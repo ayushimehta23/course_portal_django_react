@@ -40,9 +40,10 @@ function AddCourse(){
     }
 
     const formSubmit=()=>{
+        const teacherId=localStorage.getItem('teacherId');
         const formData = new FormData();
         formData.append('category',courseData.category);
-        formData.append('teacher',9);
+        formData.append('teacher',teacherId);
         formData.append('title',courseData.title);
         formData.append('description',courseData.description);
         formData.append('techs',courseData.techs);
@@ -61,6 +62,8 @@ function AddCourse(){
             console.log(error)
         }
     }
+
+    // A
 
     useEffect(() => {
         document.title='Add Course';

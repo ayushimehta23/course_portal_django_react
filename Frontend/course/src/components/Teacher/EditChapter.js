@@ -48,7 +48,7 @@ function EditChapter (){
                    }
                })
                .then((res)=>{
-                 if(res.status==200){
+                 if(res.status===200){
                     const Swal = require('sweetalert2')
                     
                         Swal.fire({

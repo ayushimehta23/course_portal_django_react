@@ -56,7 +56,7 @@ function Login(){
                     {errorMsg && <p className="text-danger">{errorMsg}</p>}
                     <form>
   <div className="mb-3">
-    <label for="exampleInputEmail1" className="form-label">Username</label>
+    <label for="exampleInputEmail1" className="form-label">Email</label>
     <input type="email" name="email" value={studentLoginData.email} onChange={handleChange} className="form-control" />
     
   </div>

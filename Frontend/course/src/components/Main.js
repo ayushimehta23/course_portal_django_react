@@ -34,6 +34,7 @@ import CourseChapters from './Teacher/CourseChapters';
 import EditChapter from './Teacher/EditChapter';
 import EditCourse from './Teacher/EditCourse';
 import TeacherSkillCourses from './TeacherSkillCourses';
+import EnrolledStudents from './Teacher/EnrolledStudents';
 
 // List Pages
 import AllCourses from './AllCourses';
@@ -79,6 +80,7 @@ function Main() {
       <Route path="/edit-course/:course_id" element={<EditCourse/>}/>
       <Route path="/teacher-skill-courses/:skill_name/:teacher_id" element={<TeacherSkillCourses/>}/>
       <Route path="/student-logout" element={<StudentLogout/>}/>
+      <Route path="/enrolled-students/:course_id" element={<EnrolledStudents/>}/>
      </Switch>
      <Footer />
      </div>

@@ -1,19 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import TeacherSidebar from "./TeacherSidebar";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 const baseURL = "http://127.0.0.1:8000/api";
-function TeacherMyCourses(){
+function EnrolledStudents(){
     
-    const [courseData, setCourseData] = useState([]);
+    const [studentData, setStudentData] = useState([]);
 
-    const teacherId=localStorage.getItem('teacherId');
+    let{course_id}=useParams();
     
     useEffect(()=>{
         try{
-            axios.get(baseURL+'/teacher-courses/'+teacherId)
+            axios.get(baseURL+'/fetch-enrolled-students/'+course_id)
             .then((res)=>{
-                setCourseData(res.data);
+                setStudentData(res.data);
             })
           }catch(error){
             console.log(error)
@@ -36,29 +36,27 @@ function TeacherMyCourses(){
                 </aside>
                 <section className="col-md-9">
                 <div className="card">
-                        <h5 className="card-header">My Courses</h5>
+                        <h5 className="card-header">Enrolled Students List</h5>
                     
                         <div className="card-body">
                             <table className="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Image</th>
-                                        <th>Total Enrolled</th>
+                                        <th>Email</th>
+                                        <th>Username</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {courseData.map((course, index)=>
+                                    {studentData.map((row, index)=>
                                     <tr>
-                                    <td><Link to={'/all-chapters/'+course.id}>{course.title}</Link></td>
-                                    <td><img src ={course.featured_img} width="80" className="rounded" alt={course.title}/></td>
-                                    <td><Link to={`/enrolled-students/`+course.id}>{course.total_enrolled_students}</Link></td>
+                                    <td><Link to={'/view-student/'+row.student.id}>{row.student.full_name}</Link></td>
+                                    <td>{row.student.email}</td>
+                                    <td>{row.student.username}</td>
                                     <td>
                                         
-                                        <Link className="btn btn-info btn-sm" to={'/edit-course/'+course.id}>Edit</Link>
-                                        <Link className="btn btn-success btn-sm ms-2" to={'/add-chapter/'+course.id}>Add Chapter</Link>
-                                        <button className="btn btn-danger btn-sm ms-2">Delete</button>
+                                        <Link className="btn btn-info btn-sm" to={'/view-student/'+row.student.id}>View</Link>
                                     </td>
                                     </tr>
                                     )}
@@ -71,4 +69,4 @@ function TeacherMyCourses(){
         </div>
     )
 }
-export default TeacherMyCourses;
+export default EnrolledStudents;

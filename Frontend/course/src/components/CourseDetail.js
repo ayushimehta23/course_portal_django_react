@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import Swal from 'sweetalert2'
 const siteURL = "http://127.0.0.1:8000/";
 const baseURL = "http://127.0.0.1:8000/api";
 
@@ -11,10 +12,13 @@ function CourseDetail () {
   const [teacherData, setTeacherData] = useState([]);
   const [relatedCourseData, setRelatedCourseData] = useState([]);
   const [techListData, setTechListData] = useState([]);
+  const [enrolledStatus, setEnrolledStatus] = useState();
+  const [userLoginStatus, setUserLoginStatus] = useState()
   let {course_id}=useParams();
+  const studentId=localStorage.getItem('studentId');
 
-  useEffect(()=>{
-    try{
+    useEffect(()=>{
+      try{
         axios.get(baseURL+'/course/'+course_id)
         .then((res)=>{
             setCourseData(res.data);
@@ -26,14 +30,98 @@ function CourseDetail () {
       }catch(error){
         console.log(error)
       }
+      // Fetch enroll status
+      try{
+        axios.get(baseURL+'/fetch-enroll-status/'+studentId+'/'+course_id)
+        .then((res)=>{
+            if(res.data.bool==true){
+              setEnrolledStatus('success')
+            }
+        })
+      }catch(error){
+        console.log(error)
+      }
+
+      const studentLoginStatus=localStorage.getItem('studentLoginStatus');
+      if(studentLoginStatus=='true'){
+        setUserLoginStatus('success')
+      }
+    },[])
+  
+
     
-}, []);
 
 const enrollCourse = () =>{
-  console.log("Hello World")
+  const studentId=localStorage.getItem('studentId');
+
+  const formData = new FormData();
+  formData.append('course',course_id);
+  formData.append('student',studentId);
+  try{
+      axios.post(baseURL+'/student-enroll-course/',formData,{
+          headers: {
+              'content-type': 'multipart/form-data'
+          }
+      })
+      .then((res)=>{
+         if(res.status===200||res.status===201){
+          Swal.fire({
+            title:'You have successfully enrolled in this course',
+            icon:'success',
+            toast:true,
+            timer:3000,
+            position:'top-right',
+            timerProgressBar:true,
+            showConfirmButton:false
+          })
+          setEnrolledStatus('success')
+         }
+
+      });
+  }catch(error){
+      console.log(error)
+  }
+  }
+
+// Add Rating
+const [ratingData, setRatingData] = useState({
+  rating: "",
+  reviews: "",
+  
+})
+
+const formSubmit=()=>{
+  const formData = new FormData();
+     formData.append('course',course_id);
+     formData.append('student',studentId);
+     formData.append('rating',ratingData.rating);
+     formData.append('reviews',ratingData.reviews);
+     
+     try{
+         axios.post(baseURL+'/course-rating/'+course_id,formData,)
+            
+         
+         .then((res)=>{
+             // console.log(res.data);
+             window.location.href='/add-chapter/1'
+         });
+     }catch(error){
+         console.log(error)
+     }
+ }
+
+const handleChange=(event)=>{
+  setRatingData({
+      ...ratingData, [event.target.name]: event.target.value
+  })
 }
 
-// console.log(relatedCourseData)
+const handleFileChange=(event)=>{
+  setChapterData({
+      ...chapterData, [event.target.name]: event.target.files[0]
+  })
+}
+
 
   useEffect(() => {
     document.title='Course Details';
@@ -57,12 +145,61 @@ const enrollCourse = () =>{
                         )}
                         </p>
                         <p className="fw-bold">Duration: 3 Hours 30 Minutes</p>
-                        <p className="fw-bold">Total Enrolled: 456 Students</p>
-                        <p className="fw-bold">Rating: 4.5/5</p>
-                        <p><Link to="/" onClick={enrollCourse} className="btn btn-success">Enroll in this course</Link></p>
+                        <p className="fw-bold">Total Enrolled: {courseData.total_enrolled_students} Student(s)</p>
+                        <p className="fw-bold">Rating: 4.5/5
+                        { enrolledStatus === "success" && userLoginStatus=="success" && 
+                        <>
+                        <button className="btn btn-success btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#ratingModal" >Rating</button>
+                        <div className="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div className="modal-dialog modal-lg">
+                              <div className="modal-content">
+                              <div className="modal-header">
+                                  <h1 className="modal-title" id="exampleModalLabel">Rate for {courseData.title}</h1>
+                                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div className="modal-body">
+                              <form>
+                              <div className="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Rating</label>
+                                <select onChange={handleChange} className="form-control" name="rating">
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                </select>
+                            
+                              </div>
+                              <div className="mb-3">
+                                <label for="exampleInputPassword1" className="form-label">Review</label>
+                                <textarea onChange={handleChange} className="form-control" name="review" rows="10"></textarea>
+                              </div>
+                              <button type="button" onClick={formSubmit} class="btn btn-primary">Submit</button>
+                            </form>
+                              </div>
+                        
+                              </div>
+                            </div>
+                          </div>
+                          </>
+                        }
+                        </p>
+                        { enrolledStatus === "success" && userLoginStatus=="success" && 
+                        <p><span>You are already enrolled in this course</span></p>
+                        }
+
+                        { userLoginStatus==="success" &&  enrolledStatus !=='success' &&
+                        <p><button onClick={enrollCourse} type="button" className="btn btn-success">Enroll in this course</button></p>
+                        }
+                        
+                        { userLoginStatus!=="success" && 
+                        <p><Link to="/student-login">Please login to enroll in this course</Link></p>
+                        }
+                        
                     </div>
             </div>
             { /* Course Videos */ }
+            {enrolledStatus === "success" && userLoginStatus=="success" && 
             <div className="card mt-4">
             <h5 className
             ="card-header">
@@ -94,6 +231,7 @@ const enrollCourse = () =>{
     )}
   </ul>
 </div>
+}
 <h3 className="pb-1 mb-4 mt-5">Related Courses </h3>
     <div className="row mb-4">
     {relatedCourseData.map((rcourse, index)=>
