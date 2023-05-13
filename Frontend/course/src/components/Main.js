@@ -55,6 +55,7 @@ function Main() {
       <Route path="/student-login" element={<Login />}/>
       <Route path="/student-register" element={<Register />}/>
       <Route path="/student-dashboard" element={<Dashboard />}/>
+      <Route path="/student-logout" element={<StudentLogout />}/>
       <Route path="/my-courses" element={<MyCourses />}/>
       <Route path="/favorite-courses" element={<FavoriteCourses />}/>
       <Route path="/recommended-courses" element={<RecommendedCourses />}/>

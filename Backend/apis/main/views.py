@@ -143,13 +143,19 @@ class EnrolledStudentList(generics.ListAPIView):
         return models.StudentCourseEnrollment.objects.filter(course=course)
 
 class CourseRatingList(generics.ListCreateAPIView):
+    queryset = models.CourseRating.objects.all()
     serializer_class = CourseRatingSerializer
 
-    def get_queryset(self):
-        course_id=self.kwargs['course_id']
-        course=models.Course.objects.get(pk=course_id)
-        return models.CourseRating.objects.filter(course=course)
+def fetch_rating_status(request, student_id, course_id):
+    student = models.Student.objects.filter(id=student_id).first()
+    course = models.Course.objects.filter(id=course_id).first()
+    ratingStatus = models.CourseRating.objects.filter(course=course, student=student).count()
+    if ratingStatus:
+        return JsonResponse({'bool': True})
+    else:
+        return JsonResponse({'bool': False})
 
+   
 
     
 

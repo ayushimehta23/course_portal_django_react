@@ -14,6 +14,7 @@ function CourseDetail () {
   const [techListData, setTechListData] = useState([]);
   const [enrolledStatus, setEnrolledStatus] = useState();
   const [userLoginStatus, setUserLoginStatus] = useState()
+  const [ratingStatus, setRatingStatus] = useState()
   let {course_id}=useParams();
   const studentId=localStorage.getItem('studentId');
 
@@ -41,6 +42,19 @@ function CourseDetail () {
       }catch(error){
         console.log(error)
       }
+      
+      // Fetch rating status
+      try{
+        axios.get(baseURL+'/fetch-rating-status/'+studentId+'/'+course_id)
+        .then((res)=>{
+            if(res.data.bool==true){
+              setRatingStatus('success')
+            }
+        })
+      }catch(error){
+        console.log(error)
+      }
+
 
       const studentLoginStatus=localStorage.getItem('studentLoginStatus');
       if(studentLoginStatus=='true'){
@@ -58,13 +72,14 @@ const enrollCourse = () =>{
   formData.append('course',course_id);
   formData.append('student',studentId);
   try{
-      axios.post(baseURL+'/student-enroll-course/',formData,{
+      axios.post(baseURL+'/student-enroll-course/'
+      ,formData,{
           headers: {
               'content-type': 'multipart/form-data'
           }
       })
       .then((res)=>{
-         if(res.status===200||res.status===201){
+         if(res.status==200||res.status==201){
           Swal.fire({
             title:'You have successfully enrolled in this course',
             icon:'success',
@@ -98,12 +113,26 @@ const formSubmit=()=>{
      formData.append('reviews',ratingData.reviews);
      
      try{
-         axios.post(baseURL+'/course-rating/'+course_id,formData,)
+         axios.post(baseURL+'/course-rating/',formData,{
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
+         })
             
          
          .then((res)=>{
-             // console.log(res.data);
-             window.location.href='/add-chapter/1'
+             if(res.status===200||res.status===201){
+              Swal.fire({
+                title: 'Rating has been saved',
+                icon: 'success',
+                toast: true,
+                timer: 3000,
+                position: 'top-right',
+                timerProgressBar: true,
+                showConfirmButton: false,
+              })
+              window.location.reload();
+             }
          });
      }catch(error){
          console.log(error)
@@ -147,9 +176,14 @@ const handleFileChange=(event)=>{
                         <p className="fw-bold">Duration: 3 Hours 30 Minutes</p>
                         <p className="fw-bold">Total Enrolled: {courseData.total_enrolled_students} Student(s)</p>
                         <p className="fw-bold">Rating: 4.5/5
-                        { enrolledStatus === "success" && userLoginStatus=="success" && 
+                        { enrolledStatus === "success" && userLoginStatus==="success" && 
                         <>
+                        { ratingStatus != 'success' && 
                         <button className="btn btn-success btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#ratingModal" >Rating</button>
+                        }
+                        { ratingStatus == 'success' && 
+                        <small className="badge bg-info text-dark ms-2">You already rated this course</small>
+                        }
                         <div className="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div className="modal-dialog modal-lg">
                               <div className="modal-content">

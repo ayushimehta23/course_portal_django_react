@@ -81,8 +81,8 @@ class Student(models.Model):
 
 # Student Course Enrollment
 class StudentCourseEnrollment(models.Model):
-    course = models.ForeignKey(Course,on_delete=models.CASCADE,related_name='enrolled_courses')
-    student = models.ForeignKey(Student,on_delete=models.CASCADE,related_name='enrolled_student')
+    course = models.ForeignKey(Course,on_delete=models.CASCADE,null=True,related_name='enrolled_courses')
+    student = models.ForeignKey(Student,on_delete=models.CASCADE,null=True,related_name='enrolled_student')
     enrolled_time = models.DateTimeField(auto_now_add=True)
    
 

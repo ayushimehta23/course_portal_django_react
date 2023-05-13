@@ -28,8 +28,12 @@ function Header() {
         <Dropdown.Item href="/teacher-register">Register</Dropdown.Item>
         </>
         }
+        {teacherLoginStatus=='true' && 
+        <>
         <Dropdown.Item href="teacher-dashboard">Dashboard</Dropdown.Item>
         <Dropdown.Item href="teacher-logout">Logout</Dropdown.Item>
+        </>
+        }
        
       </Dropdown.Menu>
     </Dropdown>
@@ -45,10 +49,13 @@ function Header() {
         <Dropdown.Item href="/student-login">Login</Dropdown.Item>
         <Dropdown.Item href="/student-register">Register</Dropdown.Item>
         </>
-      }
-        <Dropdown.Item href="student-dashboard">Dashboard</Dropdown.Item>
-        <Dropdown.Item href="student-logout">Logout</Dropdown.Item>
-       
+        }
+         {studentLoginStatus=='true'  &&
+         <>
+        <Dropdown.Item href="/student-dashboard">Dashboard</Dropdown.Item>
+        <Dropdown.Item href="/student-logout">Logout</Dropdown.Item>
+        </>
+        }
       </Dropdown.Menu>
     </Dropdown>
            
