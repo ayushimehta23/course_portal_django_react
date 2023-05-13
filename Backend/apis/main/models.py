@@ -52,6 +52,11 @@ class Course(models.Model):
         total_enrolled_students=StudentCourseEnrollment.objects.filter(course=self).count()
         return total_enrolled_students
 
+    def course_rating(self):
+        course_rating=CourseRating.objects.filter(course=self).aggregate(avg_rating=models.Avg('rating'))
+        return course_rating['avg_rating']
+
+
     def __str__(self):
         return self.title
 
@@ -81,11 +86,10 @@ class Student(models.Model):
 
 # Student Course Enrollment
 class StudentCourseEnrollment(models.Model):
-    course = models.ForeignKey(Course,on_delete=models.CASCADE,null=True,related_name='enrolled_courses')
-    student = models.ForeignKey(Student,on_delete=models.CASCADE,null=True,related_name='enrolled_student')
-    enrolled_time = models.DateTimeField(auto_now_add=True)
-   
-
+    course = models.ForeignKey(Course,on_delete=models.CASCADE, related_name='enrolled_courses')
+    student= models.ForeignKey(Student,on_delete=models.CASCADE, related_name='enrolled_student')
+    enrolled_time=models.DateTimeField(auto_now_add=True)
+    
     class Meta:
         verbose_name_plural="6. Enrolled Courses"
 

@@ -13,9 +13,10 @@ function CourseDetail () {
   const [relatedCourseData, setRelatedCourseData] = useState([]);
   const [techListData, setTechListData] = useState([]);
   const [enrolledStatus, setEnrolledStatus] = useState();
-  const [userLoginStatus, setUserLoginStatus] = useState()
-  const [ratingStatus, setRatingStatus] = useState()
-  let {course_id}=useParams();
+  const [userLoginStatus, setUserLoginStatus] = useState();
+  const [ratingStatus, setRatingStatus] = useState();
+  const [avgRating, setAvgRating] = useState(0);
+  const {course_id}=useParams();
   const studentId=localStorage.getItem('studentId');
 
     useEffect(()=>{
@@ -27,6 +28,10 @@ function CourseDetail () {
             setTeacherData(res.data.teacher)
             setRelatedCourseData(JSON.parse(res.data.related_videos))
             setTechListData(res.data.tech_list)
+            if(res.data.course_rating!='' && res.data.course_rating!=null)
+            {
+              setAvgRating(res.data.course_rating)
+            }
         })
       }catch(error){
         console.log(error)
@@ -65,38 +70,39 @@ function CourseDetail () {
 
     
 
-const enrollCourse = () =>{
-  const studentId=localStorage.getItem('studentId');
 
-  const formData = new FormData();
-  formData.append('course',course_id);
-  formData.append('student',studentId);
-  try{
-      axios.post(baseURL+'/student-enroll-course/'
-      ,formData,{
-          headers: {
-              'content-type': 'multipart/form-data'
-          }
-      })
-      .then((res)=>{
-         if(res.status==200||res.status==201){
-          Swal.fire({
-            title:'You have successfully enrolled in this course',
-            icon:'success',
-            toast:true,
-            timer:3000,
-            position:'top-right',
-            timerProgressBar:true,
-            showConfirmButton:false
-          })
-          setEnrolledStatus('success')
-         }
-
-      });
-  }catch(error){
-      console.log(error)
-  }
-  }
+  const enrollCourse = () =>{
+    console.log("Hello World")
+    
+    const formData = new FormData();
+    formData.append('course',course_id);
+    formData.append('student',studentId);
+    try{
+        axios.post(baseURL+'/student-enroll-course/',formData,{
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        })
+        .then((res)=>{
+           if(res.status===200||res.status===201){
+            Swal.fire({
+              title:'You have successfully enrolled in this course',
+              icon:'success',
+              toast:true,
+              timer:3000,
+              position:'top-right',
+              timerProgressBar:true,
+              showConfirmButton:false
+            })
+            setEnrolledStatus('success')
+           }
+  
+        });
+    }catch(error){
+        console.log(error)
+    }
+    }
+  
 
 // Add Rating
 const [ratingData, setRatingData] = useState({
@@ -118,8 +124,6 @@ const formSubmit=()=>{
             'content-type': 'multipart/form-data'
           }
          })
-            
-         
          .then((res)=>{
              if(res.status===200||res.status===201){
               Swal.fire({
@@ -131,9 +135,11 @@ const formSubmit=()=>{
                 timerProgressBar: true,
                 showConfirmButton: false,
               })
-              window.location.reload();
+            
              }
+             
          });
+         
      }catch(error){
          console.log(error)
      }
@@ -175,7 +181,7 @@ const handleFileChange=(event)=>{
                         </p>
                         <p className="fw-bold">Duration: 3 Hours 30 Minutes</p>
                         <p className="fw-bold">Total Enrolled: {courseData.total_enrolled_students} Student(s)</p>
-                        <p className="fw-bold">Rating: 4.5/5
+                        <p className="fw-bold">Rating: {avgRating} out of 5
                         { enrolledStatus === "success" && userLoginStatus==="success" && 
                         <>
                         { ratingStatus != 'success' && 
