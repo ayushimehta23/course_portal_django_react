@@ -74,43 +74,43 @@ function TeacherRegister(){
                 {!teacherData.status=="error" && <p className="text-danger">Something went wrong!</p>}
             <div className="card">
                 <h5 className="card-header">Teacher Register</h5>
-                <div className="card-body">
-                <form>
-                <div className="mb-3">
-<label for="exampleInputEmail1" className="form-label">Full Name</label>
-<input value={teacherData.full_name} onChange={handleChange} name="full_name" type="text" className="form-control" />
+                                    <div className="card-body">
+                                    <form>
+                                    <div className="mb-3">
+                    <label for="exampleInputEmail1" className="form-label">Full Name</label>
+                    <input value={teacherData.full_name} onChange={handleChange} name="full_name" type="text" className="form-control" />
 
-</div>
-<div className="mb-3">
-<label for="exampleInputEmail1" className="form-label">Email</label>
-<input value={teacherData.email} onChange={handleChange} name="email" type="email" className="form-control" />
+                    </div>
+                    <div className="mb-3">
+                    <label for="exampleInputEmail1" className="form-label">Email</label>
+                    <input value={teacherData.email} onChange={handleChange} name="email" type="email" className="form-control" />
 
-</div>
-<div className="mb-3">
-<label for="exampleInputPassword1" className="form-label">Password</label>
-<input value={teacherData.password} onChange={handleChange} name="password" type="password" className="form-control" id="exampleInputPassword1" />
-</div>
-<div className="mb-3">
-<label for="exampleInputEmail1" className="form-label">Qualification</label>
-<input value={teacherData.qualification} onChange={handleChange} name="qualification" type="text" className="form-control" />
+                    </div>
+                    <div className="mb-3">
+                    <label for="exampleInputPassword1" className="form-label">Password</label>
+                    <input value={teacherData.password} onChange={handleChange} name="password" type="password" className="form-control" id="exampleInputPassword1" />
+                    </div>
+                    <div className="mb-3">
+                    <label for="exampleInputEmail1" className="form-label">Qualification</label>
+                    <input value={teacherData.qualification} onChange={handleChange} name="qualification" type="text" className="form-control" />
 
-</div>
-<div className="mb-3">
-<label for="exampleInputEmail1" className="form-label">Mobile Number</label>
-<input value={teacherData.mobile_no} onChange={handleChange} name="mobile_no" type="number" className="form-control" />
+                    </div>
+                    <div className="mb-3">
+                    <label for="exampleInputEmail1" className="form-label">Mobile Number</label>
+                    <input value={teacherData.mobile_no} onChange={handleChange} name="mobile_no" type="number" className="form-control" />
 
-</div>
+                    </div>
 
-<div className="mb-3">
-<label for="exampleInputEmail1" className="form-label">Skills</label>
-<textarea value={teacherData.skills} onChange={handleChange} name="skills" className="form-control"></textarea>
-<div id="emailHelp" className="form-text">Php, Python, Javascript, etc</div>
+                    <div className="mb-3">
+                    <label for="exampleInputEmail1" className="form-label">Skills</label>
+                    <textarea value={teacherData.skills} onChange={handleChange} name="skills" className="form-control"></textarea>
+                    <div id="emailHelp" className="form-text">Php, Python, Javascript, etc</div>
 
-</div>
+                    </div>
 
-<button onClick={submitForm} type="submit" className="btn btn-primary">Register</button>
-</form> 
-                </div>
+                    <button onClick={submitForm} type="submit" className="btn btn-primary">Register</button>
+                    </form> 
+                                    </div>
             </div>
             </div>
         </div>

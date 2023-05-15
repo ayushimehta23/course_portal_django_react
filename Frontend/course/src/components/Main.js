@@ -26,7 +26,7 @@ import TeacherDashboard from './Teacher/TeacherDashboard';
 import TeacherProfileSetting from './Teacher/TeacherProfileSetting';
 import TeacherChangePassword from './Teacher/TeacherChangePassword';
 import TeacherMyCourses  from './Teacher/TeacherMyCourses';
-import TeacherMyUser from './Teacher/TeacherMyUser.js';
+import UserList from './Teacher/UserList';
 import AddCourse from './Teacher/AddCourse';
 import TeacherLogout from './Teacher/TeacherLogout';
 import AddChapter from './Teacher/AddChapter';
@@ -67,7 +67,7 @@ function Main() {
       <Route path="/teacher-profile-setting" element={<TeacherProfileSetting />}/>
       <Route path="/teacher-change-password" element={<TeacherChangePassword />}/>
       <Route path="/teacher-my-courses" element={<TeacherMyCourses />}/>
-      <Route path="/my-users" element={<TeacherMyUser />}/>
+      <Route path="/my-users" element={<UserList />}/>
       <Route path="/add-course" element={<AddCourse />}/>
       <Route path="/teacher-detail/:teacher_id" element={<TeacherDetail />}/>
       <Route path="/all-courses" element={<AllCourses />}/>

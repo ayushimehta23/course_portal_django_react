@@ -3,9 +3,9 @@ import  { useState, useEffect} from 'react';
 import axios from 'axios';
 import { useParams } from "react-router-dom";
 import Swal from 'sweetalert2';
+const baseURL = "http://127.0.0.1:8000/api";
 
 function EditCourse(){
-    const baseURL = "http://127.0.0.1:8000/api";
     const [cats, setCats] = useState([]);
     const [courseData, setCourseData] = useState({
         category: "",

@@ -96,7 +96,6 @@ function CourseDetail () {
             })
             setEnrolledStatus('success')
            }
-  
         });
     }catch(error){
         console.log(error)

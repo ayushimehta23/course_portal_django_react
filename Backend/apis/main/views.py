@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import permissions
-from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer, ChapterSerializer, StudentSerializer, StudentCourseEnrollSerializer, CourseRatingSerializer
+from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer, ChapterSerializer, StudentSerializer, StudentCourseEnrollSerializer, CourseRatingSerializer, TeacherDashboardSerializer
 from . import models
 
 class TeacherList(generics.ListCreateAPIView):
@@ -17,6 +17,10 @@ class TeacherDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Teacher.objects.all()
     serializer_class = TeacherSerializer
     # permission_classes = [permissions.IsAuthenticated]
+
+class TeacherDashboard(generics.RetrieveAPIView):
+    queryset=models.Teacher.objects.all()
+    serializer_class=TeacherDashboardSerializer
 
 @csrf_exempt
 def teacher_login(request):
@@ -138,9 +142,14 @@ class EnrolledStudentList(generics.ListAPIView):
     serializer_class = StudentCourseEnrollSerializer
 
     def get_queryset(self):
-        course_id=self.kwargs['course_id']
-        course=models.Course.objects.get(pk=course_id)
-        return models.StudentCourseEnrollment.objects.filter(course=course)
+        if 'course_id' in self.kwargs:
+            course_id=self.kwargs['course_id']
+            course=models.Course.objects.get(pk=course_id)
+            return models.StudentCourseEnrollment.objects.filter(course=course)
+        elif 'teacher_id' in self.kwargs:
+            teacher_id=self.kwargs['teacher_id']
+            teacher=models.Teacher.objects.get(pk=teacher_id)
+            return models.StudentCourseEnrollment.objects.filter(course__teacher=teacher).distinct()
 
 class CourseRatingList(generics.ListCreateAPIView):
     queryset = models.CourseRating.objects.all()
@@ -155,6 +164,19 @@ def fetch_rating_status(request, student_id, course_id):
     else:
         return JsonResponse({'bool': False})
 
+
+@csrf_exempt
+def teacher_change_password(request, teacher_id):
+    password = request.POST['password']
+    try:
+        teacherData = models.Teacher.objects.get(id=teacher_id)
+    except models.Teacher.DoesNotExist:
+        teacherData=None
+    if teacherData:
+        models.Teacher.objects.filter(id=teacher_id).update(password=password)
+        return JsonResponse({'bool': True})
+    else:
+        return JsonResponse({'bool': False})
    
 
     

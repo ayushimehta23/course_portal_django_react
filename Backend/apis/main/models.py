@@ -4,11 +4,11 @@ from django.core import serializers
 # Teacher Model
 class Teacher(models.Model):
     full_name = models.CharField(max_length=100)
-    detail = models.TextField(null=True)
     email = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
+    password = models.CharField(max_length=100, blank=True, null=True)
     qualification = models.CharField(max_length=200)
     mobile_no = models.CharField(max_length=20)
+    profile_img = models.ImageField(upload_to = 'teacher_profile_imgs/', null=True)
     skills = models.TextField()
 
     class Meta:
@@ -17,6 +17,16 @@ class Teacher(models.Model):
     def skill_list(self):
         skill_list=self.skills.split(',')
         return skill_list
+
+    # Total Teacher Courses
+    def total_teacher_courses(self):
+        total_courses=Course.objects.filter(teacher=self).count()
+        return total_courses
+    
+    # Total Teacher Students
+    def total_teacher_students(self):
+        total_students=StudentCourseEnrollment.objects.filter(course__teacher=self).count()
+        return total_students
 
 # Course Category Model
 class CourseCategory(models.Model):
