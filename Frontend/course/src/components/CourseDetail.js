@@ -15,6 +15,7 @@ function CourseDetail () {
   const [enrolledStatus, setEnrolledStatus] = useState();
   const [userLoginStatus, setUserLoginStatus] = useState();
   const [ratingStatus, setRatingStatus] = useState();
+  const [favoriteStatus, setFavoriteStatus] = useState();
   const [avgRating, setAvgRating] = useState(0);
   const {course_id}=useParams();
   const studentId=localStorage.getItem('studentId');
@@ -61,15 +62,26 @@ function CourseDetail () {
       }
 
 
-      const studentLoginStatus=localStorage.getItem('studentLoginStatus');
-      if(studentLoginStatus=='true'){
-        setUserLoginStatus('success')
-      }
-    },[])
   
+    // Fetch enroll status
+    try{
+      axios.get(baseURL+'/tech-favorite-status/'+studentId+'/'+course_id)
+      .then((res)=>{
+        if(res.data.bool==true){
+          setFavoriteStatus('success');
 
+        }
+      });
+    }catch(error){
+      console.log(error)
+    }
     
 
+    const studentLoginStatus=localStorage.getItem('studentLoginStatus');
+    if(studentLoginStatus=='true'){
+      setUserLoginStatus('success')
+    }
+  },[])
 
   const enrollCourse = () =>{
     console.log("Hello World")
@@ -102,6 +114,39 @@ function CourseDetail () {
     }
     }
   
+// Mark as favorite course
+
+const markAsFavorite = () => {
+  const formData = new FormData();
+  formData.append('course',course_id);
+  formData.append('student',studentId);
+  formData.append("status", true);
+  try{
+    axios.post(baseURL+'/student-add-favorite-course/',formData,{
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    })
+    .then((res)=>{
+      if(res.status==200 || res.status==201){
+        Swal.fire({
+          title: "This course has been added in your wish list",
+          icon:'success',
+          toast:true,
+          timer:10000,
+          position:'top-right',
+          timerProgressBar:true,
+          showConfirmButton: false
+        });
+        setFavoriteStatus('success');
+      }
+    });
+  }catch(error){
+    console.log(error);
+  }
+}
+
+// End
 
 // Add Rating
 const [ratingData, setRatingData] = useState({
@@ -231,6 +276,11 @@ const handleFileChange=(event)=>{
                         <p><button onClick={enrollCourse} type="button" className="btn btn-success">Enroll in this course</button></p>
                         }
                         
+                        { userLoginStatus==="success" && 
+                        <p><button onClick={markAsFavorite} type="button" title="Mark as Favorites" className="btn btn-outline-danger"><i class="bi bi-heart-fill"></i></button></p>
+                        }
+
+
                         { userLoginStatus!=="success" && 
                         <p><Link to="/student-login">Please login to enroll in this course</Link></p>
                         }

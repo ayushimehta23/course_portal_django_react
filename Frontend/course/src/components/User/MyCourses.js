@@ -1,8 +1,26 @@
 import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from 'axios';
+const baseURL = "http://127.0.0.1:8000/api";
 
 function MyCourses(){
+    const [courseData, setCourseData] = useState([]);
+    const studentId = localStorage.getItem('studentId')
+
+    useEffect(()=>{
+        try{
+            axios.get(baseURL+'/fetch-enrolled-courses/'+studentId)
+            .then((res)=>{
+                setCourseData(res.data);
+            })
+          }catch(error){
+            console.log(error)
+          }
+        
+    }, []);
+
+
     useEffect(() => {
         document.title='User | My Courses';
     });
@@ -22,17 +40,20 @@ function MyCourses(){
                                     <tr>
                                         <th>Name</th>
                                         <th>Created By</th>
-                                        <th>Action</th>
+                                      
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <td>Php Development</td>
-                                    <td><Link to="/">Suraj Kumar</Link></td>
-                                    <td>
-                                        <button className="btn btn-danger btn-sm active">Delete</button>
-                                    </td>
+                                {courseData.map((row, index) =>
+                                    <tr>
+                                    <td><Link to={'/detail/'+row.course.id}>{row.course.title}</Link></td>
+                                    <td><Link to={'/teacher-detail/'+row.course.teacher.id}>{row.course.teacher.full_name}</Link></td>
+                                    
+                                    </tr>
+                                    )}
                                 </tbody>
                             </table>
+                          
                         </div>
                     </div>
                 </section>

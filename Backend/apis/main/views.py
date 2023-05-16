@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import permissions
-from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer, ChapterSerializer, StudentSerializer, StudentCourseEnrollSerializer, CourseRatingSerializer, TeacherDashboardSerializer
+from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer, ChapterSerializer, StudentSerializer, StudentCourseEnrollSerializer, CourseRatingSerializer, TeacherDashboardSerializer,  StudentFavoriteCourseSerializer
 from . import models
 
 class TeacherList(generics.ListCreateAPIView):
@@ -62,6 +62,17 @@ class CourseList(generics.ListCreateAPIView):
             teacher=models.Teacher.objects.filter(id=skill_name).first()
             qs=models.Course.objects.filter(techs__icontains=skill_name, teacher=teacher)
 
+        # elif 'studentId' in self.kwargs:
+        #     student_id = self.kwargs['student_id']
+        #     print(student.interested_categories)
+        #     queries = [Q(techs__iendswith=value) for value in student.interested_categories]
+        #     query = queries.pop()
+        #     for item in queries:
+        #         query |= item
+        #     qs=models.Course.objects.filter(query)
+        #     return qs
+
+        # return qs
 
 class CourseDetailView(generics.RetrieveAPIView):
     queryset=models.Course.objects.all()
@@ -127,6 +138,13 @@ class StudentEnrollCourseList(generics.ListCreateAPIView):
     queryset = models.StudentCourseEnrollment.objects.all()
     serializer_class = StudentCourseEnrollSerializer
 
+# class StudentEnrollCourseCreate(generics.ListCreateAPIView):
+#     queryset=models.StudentCourseEnrollment.objects.all()
+#     serializer_class = StudentCourseEnrollCreateSerializer
+
+class StudentFavoriteCourseList(generics.ListCreateAPIView):
+    queryset=models.StudentFavoriteCourse.objects.all()
+    serializer_class=StudentFavoriteCourseSerializer
 
 def fetch_enroll_status(request, student_id, course_id):
     student = models.Student.objects.filter(id=student_id).first()
@@ -136,6 +154,27 @@ def fetch_enroll_status(request, student_id, course_id):
         return JsonResponse({'bool': True})
     else:
         return JsonResponse({'bool': False})
+
+def fetch_favorite_status(request, student_id, course_id):
+    student=models.Student.objects.filter(id=student_id).first()
+    course=models.Course.objects.filter(id=course_id).first()
+    favouriteStatus=models.StudentFavoriteCourse.objects.filter(course=course, student=student).first()
+    if favouriteStatus and favouriteStatus.status == True:
+        return JsonResponse({'bool':True})
+    else:
+        return JsonResponse({'bool':False})
+
+def remove_favorite_course(request, course_id, student_id):
+    student=models.Student.objects.filter(id=student_id).first()
+    course=models.Course.objects.filter(id=course_id).first()
+    favouriteStatus=models.StudentFavoriteCourse.objects.filter(course=course, student=student).delete()
+    if favouriteStatus:
+        return JsonResponse({'bool':True})
+    else:
+        return JsonResponse({'bool':False})
+
+
+
 
 class EnrolledStudentList(generics.ListAPIView):
     queryset = models.StudentCourseEnrollment.objects.all()
@@ -150,6 +189,15 @@ class EnrolledStudentList(generics.ListAPIView):
             teacher_id=self.kwargs['teacher_id']
             teacher=models.Teacher.objects.get(pk=teacher_id)
             return models.StudentCourseEnrollment.objects.filter(course__teacher=teacher).distinct()
+        elif 'student_id' in self.kwargs:
+            student_id=self.kwargs['student_id']
+            student=models.Student.objects.get(pk=student_id)
+            return models.StudentCourseEnrollment.objects.filter(student=student).distinct()
+        elif 'studentId' in self.kwargs:
+            student_id=self.kwargs['studentId']
+            student=models.Student.objects.get(pk=student_id)
+            return models.StudentCourseEnrollment.objects.filter(course__techs__icontains=student.interested_categories)
+        
 
 class CourseRatingList(generics.ListCreateAPIView):
     queryset = models.CourseRating.objects.all()
@@ -180,5 +228,3 @@ def teacher_change_password(request, teacher_id):
    
 
     
-
-

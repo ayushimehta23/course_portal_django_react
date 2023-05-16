@@ -1,11 +1,28 @@
 import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
+import axios from 'axios';
+const baseURL = "http://127.0.0.1:8000/api";
 
 function RecommendedCourses(){
+    const [courseData, setCourseData] = useState([]);
+    const studentId = localStorage.getItem('studentId')
+
+    useEffect(()=>{
+        try{
+            axios.get(baseURL+'/fetch-recommended-courses/'+studentId)
+            .then((res)=>{
+                setCourseData(res.data);
+            })
+          }catch(error){
+            console.log(error)
+          }
+        
+    }, []);
+
+
     useEffect(() => {
-        document.title='Recommended Courses';
+        document.title='User | My Courses';
     });
     return (
         <div className="container mt-4">
@@ -15,25 +32,28 @@ function RecommendedCourses(){
                 </aside>
                 <section className="col-md-9">
                 <div className="card">
-                        <h5 className="card-header">Recommended Courses</h5>
+                        <h5 className="card-header">My Courses</h5>
                     
                         <div className="card-body">
                             <table className="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Created By</th>
-                                        <th>Action</th>
+                                        <th>Techonologies</th>
+                                      
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <td>Php Development</td>
-                                    <td><Link to="/">Suraj Kumar</Link></td>
-                                    <td>
-                                        <button className="btn btn-danger btn-sm active">Delete</button>
-                                    </td>
+                                {courseData.map((row, index) =>
+                                    <tr>
+                                    <td><Link to={'/detail/'+row.course.id}>{row.course.title}</Link></td>
+                                    <td>{row.course.techs}</td>
+                                    
+                                    </tr>
+                                    )}
                                 </tbody>
                             </table>
+                          
                         </div>
                     </div>
                 </section>
@@ -41,5 +61,4 @@ function RecommendedCourses(){
         </div>
     )
 }
-
-export default RecommendedCourses
+export default RecommendedCourses;
