@@ -83,6 +83,8 @@ function CourseDetail () {
     }
   },[])
 
+
+  // Enroll in this course
   const enrollCourse = () =>{
     console.log("Hello World")
     
@@ -147,6 +149,39 @@ const markAsFavorite = () => {
 }
 
 // End
+
+
+// Remove from favorite course
+const removeFavorite = (pk) => {
+  const formData = new FormData();
+  formData.append('course',course_id);
+  formData.append('student',studentId);
+  formData.append('status',false);
+  try{
+    axios.get(baseURL+'/student-remove-favorite-course/'+course_id+'/'+studentId,{
+      headers:{
+        'content-type': 'multipart/form-data'
+      }
+    })
+    .then((res)=>{
+      if(res.status===200||res.status===201){
+        Swal.fire({
+        title: 'This course has been removed from your wish list',
+        icon:'success',
+        toast: true,
+        timer: 10000,
+        position: 'top-right',
+        timerProgressBar:true,
+        showConfirmButton:false
+
+      });
+      setFavoriteStatus('');
+      }
+    });
+  }catch(error){
+    console.log(error)
+  }
+}
 
 // Add Rating
 const [ratingData, setRatingData] = useState({
@@ -276,8 +311,11 @@ const handleFileChange=(event)=>{
                         <p><button onClick={enrollCourse} type="button" className="btn btn-success">Enroll in this course</button></p>
                         }
                         
-                        { userLoginStatus==="success" && 
+                        { userLoginStatus==="success" && favoriteStatus!=='success' &&
                         <p><button onClick={markAsFavorite} type="button" title="Mark as Favorites" className="btn btn-outline-danger"><i class="bi bi-heart-fill"></i></button></p>
+                        }
+                        { userLoginStatus==="success" && favoriteStatus === 'success' &&
+                          <p><button onClick={removeFavorite} title="Remove from Favorites" type="button" className="btn btn-danger"><i class="bi bi-heart-fill"></i></button></p>
                         }
 
 

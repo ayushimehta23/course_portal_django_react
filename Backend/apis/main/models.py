@@ -130,4 +130,4 @@ class CourseRating(models.Model):
         return f"{self.course}-{self.student}-{self.rating}"
 
     class Meta:
-        verbose_name_plural="7. Course Ratings"
+        verbose_name_plural="8. Course Ratings"
