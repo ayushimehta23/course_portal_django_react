@@ -4,50 +4,41 @@ import { useParams } from "react-router-dom";
 import axios from 'axios';
 
 const baseURL = "http://127.0.0.1:8000/api"; 
-function AddChapter(){
+function AddAssignment(){
 
-    const [chapterData, setChapterData] = useState({
-        course: "",
+    const [assignmentData, setAssignmentData] = useState({
         title: "",
-        description: "",
-        video: "",
-        remarks: ""
+        detail: "",
     })
 
 
     const handleChange=(event)=>{
-        setChapterData({
-            ...chapterData, [event.target.name]: event.target.value
+        setAssignmentData({
+            ...assignmentData, [event.target.name]: event.target.value
         })
     }
 
-    const handleFileChange=(event)=>{
-        setChapterData({
-            ...chapterData, [event.target.name]: event.target.files[0]
-        })
-    }
-    const {course_id} = useParams();
+    const {student_id} = useParams();
+    const {teacher_id} = useParams();
 
     const formSubmit=()=>{
      const formData = new FormData();
-        formData.append('course',course_id);
-        formData.append('title',chapterData.title);
-        formData.append('description',chapterData.description);
-        formData.append('remarks',chapterData.remarks);
-        formData.append('video',chapterData.video,chapterData.video.name);
+        formData.append('teacher',teacher_id);
+        formData.append('student',student_id);
+        formData.append('title',assignmentData.title);
+        formData.append('detail',assignmentData.description);
         try{
-            axios.post(baseURL+'/course-chapter/'+course_id,formData,{
+            axios.post(baseURL+'/student-assignment/'+teacher_id+'/'+student_id,formData,{
                 headers: {
                     'content-type': 'multipart/form-data'
                 }
             })
             .then((res)=>{
-                // console.log(res.data);
-                if(res.status===200){
+                if(res.status===200 || res.status===201){
                     const Swal = require('sweetalert2')
                     
                         Swal.fire({
-                            title: 'Data has been updated',
+                            title: 'Assignment has been updated',
                             icon: 'success',
                             toast: true,
                             timer: 3000,
@@ -55,6 +46,7 @@ function AddChapter(){
                             timerProgressBar: true,
                             showConfirmButton: false,
                           });
+                         
                  }
             });
         }catch(error){
@@ -74,7 +66,7 @@ function AddChapter(){
                 </aside>
                 <div className="col-9">
                     <div className="card">
-                        <h5 className="card-header">Add Chapter</h5>
+                        <h5 className="card-header">Add Assignment</h5>
                         <div className="card-body">
                         <form>
                         <div class="mb-3">
@@ -83,17 +75,10 @@ function AddChapter(){
                             
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" onChange={handleChange} name="description" id="description"></textarea>
+                            <label for="detail" class="form-label">Detail</label>
+                            <textarea class="form-control" onChange={handleChange} name="detail" id="detail"></textarea>
                         </div>
-                        <div class="mb-3">
-                        <label for="video" className="form-label">Video</label>
-                            <input type="file" onChange={handleFileChange}  name='video' className="form-control" id="video" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="techs" className="form-label">Remarks</label>
-                            <textarea onChange={handleChange} name="remarks" class="form-control" id="techs"></textarea>
-                        </div>
+                       
                         <button type="button" onClick={formSubmit} class="btn btn-primary">Submit</button>
                         </form>
                         </div>
@@ -103,4 +88,4 @@ function AddChapter(){
         </div>
     )
 }
-export default AddChapter;
+export default AddAssignment;

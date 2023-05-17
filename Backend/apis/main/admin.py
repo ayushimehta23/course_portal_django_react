@@ -9,4 +9,5 @@ admin.site.register(models.Student)
 admin.site.register(models.StudentCourseEnrollment)
 admin.site.register(models.CourseRating)
 admin.site.register(models.StudentFavoriteCourse)
+admin.site.register(models.StudentAssignemnt)
 

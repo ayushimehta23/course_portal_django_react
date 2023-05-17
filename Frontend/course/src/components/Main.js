@@ -18,6 +18,7 @@ import RecommendedCourses from './User/RecommendedCourses';
 import ProfileSetting from './User/ProfileSetting';
 import ChangePassword from './User/ChangePassword';
 import StudentLogout from './User/StudentLogout';
+import StudentAssignments from './User/StudentAssignments';
 
 // Teacher
 import TeacherLogin from './Teacher/TeacherLogin';
@@ -35,6 +36,8 @@ import EditChapter from './Teacher/EditChapter';
 import EditCourse from './Teacher/EditCourse';
 import TeacherSkillCourses from './TeacherSkillCourses';
 import EnrolledStudents from './Teacher/EnrolledStudents';
+import AddAssignment from './Teacher/AddAssignment';
+import ShowAssignment from './Teacher/ShowAssignment';
 
 // List Pages
 import AllCourses from './AllCourses';
@@ -82,6 +85,9 @@ function Main() {
       <Route path="/teacher-skill-courses/:skill_name/:teacher_id" element={<TeacherSkillCourses/>}/>
       <Route path="/student-logout" element={<StudentLogout/>}/>
       <Route path="/enrolled-students/:course_id" element={<EnrolledStudents/>}/>
+      <Route path="/add-assignment/:student_id/:teacher_id" element={<AddAssignment/>}/>
+      <Route path="/show-assignment/:student_id/:teacher_id" element={<ShowAssignment/>}/>
+      <Route path="/my-assignments/" element={<StudentAssignments/>}/>
      </Switch>
      <Footer />
      </div>
