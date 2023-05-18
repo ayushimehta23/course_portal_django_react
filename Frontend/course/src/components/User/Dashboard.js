@@ -37,19 +37,27 @@ function Dashboard(){
                     <div className="card border-primary">
                         <h5 className="card-header bg-primary text-white">Enrolled Courses</h5>
                         <div className="card-body">
-                            <h3><Link to="/teacher-my-courses">{dashboardData.total_teacher_courses}</Link></h3>
+                            <h3><Link to="/my-courses">{dashboardData.enrolled_courses}</Link></h3>
                         </div>
                     </div>
                    </div>
                    <div className="col-md-4">
                     <div className="card border-success">
-                        <h5 className="card-header bg-success text-white">Total Students</h5>
+                        <h5 className="card-header bg-success text-white">Favorite courses</h5>
                         <div className="card-body">
-                            <h3><Link to="/my-users">{dashboardData.total_teacher_students}</Link></h3>
+                            <h3><Link to="/favorite-courses">{dashboardData.favorite_courses}</Link></h3>
                         </div>
                     </div>
                    </div>
-                   
+                   <div className="col-md-4">
+                    <div className="card border-info">
+                        <h5 className="card-header bg-info text-white">Assignments</h5>
+                        <div className="card-body">
+                            <h5> <Link to="/my-assignments">Completed: {dashboardData.complete_assignments} | Pending: {dashboardData.pending_assignment}</Link></h5>
+                           
+                        </div>
+                    </div>
+                   </div>
                    </div>
                 </section>
             </div>

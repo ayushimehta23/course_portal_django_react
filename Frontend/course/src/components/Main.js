@@ -88,6 +88,7 @@ function Main() {
       <Route path="/add-assignment/:student_id/:teacher_id" element={<AddAssignment/>}/>
       <Route path="/show-assignment/:student_id/:teacher_id" element={<ShowAssignment/>}/>
       <Route path="/my-assignments/" element={<StudentAssignments/>}/>
+      <Route path="/teacher-chapters/" element={<CourseChapters/>}/>
      </Switch>
      <Footer />
      </div>

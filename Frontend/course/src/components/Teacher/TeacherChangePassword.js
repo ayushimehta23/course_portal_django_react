@@ -52,7 +52,7 @@ function TeacherChangePassword(){
     if (teacherLoginStatus!='true') {
       window.location.href='/teacher-login';
     }else{
-        alert('Oops...Something went wrong')
+        // alert('Oops...Something went wrong')
     }
 
     useEffect(() => {

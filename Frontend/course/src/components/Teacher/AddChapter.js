@@ -36,7 +36,7 @@ function AddChapter(){
         formData.append('remarks',chapterData.remarks);
         formData.append('video',chapterData.video,chapterData.video.name);
         try{
-            axios.post(baseURL+'/course-chapter/'+course_id,formData,{
+            axios.post(baseURL+'/course-chapters/'+course_id,formData,{
                 headers: {
                     'content-type': 'multipart/form-data'
                 }
