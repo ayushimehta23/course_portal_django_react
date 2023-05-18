@@ -1,6 +1,26 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from 'axios';
+const baseURL = "http://127.0.0.1:8000/api";
+
 
 function Sidebar(){
+    const [notifData, setNotifData] = useState([]);
+    const studentId = localStorage.getItem('studentId');
+
+    useEffect(()=>{
+        // Fetch Courses
+        try{
+            axios.get(baseURL+'/student/fetch-all-notifications/'+studentId)
+            .then((res)=>{
+                console.log(res);
+                setNotifData(res.data);
+            });
+        }catch(error){
+            console.log(error);
+        }
+    },[]);
+
     return (
         <div className="card">
                         <Link to="/user-dashboard" className="list-group-item list-group-item-action"><h5 className="card-header">User Dashboard</h5></Link>
@@ -9,7 +29,7 @@ function Sidebar(){
                         <Link to="/my-courses" className="list-group-item list-group-item-action">My Courses</Link>
                         <Link to="/favorite-courses" className="list-group-item list-group-item-action">Favorite Courses</Link>
                         <Link to="/recommended-courses" className="list-group-item list-group-item-action">Recommended Courses</Link>
-                        <Link to="/my-assignments" className="list-group-item list-group-item-action">Teacher Assignments</Link>
+                        <Link to="/my-assignments" className="list-group-item list-group-item-action">Assignments<span className="float-end badge bg-danger mt-1">{notifData.length}</span></Link>
                         <Link to="/profile-setting" className="list-group-item list-group-item-action">Profile Setting</Link>
                         <Link to="/change-password" className="list-group-item list-group-item-action">Change Password</Link>
                         <Link to="/student-logout" className="list-group-item list-group-item-action text-danger">Logout</Link>

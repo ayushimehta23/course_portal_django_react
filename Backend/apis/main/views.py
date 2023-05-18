@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import permissions
-from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer, ChapterSerializer, StudentSerializer, StudentCourseEnrollSerializer, CourseRatingSerializer, TeacherDashboardSerializer,  StudentFavoriteCourseSerializer, StudentAssignemntSerializer, StudentDashboardSerializer
+from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer, ChapterSerializer, StudentSerializer, StudentCourseEnrollSerializer, CourseRatingSerializer, TeacherDashboardSerializer,  StudentFavoriteCourseSerializer, StudentAssignemntSerializer, StudentDashboardSerializer, NotificationSerializer
 from . import models
 
 class TeacherList(generics.ListCreateAPIView):
@@ -254,6 +254,8 @@ class MyAssignmentList(generics.ListCreateAPIView):
     def get_queryset(self):
         student_id=self.kwargs['student_id']
         student=models.Student.objects.get(pk=student_id)
+        # Update Notification
+        models.Notification.objects.filter(student=student,notif_for='Student',notif_subject='Assignment').update(notifread_status=True)
         return models.StudentAssignemnt.objects.filter(student=student)
 
 class UpdateAssignment(generics.RetrieveUpdateDestroyAPIView):
@@ -272,6 +274,14 @@ def student_change_password(request, student_id):
         return JsonResponse({'bool': True})
     else:
         return JsonResponse({'bool': False})
-   
+
+class NotificationList(generics.ListCreateAPIView):
+    queryset=models.Notification.objects.all()
+    serializer_class=NotificationSerializer
+
+    def get_queryset(self):
+        student_id=self.kwargs['student_id']
+        student=models.Student.objects.get(pk=student_id)
+        return models.Notification.objects.filter(student=student,notif_for='Student',notif_subject='Assignment',notifread_status=False)
 
     

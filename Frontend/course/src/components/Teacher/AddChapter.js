@@ -26,7 +26,7 @@ function AddChapter(){
             ...chapterData, [event.target.name]: event.target.files[0]
         })
     }
-    const {course_id} = useParams();
+    const {id: course_id} = useParams();
 
     const formSubmit=()=>{
      const formData = new FormData();

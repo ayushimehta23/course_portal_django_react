@@ -39,7 +39,8 @@ function AddCourse(){
         })
     }
 
-    const formSubmit=()=>{
+    const formSubmit=(e)=>{
+        e.preventDefault();
         const teacherId=localStorage.getItem('teacherId');
         const formData = new FormData();
         formData.append('category',courseData.category);
@@ -47,7 +48,7 @@ function AddCourse(){
         formData.append('title',courseData.title);
         formData.append('description',courseData.description);
         formData.append('techs',courseData.techs);
-        formData.append('featured_img',courseData.f_img,courseData.f_img.name);
+        formData.append('featured_img',courseData.f_img);
         try{
             axios.post(baseURL+'/course/',formData,{
                 headers: {
@@ -83,6 +84,7 @@ function AddCourse(){
                         <div class="mb-3">
                             <label for="title" className="form-label">Category</label>
                             <select name='category' onChange={handleChange} className="form-control">
+                                <option>--select--</option>
                                 {cats.map((category, index)=>{return <option key={index} value={category
                                 .id}>{category.title}</option>})}
                             </select>

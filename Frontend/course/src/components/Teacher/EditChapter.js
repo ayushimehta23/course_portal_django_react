@@ -31,9 +31,10 @@ function EditChapter (){
 
     const {chapter_id} = useParams();
 
-    const formSubmit=()=>{
+    const formSubmit=(e)=>{
+        e.preventDefault();
         const formData = new FormData();
-           formData.append('course',chapterData.course);
+           formData.append('course',chapterData.course.id);
            formData.append('title',chapterData.title);
            formData.append('description',chapterData.description);
            if(chapterData.video!==''){

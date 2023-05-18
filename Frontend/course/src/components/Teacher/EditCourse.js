@@ -62,45 +62,46 @@ function EditCourse(){
         })
     }
 
-    const formSubmit=()=>{
+    const formSubmit=(e)=>{
+        e.preventDefault();
+        const teacherId=localStorage.getItem('teacherId');
         const formData = new FormData();
         formData.append('category',courseData.category);
-        formData.append('teacher',9);
+        formData.append('teacher',teacherId);
         formData.append('title',courseData.title);
         formData.append('description',courseData.description);
         if(courseData.f_img!==''){
-        formData.append('featured_img',courseData.f_img,courseData.f_img.name);
-    }
-        formData.append('techs',courseData.techs);
-        try{
-            axios.put(baseURL+'/teacher-course-detail/'+course_id,formData,{
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            })
-            .then((res)=>{
-                if(res.status===200){
-                    const Swal = require('sweetalert2')
-                    
-                        Swal.fire({
-                            title: 'Data has been updated',
-                            icon:'success',
-                            toast: true,
-                            timer: 3000,
-                            position: 'top-right',
-                            timerProgressBar: true,
-                            showConfirmButton: false,
-                          });
-                 }
-            });
-        }catch(error){
-            console.log(error)
+            formData.append('featured_img',courseData.f_img);
         }
+        formData.append('techs',courseData.techs);
+        axios.put(baseURL+'/teacher-course-detail/'+course_id,formData,{
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        })
+        .then((res)=>{
+            if(res.status===200){
+                const Swal = require('sweetalert2')
+                
+                    Swal.fire({
+                        title: 'Data has been updated',
+                        icon:'success',
+                        toast: true,
+                        timer: 3000,
+                        position: 'top-right',
+                        timerProgressBar: true,
+                        showConfirmButton: false,
+                        });
+                }
+        }).catch((err) => {
+            console.log("----error------", err)
+        });
+        
     }
 
     useEffect(() => {
         document.title='Edit Course';
-    });
+    }, []);
 
     return(
         <div className="container mt-4">

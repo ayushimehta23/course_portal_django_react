@@ -11,3 +11,7 @@ admin.site.register(models.CourseRating)
 admin.site.register(models.StudentFavoriteCourse)
 admin.site.register(models.StudentAssignemnt)
 admin.site.register(models.Notification)
+admin.site.register(models.Quiz)
+admin.site.register(models.QuizQuestions)
+admin.site.register(models.CourseQuiz)
+
