@@ -6,7 +6,7 @@ const baseURL = "http://127.0.0.1:8000/api";
 function TeacherMyCourses(){
     
     const [courseData, setCourseData] = useState([]);
-
+    const [totalResult, setTotalResult] = useState(0);
     const teacherId=localStorage.getItem('teacherId');
     
     useEffect(()=>{
@@ -22,7 +22,42 @@ function TeacherMyCourses(){
     }, []);
 
     
-    
+    //  Delete Data
+    const Swal = require('sweetalert2')
+    const handleDeleteClick = (course_id) => {
+        Swal.fire({
+            title: 'Confirm',
+            text: 'Are you sure you want to delete this data?',
+            icon: 'info',
+            confirmButtonText: 'Continue',
+            showCancelButton: true
+
+          }).then((result)=>{
+            if(result.isConfirmed){
+                try{
+                    axios.delete(baseURL+'/course/'+course_id)
+                    .then((res)=>{
+                       Swal.fire('success','Data has been deleted.');
+                       try{
+                        axios.get(baseURL+'/teacher-courses/'+teacherId)
+                        .then((res)=>{
+                            setTotalResult(res.data.length);
+                            setCourseData(res.data);
+
+                        })
+                    }catch(error){
+                            console.log(error);
+                        }
+                    });
+                }catch(error){
+                    Swal.fire('error','Data has not been deleted');
+                }
+            }else{
+                Swal.fire('error','Data has not been deleted');
+            }
+        });
+    }
+        
 
     useEffect(()=>{
     
@@ -72,7 +107,9 @@ function TeacherMyCourses(){
                                         
                                         <Link className="btn btn-info btn-sm" to={'/edit-course/'+course.id}>Edit</Link>
                                         <Link className="btn btn-success btn-sm ms-2" to={'/add-chapter/'+course.id}>Add Chapter</Link>
-                                        <button className="btn btn-danger btn-sm ms-2">Delete</button>
+                                        <Link className="btn btn-warning btn-sm ms-2" to={'/assign-quiz/'+course.id}>Assign Quiz</Link>
+                                        
+                                        <button onClick={()=>handleDeleteClick(course.id)} className="btn btn-danger btn-sm ms-2">Delete</button>
                                     </td>
                                     </tr>
                                     )}

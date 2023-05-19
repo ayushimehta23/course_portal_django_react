@@ -117,6 +117,7 @@ function EditCourse(){
                         <div class="mb-3">
                             <label for="title" className="form-label">Category</label>
                             <select name='category' value={courseData.category} onChange={handleChange} className="form-control">
+                            <option>--Select--</option>
                                 {cats.map((category, index)=>{return <option key={index} value={category
                                 .id}>{category.title}</option>})}
                             </select>

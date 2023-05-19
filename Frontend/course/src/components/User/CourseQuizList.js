@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 const baseURL = "http://127.0.0.1:8000/api";
 
-function MyCourses(){
+function CourseQuizList(){
     const [courseData, setCourseData] = useState([]);
     const studentId = localStorage.getItem('studentId')
 
@@ -22,7 +22,7 @@ function MyCourses(){
 
 
     useEffect(() => {
-        document.title='User | My Courses';
+        document.title='Quiz List';
     });
     return (
         <div className="container mt-4">
@@ -32,26 +32,27 @@ function MyCourses(){
                 </aside>
                 <section className="col-md-9">
                 <div className="card">
-                        <h5 className="card-header">My Courses</h5>
+                        <h5 className="card-header">Quiz List</h5>
                     
                         <div className="card-body">
                             <table className="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Created By</th>
                                         <th>Quiz</th>
+                                        <th>Action</th>
                                       
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {courseData.map((row, index) =>
-                                    <tr>
-                                    <td><Link to={'/detail/'+row.course.id}>{row.course.title}</Link></td>
-                                    <td><Link to={'/teacher-detail/'+row.course.teacher.id}>{row.course.teacher.full_name}</Link></td>
-                                    <td><Link className="btn btn-sm btn-warning" to={'/course-quiz/'+row.course.id}>Quiz List</Link></td>
+                                <tr>
+                                    <td>Python Quiz</td>
+                                    <td className="text-success">Attempted</td>
                                     </tr>
-                                    )}
+                                    <tr>
+                                    <td>Django Quiz</td>
+                                    <td><Link className="btn btn-sm btn-warning" to={'/take-quiz/1'}>Take Quiz</Link></td>
+                                    </tr>
+                                 
                                 </tbody>
                             </table>
                           
@@ -62,4 +63,4 @@ function MyCourses(){
         </div>
     )
 }
-export default MyCourses;
+export default CourseQuizList;

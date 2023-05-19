@@ -8,17 +8,17 @@ import Swal from 'sweetalert2';
 const baseURL = "http://127.0.0.1:8000/api";
 
 
-function CourseChapters(){
-    const [chapterData, setChapterData] = useState([]);
+function QuizQuestions(){
+    const [questionData, setQuestionData] = useState([]);
     const [totalResult, setTotalResult] = useState(0);
-    const {course_id} = useParams();
+    const {quiz_id} = useParams();
     useEffect(()=>{
         try{
-            axios.get(baseURL+'/course-chapters/'+course_id)
+            axios.get(baseURL+'/quiz-questions/'+quiz_id)
             .then((res)=>{
             
                 setTotalResult(res.data.length);
-                setChapterData(res.data);
+                setQuestionData(res.data);
               
             })
           }catch(error){
@@ -29,7 +29,7 @@ function CourseChapters(){
 
     //  Delete Data
     const Swal = require('sweetalert2')
-    const handleDeleteClick = (chapter_id) => {
+    const handleDeleteClick = (question_id) => {
         Swal.fire({
             title: 'Confirm',
             text: 'Are you sure you want to delete this data?',
@@ -40,14 +40,14 @@ function CourseChapters(){
           }).then((result)=>{
             if(result.isConfirmed){
                 try{
-                    axios.delete(baseURL+'/chapter/'+chapter_id)
+                    axios.delete(baseURL+'/question/'+question_id)
                     .then((res)=>{
                        Swal.fire('success','Data has been deleted.');
                        try{
-                        axios.get(baseURL+'/course-chapters/'+course_id)
+                        axios.get(baseURL+'/quiz-questions/'+quiz_id)
                         .then((res)=>{
                             setTotalResult(res.data.length);
-                            setChapterData(res.data);
+                            setQuestionData(res.data);
 
                         })
                     }catch(error){
@@ -65,7 +65,7 @@ function CourseChapters(){
                 
 
     useEffect(() => {
-        document.title='All Chapters';
+        document.title='All Questions';
     });
    return(
     <div className="container mt-4">
@@ -75,37 +75,25 @@ function CourseChapters(){
                 </aside>
                 <section className="col-md-9">
                 <div className="card">
-                        <h5 className="card-header">All Chapters ({totalResult})<Link className="btn btn-success btn-sm float-end" to={'/add-chapter/'+course_id}>Add Chapter</Link></h5>
+                        <h5 className="card-header">All Questions ({totalResult}) <Link className="btn btn-success btn-sm float-end" to={'/add-quiz-question/'+quiz_id}>Add Question</Link></h5>
                     
                         <div className="card-body">
                         <table className="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Title</th>
-                                        <th>Video</th>
-                                        <th>Remarks</th>
+                                        <th>Questions</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {chapterData.map((chapter, index)=>
+                                    {questionData.map((row, index)=>
                                     <tr>
-                                    <td><Link to={'/edit-chapter/'+chapter.id}>{chapter.title}</Link></td>
+                                    <td><Link to={'/edit-question/'+row.id}>{row.questions}</Link></td>
+                                   
+                            
                                     <td>
-                                    <video controls width="250">
-                                            <source src={chapter.video.url} type="video/webm"/>
-
-                                            <source src={chapter.video.url} type="video/mp4"/>
-
-                                            Sorry, your browser doesn't support embedded videos
-                    
-                                    </video>
-
-                                    </td>
-                                    <td>{chapter.remarks}</td>
-                                    <td>
-                                        <Link to={'/edit-chapter/'+chapter.id} className="btn btn-sm text-white btn-info"><i class="bi bi-pencil-square"></i></Link>
-                                        <button onClick={()=>handleDeleteClick(chapter.id)} className="btn btn-sm btn-danger ms-1"><i class="bi bi-trash"></i></button>
+                                        <Link to={'/edit-question/'+row.id} className="btn btn-sm text-white btn-info"><i class="bi bi-pencil-square"></i></Link>
+                                        <button onClick={()=>handleDeleteClick(row.id)} className="btn btn-sm btn-danger ms-1"><i class="bi bi-trash"></i></button>
                                     </td>
                                     </tr>
                                     )}
@@ -118,4 +106,4 @@ function CourseChapters(){
         </div>
    )
    }
-export default CourseChapters;
+export default QuizQuestions;
