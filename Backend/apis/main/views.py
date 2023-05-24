@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import permissions
-from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer, ChapterSerializer, StudentSerializer, StudentCourseEnrollSerializer, CourseRatingSerializer, TeacherDashboardSerializer,  StudentFavoriteCourseSerializer, StudentAssignemntSerializer, StudentDashboardSerializer, NotificationSerializer, QuizSerializer, QuestionSerializer, CourseQuizSerializer
+from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer, ChapterSerializer, StudentSerializer, StudentCourseEnrollSerializer, CourseRatingSerializer, TeacherDashboardSerializer,  StudentFavoriteCourseSerializer, StudentAssignemntSerializer, StudentDashboardSerializer, NotificationSerializer, QuizSerializer, QuestionSerializer, CourseQuizSerializer, AttemptQuizSerializer, StudyMaterialSerializer
 from . import models
 
 class TeacherList(generics.ListCreateAPIView):
@@ -61,6 +61,13 @@ class CourseList(generics.ListCreateAPIView):
             teacher=self.request.GET['teacher']
             teacher=models.Teacher.objects.filter(id=skill_name).first()
             qs=models.Course.objects.filter(techs__icontains=skill_name, teacher=teacher)
+
+        if 'searchString' in self.kwargs:
+            search=self.kwargs['searchString']
+            if search=="":
+                 qs=models.Course.objects.filter(Q(title__icontains=search))
+            else:
+                qs=models.Course.objects.all()
 
         # elif 'studentId' in self.kwargs:
         #     student_id = self.kwargs['student_id']
@@ -311,12 +318,25 @@ class QuizQuestionList(generics.ListCreateAPIView):
     def get_queryset(self):
         quiz_id=self.kwargs['quiz_id']
         quiz=models.Quiz.objects.get(pk=quiz_id)
-        return models.QuizQuestions.objects.filter(quiz=quiz)
+        if 'limit' in self.kwargs:
+            return models.QuizQuestions.objects.filter(quiz=quiz).order_by('id')[:1]
+        elif 'question_id' in self.kwargs:
+            current_question=self.kwargs['question_id']
+            return models.QuizQuestions.objects.filter(quiz=quiz, id__gt=current_question).order_by('id')[:1]
+        else:
+            return models.QuizQuestions.objects.filter(quiz=quiz)
+
 
 
 class CourseQuizList(generics.ListCreateAPIView):
     queryset=models.CourseQuiz.objects.all()
     serializer_class=CourseQuizSerializer
+
+    def get_queryset(self):
+        if 'course_id' in self.kwargs:
+            course_id=self.kwargs['course_id']
+            course=models.Course.objects.get(pk=course_id)
+            return models.CourseQuiz.objects.filter(course=course)
 
 def fetch_quiz_assign_status(request, quiz_id, course_id):
     quiz=models.Quiz.objects.filter(id=quiz_id).first()
@@ -326,3 +346,30 @@ def fetch_quiz_assign_status(request, quiz_id, course_id):
         return JsonResponse({'bool': True})
     else:
         return JsonResponse({'bool': False})
+
+class AttemptQuizList(generics.ListCreateAPIView):
+    queryset=models.AttemptQuiz.objects.all()
+    serializer_class=AttemptQuizSerializer
+
+def fetch_quiz_attempt_status(request, quiz_id, student_id):
+    quiz=models.Quiz.objects.filter(id=quiz_id).first()
+    student=models.Student.objects.filter(id=student_id).first()
+    attemptStatus=models.AttemptQuiz.objects.filter(student=student,question__quiz=quiz).count()
+    if attemptStatus > 0:
+        return JsonResponse({'bool': True})
+    else:
+        return JsonResponse({'bool': False})
+
+class StudyMaterialList(generics.ListCreateAPIView):
+    serializer_class = StudyMaterialSerializer
+
+    def get_queryset(self):
+        course_id=self.kwargs['course_id']
+        course=models.Course.objects.get(pk=course_id)
+        return models.StudyMaterial.objects.filter(course=course)
+
+class StudyMaterialDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.StudyMaterial.objects.all()
+    serializer_class = StudyMaterialSerializer
+
+   

@@ -1,18 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import CheckQuizStatusForStudent from './CheckQuizStatusForStudent'
 const baseURL = "http://127.0.0.1:8000/api";
 
 function CourseQuizList(){
-    const [courseData, setCourseData] = useState([]);
+    const [quizData, setQuizData] = useState([]);
     const studentId = localStorage.getItem('studentId')
-
+    const {course_id} = useParams();
     useEffect(()=>{
         try{
-            axios.get(baseURL+'/fetch-enrolled-courses/'+studentId)
+            axios.get(baseURL+'/fetch-assigned-quiz/'+course_id)
             .then((res)=>{
-                setCourseData(res.data);
+                setQuizData(res.data);
             })
           }catch(error){
             console.log(error)
@@ -44,15 +45,13 @@ function CourseQuizList(){
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {quizData.map((row,index) => 
                                 <tr>
-                                    <td>Python Quiz</td>
-                                    <td className="text-success">Attempted</td>
+                                    <td>{row.quiz.title}</td>
+                                   
+                                    <CheckQuizStatusForStudent quiz={row.quiz.id} student={studentId} />                                    
                                     </tr>
-                                    <tr>
-                                    <td>Django Quiz</td>
-                                    <td><Link className="btn btn-sm btn-warning" to={'/take-quiz/1'}>Take Quiz</Link></td>
-                                    </tr>
-                                 
+                                 )}
                                 </tbody>
                             </table>
                           

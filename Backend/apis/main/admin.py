@@ -14,4 +14,6 @@ admin.site.register(models.Notification)
 admin.site.register(models.Quiz)
 admin.site.register(models.QuizQuestions)
 admin.site.register(models.CourseQuiz)
+admin.site.register(models.AttemptQuiz)
+admin.site.register(models.StudyMaterial)
 

@@ -38,6 +38,7 @@ import TeacherSkillCourses from './TeacherSkillCourses';
 import EnrolledStudents from './Teacher/EnrolledStudents';
 import AddAssignment from './Teacher/AddAssignment';
 import ShowAssignment from './Teacher/ShowAssignment';
+import StudyMaterials from './Teacher/StudyMaterials';
 
 // Teacher Dashboard: Quiz
 import AddQuiz from './Teacher/AddQuiz';
@@ -57,6 +58,8 @@ import AddQuizQuestion from './Teacher/AddQuizQuestions';
 // Student Dashboard: Quiz
 import CourseQuizList from './User/CourseQuizList';
 import TakeQuiz from './User/TakeQuiz';
+import Search from './Search';
+import AddStudyMaterial from './Teacher/AddStudyMaterial';
 
 
 function Main() {
@@ -110,6 +113,9 @@ function Main() {
       <Route path="/assign-quiz/:course_id" element={<AssignQuiz/>}/>
       <Route path="/course-quiz/:course_id" element={<CourseQuizList/>}/>
       <Route path="/take-quiz/:quiz_id" element={<TakeQuiz/>}/>
+      <Route path="/search/:searchString" element={<Search/>}/>
+      <Route path="/study-materials/:course_id" element={<StudyMaterials/>}/>
+      <Route path="/add-study/:course_id" element={<AddStudyMaterial/>}/>
      </Switch>
      <Footer />
      </div>
