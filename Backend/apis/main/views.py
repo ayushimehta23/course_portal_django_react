@@ -351,6 +351,12 @@ class AttemptQuizList(generics.ListCreateAPIView):
     queryset=models.AttemptQuiz.objects.all()
     serializer_class=AttemptQuizSerializer
 
+    def get_queryset(self):
+        if 'quiz_id' in self.kwargs:
+            quiz_id=self.kwargs['quiz_id']
+            quiz=models.Quiz.objects.get(pk=quiz_id)
+            return models.AttemptQuiz.objects.filter(quiz=quiz)
+
 def fetch_quiz_attempt_status(request, quiz_id, student_id):
     quiz=models.Quiz.objects.filter(id=quiz_id).first()
     student=models.Student.objects.filter(id=student_id).first()

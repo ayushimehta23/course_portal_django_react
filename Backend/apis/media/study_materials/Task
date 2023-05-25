@@ -1,0 +1,21 @@
+18/05/2023
+
+InTime :- 09:15 AM
+OutTime :- 05:15 PM
+
+Total worked hours: 8 
+
+Name : Ayushi Mehta
+LearnTechnology : Python
+
+Show enrolled courses, assignments and favorite courses on student dashboard
+Added total chapters on teacher dashboard
+Student profile setting page and updating data in backend
+Student change password functionality
+
+All good.
+
+Solved issues in add and edit course, add and edit chapter
+Send notification to student when teacher adds assignment
+Add models for quiz, quiz questions and course quiz and assign quiz to a course from backend
+

@@ -26,7 +26,7 @@ function AddStudyMaterial(){
             ...studyData, [event.target.name]: event.target.files[0]
         })
     }
-    const {id : course_id} = useParams();
+    const {course_id} = useParams();
 
     const formSubmit=()=>{
      const formData = new FormData();
@@ -36,7 +36,7 @@ function AddStudyMaterial(){
         formData.append('remarks',studyData.remarks);
         formData.append('upload',studyData.upload,studyData.upload.name);
         try{
-            axios.post(baseURL+'/study-material/'+course_id,formData,{
+            axios.post(baseURL+'/study-materials/'+course_id,formData,{
                 headers: {
                     'content-type': 'multipart/form-data'
                 }

@@ -44,7 +44,7 @@ function StudyMaterials(){
                     .then((res)=>{
                        Swal.fire('success','Data has been deleted.');
                        try{
-                        axios.get(baseURL+'/study-materials/'+study_id)
+                        axios.get(baseURL+'/study-materials/'+course_id)
                         .then((res)=>{
                             setTotalResult(res.data.length);
                             setStudyData(res.data);
@@ -62,10 +62,14 @@ function StudyMaterials(){
             }
         });
     }
-                
+          
+    
+    const downloadFile = (file_url)=>{
+        window.location.href=file_url;
+    }
 
     useEffect(() => {
-        document.title='All Chapters';
+        document.title='Study Materials';
     });
    return(
     <div className="container mt-4">
@@ -92,7 +96,7 @@ function StudyMaterials(){
                                     <tr>
                                     <td>{row.title}</td>
                                     <td>
-                                        <Link to={`/${row.upload}`}>File</Link>
+                                    <button className="btn btn-outline-primary" onClick={()=>downloadFile(row.upload)}>Download File</button>
 
                                     </td>
                                     <td>{row.remarks}</td>
