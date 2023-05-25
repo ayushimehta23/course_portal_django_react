@@ -16,6 +16,7 @@ function AllQuiz(){
         try{
             axios.get(baseURL+'/teacher-quiz/'+teacherId)
             .then((res)=>{
+                
                 setQuizData(res.data);
             })
           }catch(error){
@@ -91,7 +92,7 @@ function AllQuiz(){
                                         <Link to={'/all-questions/'+row.id}>{row.title}</Link>
                                     </td>
                                     
-                                    <td><Link to="#">123</Link></td>
+                                    <td><Link to="#">1</Link></td>
                                     <td>
                                         
                                         <Link className="btn btn-info btn-sm" to={'/edit-quiz/'+row.id}>Edit</Link>

@@ -1,9 +1,9 @@
 import { Link, useParams } from "react-router-dom";
-import Swal from "sweetalert2";
+
 import TeacherSidebar from "./TeacherSidebar";
 import { useEffect, useState } from "react";
 import axios from 'axios';
-import CheckQuizInCourse from "./CheckQuizInCourse.js";
+import QuizResult from "./QuizResult";
 const baseURL = "http://127.0.0.1:8000/api";
 
 function AttemptedStudents(){
@@ -14,6 +14,7 @@ function AttemptedStudents(){
 
     
     useEffect(()=>{
+    
         try{
             axios.get(baseURL+'/attempted-quiz/'+quiz_id)
             .then((res)=>{
@@ -65,7 +66,13 @@ function AttemptedStudents(){
                                         {row.student.username}
                                     </td>
                                     <td>
-                                        <Link to="#">Quiz Result</Link>
+                                    <button type="button"class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target={`#resultModal${row.id}`}>
+                                    Quiz Result
+                                    </button>
+
+                                    <div className="modal fade" id={`resultModal${row.id}`} tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
+                                        <QuizResult quiz={row.quiz.id} student={row.student.id} />
+                                    </div>
                                     </td>
                                     
                                     </tr>

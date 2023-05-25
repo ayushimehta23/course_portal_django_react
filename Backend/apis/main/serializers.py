@@ -4,7 +4,7 @@ from . import models
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Teacher
-        fields = ['id', 'full_name', 'email', 'qualification', 'mobile_no', 'skills', 'profile_img', 'teacher_courses', 'skill_list']
+        fields = ['id', 'full_name', 'email', 'qualification', 'mobile_no', 'skills', 'profile_img', 'teacher_courses', 'skill_list', 'total_teacher_courses']
         depth = 1
 
 class TeacherDashboardSerializer(serializers.ModelSerializer):
@@ -147,7 +147,7 @@ class CourseQuizSerializer(serializers.ModelSerializer):
 class AttemptQuizSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.AttemptQuiz
-        fields = ['id', 'student', 'question', 'right_ans', 'add_time']
+        fields = ['id', 'student', 'question', 'right_ans', 'add_time', 'quiz']
     def __init__(self, *args, **kwargs):
         super(AttemptQuizSerializer, self).__init__(*args, **kwargs)
         request=self.context.get('request')

@@ -63,7 +63,6 @@ function QuizQuestions(){
         });
     }
                 
-
     useEffect(() => {
         document.title='All Questions';
     });
@@ -89,8 +88,6 @@ function QuizQuestions(){
                                     {questionData.map((row, index)=>
                                     <tr>
                                     <td><Link to={'/edit-question/'+row.id}>{row.questions}</Link></td>
-                                   
-                            
                                     <td>
                                         <Link to={'/edit-question/'+row.id} className="btn btn-sm text-white btn-info"><i class="bi bi-pencil-square"></i></Link>
                                         <button onClick={()=>handleDeleteClick(row.id)} className="btn btn-sm btn-danger ms-1"><i class="bi bi-trash"></i></button>

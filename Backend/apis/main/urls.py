@@ -9,13 +9,17 @@ urlpatterns = [
     path('teacher/<int:pk>/',views.TeacherDetail.as_view()),
     path('teacher/change-password/<int:teacher_id>/',views.teacher_change_password),
     path('teacher-login', views.teacher_login),
+    path('popular-teachers/', views.TeacherList.as_view()),
+
 
     # Category
     path('category/', views.CategoryList.as_view()),
 
     # Course
      path('course/', views.CourseList.as_view()),
+     path('popular-courses/', views.CourseRatingList.as_view()),
      path('search-courses/<str:searchString>', views.CourseList.as_view()),
+     path('update-view/<int:course_id>', views.update_view),
 
     # Course Detail
     path('course/<int:pk>', views.CourseDetailView.as_view()), 
@@ -31,6 +35,9 @@ urlpatterns = [
 
     # Course Detail
     path('teacher-course-detail/<int:pk>', views.TeacherCourseDetail.as_view()),
+
+    # Student Testimonial
+    path('student-testimonial/', views.CourseRatingList.as_view()),
 
    # Student
     path('student/', views.StudentList.as_view()),
@@ -75,4 +82,5 @@ urlpatterns = [
     path('study-material/<int:pk>', views.StudyMaterialDetailView.as_view()), 
     path('user/study-materials/<int:course_id>', views.StudyMaterialList.as_view()), 
     path('attempted-quiz/<int:quiz_id>', views.AttemptQuizList.as_view()), 
+    path('fetch-quiz-result/<int:quiz_id>/<int:student_id>', views.fetch_quiz_result_status), 
 ]

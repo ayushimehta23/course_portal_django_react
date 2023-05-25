@@ -14,6 +14,7 @@ function CourseDetail () {
   const [techListData, setTechListData] = useState([]);
   const [enrolledStatus, setEnrolledStatus] = useState();
   const [userLoginStatus, setUserLoginStatus] = useState();
+  const [courseViews, setCourseViews] = useState(0);
   const [ratingStatus, setRatingStatus] = useState();
   const [favoriteStatus, setFavoriteStatus] = useState();
   const [avgRating, setAvgRating] = useState(0);
@@ -37,6 +38,15 @@ function CourseDetail () {
       }catch(error){
         console.log(error)
       }
+
+      // Update View
+      axios.get(baseURL+'/update-view/'+course_id)
+      .then((res)=>{
+        setCourseViews(res.data.views)
+      })
+
+
+
       // Fetch enroll status
       try{
         axios.get(baseURL+'/fetch-enroll-status/'+studentId+'/'+course_id)
@@ -261,6 +271,7 @@ const handleFileChange=(event)=>{
                         <p className="fw-bold">Duration: 3 Hours 30 Minutes</p>
                         <p className="fw-bold">Total Enrolled: {courseData.total_enrolled_students} Student(s)</p>
                         <p className="fw-bold">Rating: {avgRating} out of 5
+                        <p className="fw-bold">Views: {courseViews}</p>
                         { enrolledStatus === "success" && userLoginStatus==="success" && 
                         <>
                         { ratingStatus != 'success' && 
