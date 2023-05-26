@@ -1,15 +1,35 @@
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from 'axios';
+const baseURL = "http://127.0.0.1:8000/api";
+
 function Footer() {
-    return (
-        <footer className="text-muted py-5 border-top mt-5">
-        <div className="container">
-          <p className="float-end mb-1">
-            <a href="#">Back to top</a>
-          </p>
-          <p className="mb-1">Album example is © Bootstrap, but please download and customize it for yourself!</p>
-          <p className="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a href="/docs/5.3/getting-started/introduction/">getting started guide</a>.</p>
-        </div>
-      </footer> 
+  const [pagesData, setPagesData] = useState([]);
+
+useEffect(()=>{
+  try{
+      axios.get(baseURL+'/pages/')
+      .then((res)=>{
+        setPagesData(res.data);
+      })
+    }catch(error){
+      console.log(error)
+    }
   
+}, []);
+    return (
+      <footer class="py-3 my-5">
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item"><Link to="/" class="nav-link px-2 text-body-secondary">Home</Link></li>
+        <li class="nav-item"><Link to="/faq" class="nav-link px-2 text-body-secondary">FAQs</Link></li>
+        {pagesData && pagesData.map((row, index)=>
+        <li class="nav-item"><Link to={`/page/${row.id}${row.url}`} class="nav-link px-2 text-body-secondary">{row.title}</Link></li>
+        )}
+         <li class="nav-item"><Link to="/contact-us" class="nav-link px-2 text-body-secondary">Contact Us</Link></li>
+      </ul>
+      <p class="text-center text-body-secondary">© 2023 Course Portal, Inc</p>
+    </footer> 
+     
     );
   }
   

@@ -38,6 +38,10 @@ function QuizResult(props){
                         <td>Attempted Questions</td>
                         <td>{resultData.total_attempted_questions}</td>
                     </tr>
+                    <tr>
+                        <td>Correct Answered</td>
+                        <td>{resultData.total_correct_questions}</td>
+                    </tr>
                 </table>
             </div>
             </div>

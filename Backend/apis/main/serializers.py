@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from . import models
+from django.contrib.flatpages.models import FlatPage
 
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,12 +16,12 @@ class TeacherDashboardSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CourseCategory
-        fields = ['id', 'title', 'description']
+        fields = ['id', 'title', 'description', 'total_courses']
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Course
-        fields = ['id', 'category', 'teacher', 'title', 'description', 'featured_img', 'techs', 'course_chapters', 'related_videos', 'tech_list', 'total_enrolled_students', 'course_rating']
+        fields = ['id', 'category', 'teacher', 'title', 'description', 'featured_img', 'techs', 'course_chapters', 'related_videos', 'tech_list', 'total_enrolled_students', 'course_rating', 'course_views']
         
     def __init__(self, *args, **kwargs):
         super(CourseSerializer, self).__init__(*args, **kwargs)
@@ -166,3 +167,19 @@ class StudyMaterialSerializer(serializers.ModelSerializer):
         self.Meta.depth = 0
         if request and request.method == 'GET':
             self.Meta.depth = 1
+
+class FAQSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.FAQ
+        fields = ['question', 'answer']
+
+class FlatPagesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=FlatPage
+        fields = ['id', 'title', 'content', 'url']
+
+class ContactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=models.Contact
+        fields = ['id', 'full_name', 'email', 'query_txt']
+    

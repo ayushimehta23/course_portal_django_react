@@ -5,8 +5,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import permissions
-from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer, ChapterSerializer, StudentSerializer, StudentCourseEnrollSerializer, CourseRatingSerializer, TeacherDashboardSerializer,  StudentFavoriteCourseSerializer, StudentAssignemntSerializer, StudentDashboardSerializer, NotificationSerializer, QuizSerializer, QuestionSerializer, CourseQuizSerializer, AttemptQuizSerializer, StudyMaterialSerializer
+from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer, ChapterSerializer, StudentSerializer, StudentCourseEnrollSerializer, CourseRatingSerializer, TeacherDashboardSerializer,  StudentFavoriteCourseSerializer, StudentAssignemntSerializer, StudentDashboardSerializer, NotificationSerializer, QuizSerializer, QuestionSerializer, CourseQuizSerializer, AttemptQuizSerializer, StudyMaterialSerializer, FAQSerializer, FlatPagesSerializer, ContactSerializer
 from . import models
+from rest_framework.pagination import PageNumberPagination
+from django.contrib.flatpages.models import FlatPage
+
+class StandardResultsSetPagination(PageNumberPagination):
+    page_size=4
+    page_size_query_param='page_size'
+    max_page_size=4
 
 class TeacherList(generics.ListCreateAPIView):
     queryset = models.Teacher.objects.all()
@@ -21,9 +28,6 @@ class TeacherList(generics.ListCreateAPIView):
         if 'all' in self.request.GET:
             sql="SELECT *,COUNT(c.id) as total_course FROM main_teacher as t INNER JOIN main_course as c ON c.teacher_id=t.id GROUP BY t.id ORDER BY total_course DESC"
             return models.Teacher.objects.raw(sql)
-
-
-
 
 class TeacherDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Teacher.objects.all()
@@ -47,7 +51,6 @@ def teacher_login(request):
     else:
         return JsonResponse({'bool': False})
 
-
 class CategoryList(generics.ListCreateAPIView):
     queryset = models.CourseCategory.objects.all()
     serializer_class = CategorySerializer
@@ -56,6 +59,7 @@ class CategoryList(generics.ListCreateAPIView):
 class CourseList(generics.ListCreateAPIView):
     queryset = models.Course.objects.all()
     serializer_class = CourseSerializer
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         qs=super().get_queryset()
@@ -66,7 +70,8 @@ class CourseList(generics.ListCreateAPIView):
 
         if 'category' in self.request.GET:
             category=self.request.GET['category']
-            qs=models.Course.objects.filter(techs__icontains=category)
+            category=models.CourseCategory.objects.filter(id=category).first()
+            qs=models.Course.objects.filter(category=category)
 
         if 'skill_name' in self.request.GET and 'teacher' in self.request.GET:
             skill_name=self.request.GET['skill_name']
@@ -140,8 +145,6 @@ class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = StudentSerializer
     # permission_classes = [permissions.IsAuthenticated]
 
-
-
 class StudentDashboard(generics.RetrieveAPIView):
     queryset=models.Student.objects.all()
     serializer_class=StudentDashboardSerializer
@@ -177,7 +180,6 @@ def get_queryset(self):
         student=models.Student.objects.get(pk=student_id)
         return models.StudentFavoriteCourseList.objects.filter(student=student).distinct()
     
-
 def fetch_enroll_status(request, student_id, course_id):
     student = models.Student.objects.filter(id=student_id).first()
     course = models.Course.objects.filter(id=course_id).first()
@@ -227,10 +229,10 @@ class EnrolledStudentList(generics.ListAPIView):
             student=models.Student.objects.get(pk=student_id)
             return models.StudentCourseEnrollment.objects.filter(course__techs__icontains=student.interested_categories)
         
-
 class CourseRatingList(generics.ListCreateAPIView):
     queryset = models.CourseRating.objects.all()
     serializer_class = CourseRatingSerializer
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         if 'popular' in self.request.GET:
@@ -241,7 +243,6 @@ class CourseRatingList(generics.ListCreateAPIView):
             return models.CourseRating.objects.raw(sql)
         return models.CourseRating.objects.filter(course__isnull=False).order_by('-rating')
     
-
 def fetch_rating_status(request, student_id, course_id):
     student = models.Student.objects.filter(id=student_id).first()
     course = models.Course.objects.filter(id=course_id).first()
@@ -250,7 +251,6 @@ def fetch_rating_status(request, student_id, course_id):
         return JsonResponse({'bool': True})
     else:
         return JsonResponse({'bool': False})
-
 
 @csrf_exempt
 def teacher_change_password(request, teacher_id):
@@ -312,7 +312,6 @@ class NotificationList(generics.ListCreateAPIView):
         student_id=self.kwargs['student_id']
         student=models.Student.objects.get(pk=student_id)
         return models.Notification.objects.filter(student=student,notif_for='Student',notif_subject='Assignment',notifread_status=False)
-
     
 class QuizList(generics.ListCreateAPIView):
     queryset=models.Quiz.objects.all()
@@ -384,7 +383,14 @@ def fetch_quiz_result_status(request,quiz_id,student_id):
     student=models.Student.objects.filter(id=student_id).first()  
     total_questions=models.QuizQuestions.objects.filter(quiz=quiz).count()
     total_attempted_questions=models.AttemptQuiz.objects.filter(quiz=quiz,student=student).values('student').count()
-    return JsonResponse({'total_questions':total_questions,'total_attempted_questions':total_attempted_questions})
+    attempted_questions=models.AttemptQuiz.objects.filter(quiz=quiz,student=student)
+
+    total_correct_questions=0
+    for attempt in attempted_questions:
+        if attempt.right_ans == attempt.question.right_ans:
+            total_correct_questions+=1
+
+    return JsonResponse({'total_questions':total_questions, 'total_attempted_questions':total_attempted_questions, 'total_correct_questions':total_correct_questions})
 
 def fetch_quiz_attempt_status(request, quiz_id, student_id):
     quiz=models.Quiz.objects.filter(id=quiz_id).first()
@@ -413,4 +419,20 @@ def update_view(request,course_id):
     queryset.save()
     return JsonResponse({'views':queryset.course_views})
 
-   
+
+
+class FAQList(generics.ListAPIView):
+    queryset = models.FAQ.objects.all()
+    serializer_class = FAQSerializer
+
+class FlatPagesList(generics.ListAPIView):
+    queryset=FlatPage.objects.all()
+    serializer_class=FlatPagesSerializer
+
+class FlatPagesDetail(generics.RetrieveAPIView):
+    queryset=FlatPage.objects.all()
+    serializer_class=FlatPagesSerializer
+
+class ContactList(generics.ListCreateAPIView):
+    queryset = models.Contact.objects.all()
+    serializer_class = ContactSerializer

@@ -16,4 +16,6 @@ admin.site.register(models.QuizQuestions)
 admin.site.register(models.CourseQuiz)
 admin.site.register(models.AttemptQuiz)
 admin.site.register(models.StudyMaterial)
+admin.site.register(models.FAQ)
+admin.site.register(models.Contact)
 

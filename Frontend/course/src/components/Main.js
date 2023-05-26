@@ -1,7 +1,6 @@
 import Header from './Header';
 import Home from './Home';
 import Footer from './Footer';
-import About from './About';
 import CourseDetail from './CourseDetail';
 import TeacherDetail from './TeacherDetail';
 
@@ -62,6 +61,10 @@ import Search from './Search';
 import AddStudyMaterial from './Teacher/AddStudyMaterial';
 import UserStudyMaterials from './User/UserStudyMaterials';
 import AttemptedStudents from './Teacher/AttemptedStudents';
+import Category from './Category';
+import FAQ from './FAQ';
+import Page from './Page';
+import ContactUs from './ContactUs';
 
 
 function Main() {
@@ -71,7 +74,6 @@ function Main() {
      <Header />
      <Switch>
       <Route path="/" element={<Home />}/>
-      <Route path="/about" element={<About />}/>
       <Route path="/detail/:course_id" element={<CourseDetail />}/>
       <Route path="/student-login" element={<Login />}/>
       <Route path="/student-register" element={<Register />}/>
@@ -94,7 +96,7 @@ function Main() {
       <Route path="/all-courses" element={<AllCourses />}/>
       <Route path="/popular-courses" element={<PopularCourses />}/>
       <Route path="/popular-teachers" element={<PopularTeachers />}/>
-      <Route path="/category/:category_slug" element={<CategoryCourses />}/>
+      <Route path="/course/:category_id/:category_slug" element={<CategoryCourses />}/>
       <Route path="/teacher-logout" element={<TeacherLogout/>}/>
       <Route path="/add-chapter/:id" element={<AddChapter/>}/>
       <Route path="/all-chapters/:course_id" element={<CourseChapters/>}/>
@@ -120,6 +122,10 @@ function Main() {
       <Route path="/add-study/:course_id" element={<AddStudyMaterial/>}/>
       <Route path="/user/study-materials/:course_id" element={<UserStudyMaterials/>}/>
       <Route path="/attempted-students/:quiz_id" element={<AttemptedStudents/>}/>
+      <Route path="/category" element={<Category/>}/>
+      <Route path="/faq" element={<FAQ/>}/>
+      <Route path="/page/:page_id/:page_slug" element={<Page/>}/>
+      <Route path="/contact-us" element={<ContactUs />}/>
      </Switch>
      <Footer />
      </div>

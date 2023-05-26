@@ -1,6 +1,8 @@
 from django.db import models
 from django.core import serializers
 
+from django.core.mail import send_mail
+
 # Teacher Model
 class Teacher(models.Model):
     full_name = models.CharField(max_length=100)
@@ -37,12 +39,17 @@ class CourseCategory(models.Model):
     class Meta:
         verbose_name_plural = "2. Course Categories"
 
+    # Total Course of this category
+    def total_courses(self):
+        return Course.objects.filter(category=self).count()
+
+
     def __str__(self):
         return self.title
 
 # Course Model
 class Course(models.Model):
-    category=models.ForeignKey(CourseCategory, on_delete=models.CASCADE)
+    category=models.ForeignKey(CourseCategory, on_delete=models.CASCADE,related_name='category_courses')
     teacher=models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='teacher_courses')
     title = models.CharField(max_length=150)
     description = models.TextField()
@@ -233,8 +240,42 @@ class StudyMaterial(models.Model):
     description = models.TextField()
     upload = models.FileField(upload_to = 'study_materials/', null=True)
     remarks = models.TextField(null=True)
+
     class Meta:
         verbose_name_plural = "15. Course Study Materials"
+
+# FAQ Model
+class FAQ(models.Model):
+    question=models.CharField(max_length=300)
+    answer=models.TextField()
+
+    def __str__(self) -> str:
+        return self.question
+
+    class Meta:
+        verbose_name_plural = "16. FAQ"
+
+class Contact(models.Model):
+    full_name=models.CharField(max_length=50)
+    email=models.EmailField()
+    query_txt=models.TextField()
+    add_time=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return self.query_txt
+
+    def save(self):
+        send_mail(
+            "Subject here",
+            "Here is the message.",
+            "from@example.com",
+            ["to@example.com"],
+            fail_silently=False,
+        )
+        return super().save()
+
+    class Meta:
+        verbose_name_plural = "17. Contact Queries"
 
 
 

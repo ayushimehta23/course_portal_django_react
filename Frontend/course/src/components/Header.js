@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 function Header() {
   const [searchString, setSearchString] = useState({
@@ -37,6 +37,7 @@ function Header() {
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav ms-auto">
             <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+            <Link className="nav-link" to="/category">Categories</Link>
             <Link className="nav-link" to="/all-courses">Courses</Link>
             <Dropdown>
       <Dropdown.Toggle variant="secondary" id="dropdown-basic">

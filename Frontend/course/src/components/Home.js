@@ -17,7 +17,7 @@ function Home() {
       try{
           axios.get(baseURL+'/course/?result=4')
           .then((res)=>{
-              setCourseData(res.data);
+              setCourseData(res.data.results);
           })
         }catch(error){
           console.log(error)
@@ -27,7 +27,7 @@ function Home() {
       try{
         axios.get(baseURL+'/popular-courses/?popular=1')
         .then((res)=>{
-          setPopularCourseData(res.data);
+          setPopularCourseData(res.data.results);
         })
       }catch(error){
         console.log(error);
@@ -48,7 +48,7 @@ function Home() {
   try{
     axios.get(baseURL+'/student-testimonial/')
     .then((res)=>{
-      setTestimonialData(res.data);
+      setTestimonialData(res.data.results);
     })
   }catch(error){
     console.log(error);
@@ -131,7 +131,8 @@ function Home() {
       <p>{row.reviews}</p>
     </blockquote>
     <figcaption class="blockquote-footer">
-      {row.course.title} <cite title="Source Title">{row.student.full_name}</cite>
+      {row.course.title}
+       <cite title="Source Title">--{row.student.full_name}</cite>
     </figcaption>
     </figure>
     </div>
