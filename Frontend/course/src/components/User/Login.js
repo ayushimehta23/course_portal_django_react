@@ -28,10 +28,9 @@ function Login(){
       axios.post(baseURL+'/student-login',studentFormData)
       .then((res)=>{
         if(res.data.bool==true){
-          navigate=('/verify-teacher/'+res.data.id)
-          // localStorage.setItem('studentLoginStatus', true);
-          // localStorage.setItem('studentId',res.data.student_id)
-          // window.location.href='/student-dashboard';
+          localStorage.setItem('studentLoginStatus', true);
+          localStorage.setItem('studentId',res.data.student_id)
+          window.location.href='/student-dashboard';
         }else{
           setErrorMsg('Invalid Email or Password')
         }
