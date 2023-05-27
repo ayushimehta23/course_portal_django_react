@@ -65,6 +65,8 @@ import Category from './Category';
 import FAQ from './FAQ';
 import Page from './Page';
 import ContactUs from './ContactUs';
+import VerifyTeacher from './Teacher/VerifyTeacher';
+import VerifyStudent from './User/VerifyStudent';
 
 
 function Main() {
@@ -126,6 +128,8 @@ function Main() {
       <Route path="/faq" element={<FAQ/>}/>
       <Route path="/page/:page_id/:page_slug" element={<Page/>}/>
       <Route path="/contact-us" element={<ContactUs />}/>
+      <Route path="/verify-teacher/:teacher_id" element={<VerifyTeacher />}/>
+      <Route path="/verify-student/:student_id" element={<VerifyStudent />}/>
      </Switch>
      <Footer />
      </div>

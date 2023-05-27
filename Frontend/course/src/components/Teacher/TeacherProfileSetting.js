@@ -16,7 +16,6 @@ function TeacherProfileSetting(){
         'p_img':'',
         'skills':'',
         'status':'',
-      
     })
 
     const teacherId = localStorage.getItem('teacherId');
@@ -38,6 +37,7 @@ function TeacherProfileSetting(){
                     skills:res.data.skills,
                     profile_img:res.data.profile_img,
                     p_img:"",
+                   
                 });
               
             })
@@ -71,6 +71,7 @@ function TeacherProfileSetting(){
         teacherFormData.append("qualification", teacherData.qualification)
         teacherFormData.append("mobile_no", teacherData.mobile_no)
         teacherFormData.append("skills", teacherData.skills)
+       
         if(teacherData.p_img!==''){
             teacherFormData.append('profile_img',teacherData.p_img,teacherData.p_img.name);
         }
@@ -156,6 +157,7 @@ function TeacherProfileSetting(){
                         <div id="emailHelp" className="form-text">Php, Python, Javascript, etc</div>
                         </div>
                         </div>
+                        
 
                         <button onClick={submitForm} type="submit" className="btn btn-primary">Register</button>
                         </form> 

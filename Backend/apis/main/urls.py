@@ -4,12 +4,13 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     # Teacher
-    path('teacher/', views.TeacherList.as_view()),
+    path('teacher', views.TeacherList.as_view()),
     path('teacher/dashboard/<int:pk>/', views.TeacherDashboard.as_view()),
     path('teacher/<int:pk>/',views.TeacherDetail.as_view()),
     path('teacher/change-password/<int:teacher_id>/',views.teacher_change_password),
     path('teacher-login', views.teacher_login),
     path('popular-teachers/', views.TeacherList.as_view()),
+    path('verify-teacher/<int:teacher_id>/', views.verify_teacher_via_otp),
 
 
     # Category
@@ -62,6 +63,7 @@ urlpatterns = [
     path('my-assignments/<int:student_id>',views.MyAssignmentList.as_view()),
     path('student/fetch-all-notifications/<int:student_id>/',views.NotificationList.as_view()),
     path('save-notification/',views.NotificationList.as_view()),
+    path('verify-student/<int:student_id>/', views.verify_student_via_otp),
 
     # Quiz Start
     path('quiz/', views.QuizList.as_view()),

@@ -49,6 +49,11 @@ function ContactUs(){
     };
 
     // End
+
+    const listStyle={
+        'list-style':'none'
+    }
+
     useEffect(() => {
         document.title='Contact Us';
     });
@@ -57,7 +62,7 @@ function ContactUs(){
     return (
         <div className="container mt-4">
         <div className="row">
-            <div className="col-8 offset-2">
+            <div className="col-7">
                 {contactData.status=="success" && <p className="text-success">Thanks for your Contacting Us</p>}
                 {!contactData.status=="error" && <p className="text-danger">Something went wrong!</p>}
             <div className="card">
@@ -84,8 +89,25 @@ function ContactUs(){
 
                     <button onClick={submitForm} type="submit" className="btn btn-primary">Send</button>
                     </form> 
-                                    </div>
+                </div>
             </div>
+            </div>
+            <div className="col-4 offset-1">
+                <h3 className="border-bottom">Address</h3>
+                <ul className="m-0 p-0" style={listStyle}>
+                    <li>
+                        <label className="fw-bold">Address:</label>
+                        <span className="ms-2">50, Green Avenue, New Delhi</span>
+                    </li>
+                    <li>
+                        <label className="fw-bold">Mobile No:</label>
+                        <span className="ms-2">9426523102</span>
+                    </li>
+                    <li>
+                        <label className="fw-bold">Phone No:</label>
+                        <span className="ms-2">0268-2550814</span>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

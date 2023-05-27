@@ -1,4 +1,4 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -9,6 +9,7 @@ function TeacherLogin(){
     email:'',
     password:''
   });
+
 
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -26,11 +27,11 @@ function TeacherLogin(){
       axios.post(baseURL+'/teacher-login',teacherFormData)
       .then((res)=>{
         if(res.data.bool==true){
-          localStorage.setItem('teacherLoginStatus', true);
-          localStorage.setItem('teacherId',res.data.teacher_id)
-          window.location.href='/teacher-dashboard';
+            localStorage.setItem('teacherLoginStatus', true);
+            localStorage.setItem('teacherId',res.data.teacher_id)
+            window.location.href="/teacher-dashboard"
         }else{
-          setErrorMsg('Invalid Email or Password')
+          setErrorMsg(res.data.msg)
         }
       })
     }catch(error){

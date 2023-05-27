@@ -48,7 +48,7 @@ function Header() {
         {teacherLoginStatus!='true' && 
         <>
         <Dropdown.Item href="/teacher-login">Login</Dropdown.Item>
-        <Dropdown.Item href="/teacher-register">Register</Dropdown.Item>
+        <Dropdown.Item href="/teacher-register/">Register</Dropdown.Item>
         </>
         }
         {teacherLoginStatus=='true' && 
