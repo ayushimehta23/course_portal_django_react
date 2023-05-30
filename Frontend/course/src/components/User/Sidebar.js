@@ -31,7 +31,7 @@ function Sidebar(){
                         <Link to="/recommended-courses" className="list-group-item list-group-item-action">Recommended Courses</Link>
                         <Link to="/my-assignments" className="list-group-item list-group-item-action">Assignments<span className="float-end badge bg-danger mt-1">{notifData.length}</span></Link>
                         <Link to="/profile-setting" className="list-group-item list-group-item-action">Profile Setting</Link>
-                        <Link to="/change-password" className="list-group-item list-group-item-action">Change Password</Link>
+                        <Link to="/update-password" className="list-group-item list-group-item-action">Update Password</Link>
                         <Link to="/student-logout" className="list-group-item list-group-item-action text-danger">Logout</Link>
 
                     </div>

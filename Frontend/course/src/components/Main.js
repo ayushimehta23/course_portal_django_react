@@ -15,7 +15,7 @@ import MyCourses from './User/MyCourses';
 import FavoriteCourses from './User/FavoriteCourses';
 import RecommendedCourses from './User/RecommendedCourses';
 import ProfileSetting from './User/ProfileSetting';
-import ChangePassword from './User/ChangePassword';
+import UpdatePassword from './User/UpdatePassword';
 import StudentLogout from './User/StudentLogout';
 import StudentAssignments from './User/StudentAssignments';
 
@@ -24,7 +24,7 @@ import TeacherLogin from './Teacher/TeacherLogin';
 import TeacherRegister from './Teacher/TeacherRegister';
 import TeacherDashboard from './Teacher/TeacherDashboard';
 import TeacherProfileSetting from './Teacher/TeacherProfileSetting';
-import TeacherChangePassword from './Teacher/TeacherChangePassword';
+import TeacherUpdatePassword from './Teacher/TeacherUpdatePassword';
 import TeacherMyCourses  from './Teacher/TeacherMyCourses';
 import UserList from './Teacher/UserList';
 import AddCourse from './Teacher/AddCourse';
@@ -67,6 +67,9 @@ import Page from './Page';
 import ContactUs from './ContactUs';
 import VerifyTeacher from './Teacher/VerifyTeacher';
 import VerifyStudent from './User/VerifyStudent';
+import TeacherForgotPassword from './Teacher/TeacherForgotPassword';
+import TeacherChangePassword from './Teacher/TeacherChangePassword';
+import ForgotPassword from './User/ForgotPassword';
 
 
 function Main() {
@@ -85,12 +88,13 @@ function Main() {
       <Route path="/favorite-courses" element={<FavoriteCourses />}/>
       <Route path="/recommended-courses" element={<RecommendedCourses />}/>
       <Route path="/profile-setting" element={<ProfileSetting />}/>
-      <Route path="/change-password" element={<ChangePassword />}/>
+      <Route path="/update-password" element={<UpdatePassword />}/>
       <Route path="/teacher-login" element={<TeacherLogin />}/>
       <Route path="/teacher-register" element={<TeacherRegister />}/>
       <Route path="/teacher-dashboard" element={<TeacherDashboard />}/>
       <Route path="/teacher-profile-setting" element={<TeacherProfileSetting />}/>
-      <Route path="/teacher-change-password" element={<TeacherChangePassword />}/>
+      <Route path="/teacher-update-password" element={<TeacherUpdatePassword />}/>
+      <Route path="/teacher-change-password/:teacher_id" element={<TeacherChangePassword />}/>
       <Route path="/teacher-my-courses" element={<TeacherMyCourses />}/>
       <Route path="/my-users" element={<UserList />}/>
       <Route path="/add-course" element={<AddCourse />}/>
@@ -130,6 +134,8 @@ function Main() {
       <Route path="/contact-us" element={<ContactUs />}/>
       <Route path="/verify-teacher/:teacher_id" element={<VerifyTeacher />}/>
       <Route path="/verify-student/:student_id" element={<VerifyStudent />}/>
+      <Route path="/teacher-forgot-password" element={<TeacherForgotPassword />}/>
+      <Route path="/student-forgot-password" element={<ForgotPassword />}/>
      </Switch>
      <Footer />
      </div>

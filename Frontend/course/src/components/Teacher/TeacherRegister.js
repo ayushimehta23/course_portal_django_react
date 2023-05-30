@@ -41,25 +41,23 @@ function TeacherRegister(){
         teacherFormData.append("skills", teacherData.skills)
         teacherFormData.append("otp_digit", otp_digit)
         
-        try {
-            axios.post(baseURL, teacherFormData).then((response)=>{
-                navigate=('/verify-teacher/'+response.data.id)
+        axios.post(baseURL, teacherFormData).then((response)=>{
+            navigate('/verify-teacher/'+response.data.id)
+            
+            // setTeacherData({
+            //     'full_name':'',
+            //     'email':'',
+            //     'password':'',
+            //     'qualification':'',
+            //     'mobile_no':'',
+            //     'skills':'',
+            //     'status':'success',
                 
-                // setTeacherData({
-                //     'full_name':'',
-                //     'email':'',
-                //     'password':'',
-                //     'qualification':'',
-                //     'mobile_no':'',
-                //     'skills':'',
-                //     'status':'success',
-                  
-                // })
-            })
-        }catch(error){
+            // })
+        }).catch((error) => {
             console.log(error);
             setTeacherData({'status':'error'})
-        }
+        })
         
     };
 
@@ -78,7 +76,7 @@ function TeacherRegister(){
             <div className="card">
                 <h5 className="card-header">Teacher Register</h5>
                                     <div className="card-body">
-                                    <form>
+                                    {/* <form> */}
                                     <div className="mb-3">
                     <label for="exampleInputEmail1" className="form-label">Full Name</label>
                     <input value={teacherData.full_name} onChange={handleChange} name="full_name" type="text" className="form-control" />
@@ -112,7 +110,7 @@ function TeacherRegister(){
                     </div>
 
                     <button onClick={submitForm} type="submit" className="btn btn-primary">Register</button>
-                    </form> 
+                    {/* </form>  */}
                                     </div>
             </div>
             </div>

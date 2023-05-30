@@ -7,12 +7,11 @@ urlpatterns = [
     path('teacher', views.TeacherList.as_view()),
     path('teacher/dashboard/<int:pk>/', views.TeacherDashboard.as_view()),
     path('teacher/<int:pk>/',views.TeacherDetail.as_view()),
-    path('teacher/change-password/<int:teacher_id>/',views.teacher_change_password),
+    path('teacher-update-password/<int:teacher_id>/',views.teacher_update_password),
+     path('teacher-change-password/<int:teacher_id>/',views.teacher_change_password),
     path('teacher-login', views.teacher_login),
     path('popular-teachers/', views.TeacherList.as_view()),
-    path('verify-teacher/<int:teacher_id>/', views.verify_teacher_via_otp),
-
-
+   
     # Category
     path('category/', views.CategoryList.as_view()),
 
@@ -63,8 +62,8 @@ urlpatterns = [
     path('my-assignments/<int:student_id>',views.MyAssignmentList.as_view()),
     path('student/fetch-all-notifications/<int:student_id>/',views.NotificationList.as_view()),
     path('save-notification/',views.NotificationList.as_view()),
-    path('verify-student/<int:student_id>/', views.verify_student_via_otp),
-
+    path('teacher-forgot-password/',views.teacher_forgot_password),
+    
     # Quiz Start
     path('quiz/', views.QuizList.as_view()),
     path('teacher-quiz/<int:teacher_id>', views.TeacherQuizList.as_view()),

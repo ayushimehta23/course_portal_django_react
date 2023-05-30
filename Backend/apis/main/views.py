@@ -275,7 +275,7 @@ def fetch_rating_status(request, student_id, course_id):
         return JsonResponse({'bool': False})
 
 @csrf_exempt
-def teacher_change_password(request, teacher_id):
+def teacher_update_password(request, teacher_id):
     password = request.POST['password']
     try:
         teacherData = models.Teacher.objects.get(id=teacher_id)
@@ -286,6 +286,16 @@ def teacher_change_password(request, teacher_id):
         return JsonResponse({'bool': True})
     else:
         return JsonResponse({'bool': False})
+
+@csrf_exempt
+def teacher_change_password(request, teacher_id):
+    password = request.POST['password']
+    verify = models.Teacher.objects.filter(id=teacher_id).first()
+    if verify:
+        models.Teacher.objects.filter(id=teacher_id).update(password=password)
+        return JsonResponse({'bool':True, 'msg':'Password has been changed'})
+    else:
+        return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})
 
 class AssignmentList(generics.ListCreateAPIView):
     queryset=models.StudentAssignemnt.objects.all()
@@ -458,3 +468,21 @@ class FlatPagesDetail(generics.RetrieveAPIView):
 class ContactList(generics.ListCreateAPIView):
     queryset = models.Contact.objects.all()
     serializer_class = ContactSerializer
+
+@csrf_exempt
+def teacher_forgot_password(request):
+    email=request.POST.get('email')
+    verify=models.Teacher.objects.filter(email=email).first()
+    if verify:
+        link=f"http://localhost:3000/teacher-change-password/{verify.id}/"
+        send_mail(
+            "Verify Account",
+            "Please verify your account",
+            "ayushimehta2342@gmail.com",
+            [email],
+            fail_silently=False,
+            html_message=f'<p>Your OTP is</p><p>{link}</p>'
+        )
+        return JsonResponse({'bool': True, 'msg':'Please check your email'})
+    else:
+        return JsonResponse({'bool': False, 'msg':'Invalid Email!!'})

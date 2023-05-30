@@ -1,20 +1,23 @@
-import Sidebar from "./Sidebar";
+import { Link } from "react-router-dom";
+import TeacherSidebar from "./TeacherSidebar";
 import  { useState, useEffect} from 'react';
 import axios from 'axios';
+import { useParams } from "react-router-dom";
+import Swal from 'sweetalert2';
 const baseURL = "http://127.0.0.1:8000/api";
 
-function ChangePassword(){
+function TeacherUpdatePassword(){
 
-    const [studentData, setStudentData] = useState({
+    const [teacherData, setTeacherData] = useState({
         'password':'',
     })
 
-    const studentId = localStorage.getItem('studentId');
+    const teacherId = localStorage.getItem('teacherId');
 
     // Change element value
     const  handleChange=(event)=>{
-        setStudentData({
-            ...studentData, [event.target.name]:event.target.value
+        setTeacherData({
+            ...teacherData, [event.target.name]:event.target.value
         });
     }
 
@@ -22,44 +25,44 @@ function ChangePassword(){
     // Submit Form
     const submitForm = () => {
         // console.log(teacherData)
-        const studentFormData = new FormData();
-       studentFormData.append("password", studentData.password)
+        const teacherFormData = new FormData();
+        teacherFormData.append("password", teacherData.password)
             
         
         try {
-            axios.post(baseURL+'/student/change-password/'+studentId+'/', studentFormData,{
+            axios.post(baseURL+'/teacher-update-password/'+teacherId+'/', teacherFormData,{
                 headers: {
                     'content-type': 'multipart/form-data'
                 }
             }).then((response)=>{
                 if(response.status==200){
-                   window.location.href='/student-logout';
+                   window.location.href='/teacher-logout';
                  }
             })
         }catch(error){
             console.log(error);
-            setStudentData({'status':'error'})
+            setTeacherData({'status':'error'})
         }
         
     };
 
     // End
 
-    const studentLoginStatus = localStorage.getItem('studentLoginStatus')
-    if (studentLoginStatus!='true') {
-      window.location.href='/student-login';
+    const teacherLoginStatus = localStorage.getItem('teacherLoginStatus')
+    if (teacherLoginStatus!='true') {
+      window.location.href='/teacher-login';
     }else{
         // alert('Oops...Something went wrong')
     }
 
     useEffect(() => {
-        document.title='Student Change Password';
+        document.title='Teacher Update Password';
     });
     return (
         <div className="container mt-4">
             <div className="row">
                 <aside className="col-md-3">
-                    <Sidebar />
+                    <TeacherSidebar />
                 </aside>
                 <section className="col-md-9">
                     <div className="card">
@@ -68,7 +71,7 @@ function ChangePassword(){
                 <div className="mb-3 row">
                     <label for="inputPassword" className="col-sm-2 col-form-label">New Password</label>
                     <div className="col-sm-10">
-                    <input type="text" value={studentData.password} onChange={handleChange} name="password" className="form-control" id="inputPassword" />
+                    <input type="text" value={teacherData.password} onChange={handleChange} name="password" className="form-control" id="inputPassword" />
                     </div>
                     </div>
                         <hr />
@@ -82,4 +85,4 @@ function ChangePassword(){
     )
 }
 
-export default ChangePassword;
+export default TeacherUpdatePassword;

@@ -69,6 +69,7 @@ function TeacherLogin(){
   </div>
  
   <button type="submit" onClick={submitForm} className="btn btn-primary">Login</button>
+  <p className="mt-3"><Link to="/teacher-forgot-password" className="text-danger">Forgot Password?</Link></p>
 </form> 
                     </div>
                 </div>

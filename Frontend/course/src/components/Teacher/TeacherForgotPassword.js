@@ -1,14 +1,12 @@
-import { Form, Link, useNavigate, useParams } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 const baseURL = "http://127.0.0.1:8000/api";
-function TeacherChangePassword(){
-
-    const {teacher_id} = useParams();
+function TeacherForgotPassword(){
 
   const [teacherData, setTeacherData] = useState({
-    password:'',
+    email:'',
   });
 
 
@@ -23,9 +21,9 @@ function TeacherChangePassword(){
 
   const submitForm = () => {
     const teacherFormData = new FormData;
-    teacherFormData.append('password',teacherData.password)
+    teacherFormData.append('email',teacherData.email)
     try{
-      axios.post(baseURL+'/teacher-change-password/'+teacher_id+'/',teacherFormData)
+      axios.post(baseURL+'/teacher-forgot-password/',teacherFormData)
       .then((res)=>{
         if(res.data.bool==true){
             setSuccessMsg(res.data.msg)
@@ -40,13 +38,13 @@ function TeacherChangePassword(){
     }
   }
 
-  const teacherLoginStatus=localStorage.getItem('teacherLoginStatus');
-  if(teacherLoginStatus=='true'){
-    window.location.href='/teacher-dashboard';
-  }
+//   const teacherLoginStatus=localStorage.getItem('teacherLoginStatus');
+//   if(teacherLoginStatus=='true'){
+//     window.location.href='/teacher-dashboard';
+//   }
 
   useEffect(() => {
-    document.title='Teacher - Change Password';
+    document.title='Teacher - Forgot Password';
 });
 
 
@@ -55,19 +53,19 @@ function TeacherChangePassword(){
             <div className="row">
                 <div className="col-6 offset-3">
                 <div className="card">
-                    <h5 className="card-header">Enter your password</h5>
+                    <h5 className="card-header">Enter Your Registered Email</h5>
                     <div className="card-body">
                       {successMsg && <p className="text-success">{successMsg}</p>}
                       {errorMsg && <p className="text-danger">{errorMsg}</p>}
-                    {/* <form> */}
+                    <form>
   <div className="mb-3">
-    <label for="exampleInputEmail1" className="form-label" >Password</label>
-    <input name="password" type="password" value = {teacherData.password} onChange={handleChange} className="form-control" />
+    <label for="exampleInputEmail1" className="form-label" >Email</label>
+    <input name="email" type="email" value = {teacherData.email} onChange={handleChange} className="form-control" />
   </div>
   
  
-  <button type="submit" onClick={submitForm} className="btn btn-primary">Change</button>
-{/* </form>  */}
+  <button type="submit" onClick={submitForm} className="btn btn-primary">Send</button>
+</form> 
                     </div>
                 </div>
                 </div>
@@ -76,4 +74,4 @@ function TeacherChangePassword(){
     )
 }
 
-export default TeacherChangePassword;
+export default TeacherForgotPassword;

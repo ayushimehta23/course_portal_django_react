@@ -53,7 +53,7 @@ function Login(){
             <div className="row">
                 <div className="col-6 offset-3">
                 <div className="card">
-                    <h5 className="card-header">User Login</h5>
+                    <h5 className="card-header">Student Login</h5>
                     <div className="card-body">
                     {errorMsg && <p className="text-danger">{errorMsg}</p>}
                     <form>
@@ -71,6 +71,7 @@ function Login(){
     <label className="form-check-label" for="exampleCheck1">Remember Me</label>
   </div> */}
   <button type="submit" onClick={submitForm} className="btn btn-primary">Login</button>
+  <p className="mt-3"><Link to="/student-forgot-password" className="text-danger">Forgot Password?</Link></p>
 </form> 
                     </div>
                 </div>
