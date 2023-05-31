@@ -70,6 +70,7 @@ import VerifyStudent from './User/VerifyStudent';
 import TeacherForgotPassword from './Teacher/TeacherForgotPassword';
 import TeacherChangePassword from './Teacher/TeacherChangePassword';
 import ForgotPassword from './User/ForgotPassword';
+import ChangePassword from './User/ChangePassword';
 
 
 function Main() {
@@ -136,6 +137,7 @@ function Main() {
       <Route path="/verify-student/:student_id" element={<VerifyStudent />}/>
       <Route path="/teacher-forgot-password" element={<TeacherForgotPassword />}/>
       <Route path="/student-forgot-password" element={<ForgotPassword />}/>
+      <Route path="/student-change-password/:student_id" element={<ChangePassword />}/>
      </Switch>
      <Footer />
      </div>

@@ -8,7 +8,7 @@ urlpatterns = [
     path('teacher/dashboard/<int:pk>/', views.TeacherDashboard.as_view()),
     path('teacher/<int:pk>/',views.TeacherDetail.as_view()),
     path('teacher-update-password/<int:teacher_id>/',views.teacher_update_password),
-     path('teacher-change-password/<int:teacher_id>/',views.teacher_change_password),
+    path('teacher-change-password/<int:teacher_id>/',views.teacher_change_password),
     path('teacher-login', views.teacher_login),
     path('popular-teachers/', views.TeacherList.as_view()),
    
@@ -41,7 +41,8 @@ urlpatterns = [
 
    # Student
     path('student/', views.StudentList.as_view()),
-    path('student/change-password/<int:student_id>/',views.student_change_password),
+    path('student/update-password/<int:student_id>/',views.student_update_password),
+    path('student-change-password/<int:student_id>/',views.student_change_password),
     path('student/<int:pk>/',views.StudentDetail.as_view()),
     path('student/dashboard/<int:pk>/', views.StudentDashboard.as_view()),
     path('student-login', views.student_login),
@@ -63,6 +64,7 @@ urlpatterns = [
     path('student/fetch-all-notifications/<int:student_id>/',views.NotificationList.as_view()),
     path('save-notification/',views.NotificationList.as_view()),
     path('teacher-forgot-password/',views.teacher_forgot_password),
+    path('student-forgot-password/',views.student_forgot_password),
     
     # Quiz Start
     path('quiz/', views.QuizList.as_view()),

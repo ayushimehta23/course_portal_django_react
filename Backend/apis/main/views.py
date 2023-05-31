@@ -324,7 +324,7 @@ class UpdateAssignment(generics.RetrieveUpdateDestroyAPIView):
     serializer_class=StudentAssignemntSerializer
 
 @csrf_exempt
-def student_change_password(request, student_id):
+def student_update_password(request, student_id):
     password = request.POST['password']
     try:
         studentData = models.Student.objects.get(id=student_id)
@@ -486,3 +486,31 @@ def teacher_forgot_password(request):
         return JsonResponse({'bool': True, 'msg':'Please check your email'})
     else:
         return JsonResponse({'bool': False, 'msg':'Invalid Email!!'})
+
+@csrf_exempt
+def student_forgot_password(request):
+    email=request.POST.get('email')
+    verify=models.Student.objects.filter(email=email).first()
+    if verify:
+        link=f"http://localhost:3000/student-change-password/{verify.id}/"
+        send_mail(
+            "Verify Account",
+            "Please verify your account",
+            "ayushimehta2342@gmail.com",
+            [email],
+            fail_silently=False,
+            html_message=f'<p>Your OTP is</p><p>{link}</p>'
+        )
+        return JsonResponse({'bool': True, 'msg':'Please check your email'})
+    else:
+        return JsonResponse({'bool': False, 'msg':'Invalid Email!!'})
+
+@csrf_exempt
+def student_change_password(request, student_id):
+    password = request.POST['password']
+    verify = models.Student.objects.filter(id=student_id).first()
+    if verify:
+        models.Student.objects.filter(id=student_id).update(password=password)
+        return JsonResponse({'bool':True, 'msg':'Password has been changed'})
+    else:
+        return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})

@@ -27,7 +27,7 @@ function UpdatePassword(){
             
         
         try {
-            axios.post(baseURL+'/student/change-password/'+studentId+'/', studentFormData,{
+            axios.post(baseURL+'/student/update-password/'+studentId+'/', studentFormData,{
                 headers: {
                     'content-type': 'multipart/form-data'
                 }
