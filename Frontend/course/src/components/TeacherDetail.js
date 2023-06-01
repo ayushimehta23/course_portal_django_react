@@ -27,7 +27,9 @@ function TeacherDetail() {
     
 }, []);
 
-
+const icon_style={
+  'font-size' :'30px'
+}
 
     useEffect(() => {
         document.title='Teacher Details';
@@ -48,9 +50,19 @@ function TeacherDetail() {
                           </>
                         )}
                         </p>
-                        <p className="fw-bold">Recent Course: <Link to="/category/php">ReactJs Course</Link></p>
-                        <p className="fw-bold">Total Enrolled: 456 Students</p>
-                        <p className="fw-bold">Rating: 4.5/5</p>
+                        {teacherData.facebook_url &&
+                        <Link  to={teacherData.facebook_url} style={icon_style}><i class="bi bi-facebook"></i></Link>
+                        }
+                        {teacherData.instagram_url &&
+                        <Link to={teacherData.instagram_url} style={icon_style}><i class="bi bi-instagram ms-4"></i></Link>
+                        }
+                        {teacherData.twitter_url &&
+                        <Link to={teacherData.twitter_url} style={icon_style}><i class="bi bi-twitter ms-4"></i></Link>
+                        }
+                        {teacherData.website_url &&
+                        <Link to={teacherData.website_url} style={icon_style}><i class="bi bi-globe ms-4"></i></Link>
+                        }
+      
                     </div>
             </div>
             { /* Course Videos */ }

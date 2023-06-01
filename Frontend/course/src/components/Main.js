@@ -71,6 +71,7 @@ import TeacherForgotPassword from './Teacher/TeacherForgotPassword';
 import TeacherChangePassword from './Teacher/TeacherChangePassword';
 import ForgotPassword from './User/ForgotPassword';
 import ChangePassword from './User/ChangePassword';
+import MyTeachers from './User/MyTeachers';
 
 
 function Main() {
@@ -138,6 +139,7 @@ function Main() {
       <Route path="/teacher-forgot-password" element={<TeacherForgotPassword />}/>
       <Route path="/student-forgot-password" element={<ForgotPassword />}/>
       <Route path="/student-change-password/:student_id" element={<ChangePassword />}/>
+      <Route path="/my-teachers" element={<MyTeachers />}/>
      </Switch>
      <Footer />
      </div>

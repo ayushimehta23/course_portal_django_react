@@ -65,6 +65,12 @@ urlpatterns = [
     path('save-notification/',views.NotificationList.as_view()),
     path('teacher-forgot-password/',views.teacher_forgot_password),
     path('student-forgot-password/',views.student_forgot_password),
+    path('send-message/<int:teacher_id>/<int:student_id>',views.save_teacher_student_msg),
+    path('send-group-message/<int:teacher_id>',views.save_teacher_student_group_msg),
+
+    path('send-group-message-from-student/<int:student_id>',views.save_teacher_student_group_msg_from_student),
+
+    path('get-messages/<int:teacher_id>/<int:student_id>',views.MessageList.as_view()),
     
     # Quiz Start
     path('quiz/', views.QuizList.as_view()),
@@ -92,4 +98,6 @@ urlpatterns = [
     path('pages/', views.FlatPagesList.as_view()),
     path('pages/<int:pk>/<str:page_slug>', views.FlatPagesDetail.as_view()),
     path('contact/', views.ContactList.as_view()),
+
+    path('fetch-my-teachers/<int:studentId>', views.MyTeacherList.as_view()),
 ]

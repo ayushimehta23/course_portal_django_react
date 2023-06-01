@@ -16,6 +16,11 @@ function TeacherProfileSetting(){
         'p_img':'',
         'skills':'',
         'status':'',
+        'facebook_url':'',
+        'twitter_url':'',
+        'instagram_url':'',
+        'website_url':'',
+
     })
 
     const teacherId = localStorage.getItem('teacherId');
@@ -37,6 +42,10 @@ function TeacherProfileSetting(){
                     skills:res.data.skills,
                     profile_img:res.data.profile_img,
                     p_img:"",
+                    facebook_url:res.data.facebook_url,
+                    twitter_url:res.data.twitter_url,
+                    instagram_url:res.data.instagram_url,
+                    website_url:res.data.website_url,
                    
                 });
               
@@ -71,6 +80,10 @@ function TeacherProfileSetting(){
         teacherFormData.append("qualification", teacherData.qualification)
         teacherFormData.append("mobile_no", teacherData.mobile_no)
         teacherFormData.append("skills", teacherData.skills)
+        teacherFormData.append("facebook_url", teacherData.facebook_url)
+        teacherFormData.append("twitter_url", teacherData.twitter_url)
+        teacherFormData.append("instagram_url", teacherData.instagram_url)
+        teacherFormData.append("website_url", teacherData.website_url)
        
         if(teacherData.p_img!==''){
             teacherFormData.append('profile_img',teacherData.p_img,teacherData.p_img.name);
@@ -155,6 +168,31 @@ function TeacherProfileSetting(){
                         <label for="exampleInputEmail1" className="form-label">Skills</label>
                         <textarea value={teacherData.skills} onChange={handleChange} name="skills" type="text" className="form-control"></textarea>
                         <div id="emailHelp" className="form-text">Php, Python, Javascript, etc</div>
+                        </div>
+                        </div>
+                        <h4 className="my-4">Social Accounts</h4>
+                        <div className="mb-3 row">
+                        <label for="staticEmail" className="col-sm-2 col-form-label">Facebook</label>
+                        <div className="col-sm-10">
+                        <input value={teacherData.facebook_url} onChange={handleChange} name="facebook_url" type="text" className="form-control" id="staticEmail" />
+                        </div>
+                        </div>
+                        <div className="mb-3 row">
+                        <label for="staticEmail" className="col-sm-2 col-form-label">Twitter</label>
+                        <div className="col-sm-10">
+                        <input value={teacherData.twitter_url} onChange={handleChange} name="twitter_url" type="text" className="form-control" id="staticEmail" />
+                        </div>
+                        </div>
+                        <div className="mb-3 row">
+                        <label for="staticEmail" className="col-sm-2 col-form-label">Instagarm</label>
+                        <div className="col-sm-10">
+                        <input value={teacherData.instagram_url} onChange={handleChange} name="instagram_url" type="text" className="form-control" id="staticEmail" />
+                        </div>
+                        </div>
+                        <div className="mb-3 row">
+                        <label for="staticEmail" className="col-sm-2 col-form-label">Website</label>
+                        <div className="col-sm-10">
+                        <input value={teacherData.website_url} onChange={handleChange} name="website_url" type="text" className="form-control" id="staticEmail" />
                         </div>
                         </div>
                         

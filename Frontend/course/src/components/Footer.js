@@ -22,9 +22,7 @@ useEffect(()=>{
       <ul class="nav justify-content-center border-bottom pb-3 mb-3">
         <li class="nav-item"><Link to="/" class="nav-link px-2 text-body-secondary">Home</Link></li>
         <li class="nav-item"><Link to="/faq" class="nav-link px-2 text-body-secondary">FAQs</Link></li>
-        {pagesData && pagesData.map((row, index)=>
-        <li class="nav-item"><Link to={`/page/${row.id}${row.url}`} class="nav-link px-2 text-body-secondary">{row.title}</Link></li>
-        )}
+        
          <li class="nav-item"><Link to="/contact-us" class="nav-link px-2 text-body-secondary">Contact Us</Link></li>
       </ul>
       <p class="text-center text-body-secondary">© 2023 Course Portal, Inc</p>

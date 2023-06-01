@@ -268,7 +268,6 @@ const handleFileChange=(event)=>{
                           </>
                         )}
                         </p>
-                        <p className="fw-bold">Duration: 3 Hours 30 Minutes</p>
                         <p className="fw-bold">Total Enrolled: {courseData.total_enrolled_students} Student(s)</p>
                         <p className="fw-bold">Rating: {avgRating} out of 5
                         <p className="fw-bold">Views: {courseViews}</p>
@@ -345,7 +344,7 @@ const handleFileChange=(event)=>{
             </h5>
             <ul className="list-group list-group-flush">
             {chapterData.map((chapter, index)=>
-              <li className="list-group-item">{chapter.title} <span className="float-end"> <span className="me-5">1 Hour 30 Minutes</span><button className="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#videoModal1" float-end><i class="bi-youtube"></i></button>
+              <li className="list-group-item">{chapter.title} <span className="float-end"> <button className="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#videoModal1" float-end><i class="bi-youtube"></i></button>
               </span>
               { /* Video Modal */}
               <div className="modal" id="videoModal1" tabindex="-1" aria-labelledby="exampleModalLabel">

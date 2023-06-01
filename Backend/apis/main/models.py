@@ -15,6 +15,11 @@ class Teacher(models.Model):
     otp_digit=models.CharField(max_length=10,null=True)
     login_via_otp=models.BooleanField(default=False)
 
+    facebook_url=models.URLField(null=True)
+    twitter_url=models.URLField(null=True)
+    instagram_url=models.URLField(null=True)
+    website_url=models.URLField(null=True)
+
     class Meta:
         verbose_name_plural = "1. Teacher"
 
@@ -282,6 +287,16 @@ class Contact(models.Model):
     class Meta:
         verbose_name_plural = "17. Contact Queries"
 
+# Messages
+class TeacherStudentChat(models.Model):
+    teacher=models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    student=models.ForeignKey(Student, on_delete=models.CASCADE)
+    msg_txt=models.TextField()
+    msg_from=models.CharField(max_length=100)
+    msg_time=models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural = "18. Teacher Student Messages"
 
 
 

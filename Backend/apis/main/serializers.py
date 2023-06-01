@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Teacher
-        fields = ['id', 'full_name', 'email', 'qualification', 'mobile_no', 'skills', 'profile_img', 'teacher_courses', 'skill_list', 'total_teacher_courses', 'verify_status', 'otp_digit']
+        fields = ['id', 'full_name', 'email', 'qualification', 'mobile_no', 'skills', 'profile_img', 'teacher_courses', 'skill_list', 'total_teacher_courses', 'verify_status', 'otp_digit', 'facebook_url', 'twitter_url', 'instagram_url', 'website_url']
         depth = 1
 
     def __init__(self, *args, **kwargs):
@@ -227,4 +227,13 @@ class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model=models.Contact
         fields = ['id', 'full_name', 'email', 'query_txt']
+
+class TeacherStudentChatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=models.TeacherStudentChat
+        fields = ['id', 'teacher', 'student', 'msg_txt', 'msg_from', 'msg_time']
     
+    def to_representation(self, instance):
+        representation = super(TeacherStudentChatSerializer, self).to_representation(instance)
+        representation['msg_time'] = instance.msg_time.strftime("%Y-%m-%d %H:%M")
+        return representation

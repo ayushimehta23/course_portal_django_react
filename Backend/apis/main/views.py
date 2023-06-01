@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework import permissions
-from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer, ChapterSerializer, StudentSerializer, StudentCourseEnrollSerializer, CourseRatingSerializer, TeacherDashboardSerializer,  StudentFavoriteCourseSerializer, StudentAssignemntSerializer, StudentDashboardSerializer, NotificationSerializer, QuizSerializer, QuestionSerializer, CourseQuizSerializer, AttemptQuizSerializer, StudyMaterialSerializer, FAQSerializer, FlatPagesSerializer, ContactSerializer
+from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer, ChapterSerializer, StudentSerializer, StudentCourseEnrollSerializer, CourseRatingSerializer, TeacherDashboardSerializer,  StudentFavoriteCourseSerializer, StudentAssignemntSerializer, StudentDashboardSerializer, NotificationSerializer, QuizSerializer, QuestionSerializer, CourseQuizSerializer, AttemptQuizSerializer, StudyMaterialSerializer, FAQSerializer, FlatPagesSerializer, ContactSerializer, TeacherStudentChatSerializer
 from . import models
 from rest_framework.pagination import PageNumberPagination
 from django.contrib.flatpages.models import FlatPage
@@ -379,8 +379,6 @@ class QuizQuestionList(generics.ListCreateAPIView):
         else:
             return models.QuizQuestions.objects.filter(quiz=quiz)
 
-
-
 class CourseQuizList(generics.ListCreateAPIView):
     queryset=models.CourseQuiz.objects.all()
     serializer_class=CourseQuizSerializer
@@ -451,8 +449,6 @@ def update_view(request,course_id):
     queryset.save()
     return JsonResponse({'views':queryset.course_views})
 
-
-
 class FAQList(generics.ListAPIView):
     queryset = models.FAQ.objects.all()
     serializer_class = FAQSerializer
@@ -512,5 +508,81 @@ def student_change_password(request, student_id):
     if verify:
         models.Student.objects.filter(id=student_id).update(password=password)
         return JsonResponse({'bool':True, 'msg':'Password has been changed'})
+    else:
+        return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})
+
+@csrf_exempt
+def save_teacher_student_msg(request, teacher_id, student_id):
+    teacher=models.Teacher.objects.get(id=teacher_id)
+    student=models.Student.objects.get(id=student_id)
+    msg_txt=request.POST.get('msg_txt')
+    msg_from=request.POST.get('msg_from')
+    msgRes=models.TeacherStudentChat.objects.create(
+        teacher=teacher, student=student, msg_txt=msg_txt, msg_from=msg_from
+    )
+    if msgRes:
+        msgs=models.TeacherStudentChat.objects.filter(teacher=teacher, student=student).count()
+        return JsonResponse({'bool':True, 'msg':'Message has been sent'})
+    else:
+        return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})
+
+class MessageList(generics.ListAPIView):
+    queryset=models.TeacherStudentChat.objects.all()
+    serializer_class=TeacherStudentChatSerializer
+
+    def get_queryset(self):
+        teacher_id=self.kwargs['teacher_id']
+        student_id=self.kwargs['student_id']
+        teacher=models.Teacher.objects.get(pk=teacher_id)
+        student=models.Student.objects.get(pk=student_id)
+        return models.TeacherStudentChat.objects.filter(teacher=teacher, student=student).exclude(msg_txt='')
+
+
+@csrf_exempt
+def save_teacher_student_group_msg(request, teacher_id):
+    teacher=models.Teacher.objects.get(id=teacher_id)
+    msg_txt=request.POST.get('msg_txt')
+    msg_from=request.POST.get('msg_from')
+
+    enrolledList=models.StudentCourseEnrollment.objects.filter(course__teacher=teacher).distinct()
+    for enrolled in enrolledList:
+
+        msgRes=models.TeacherStudentChat.objects.create(
+            teacher=teacher, student=enrolled.student, msg_txt=msg_txt, msg_from=msg_from
+        )
+    if msgRes:
+        return JsonResponse({'bool':True, 'msg':'Message has been sent'})
+    else:
+        return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})
+
+class MyTeacherList(generics.ListAPIView):
+    queryset=models.Course.objects.all()
+    serializer_class=CourseSerializer
+
+    def get_queryset(self):
+        if 'studentId' in self.kwargs:
+            student_id=self.kwargs['studentId']
+            sql=f"SELECT * FROM main_course as c, main_studentcourseenrollment as e, main_teacher as t WHERE c.teacher_id=t.id AND e.course_id=c.id AND e.student_id={student_id} GROUP BY c.teacher_id"
+            qs=models.Course.objects.raw(sql)
+            print(qs)
+            return qs
+
+@csrf_exempt
+def save_teacher_student_group_msg_from_student(request, student_id):
+    student=models.Student.objects.get(id=student_id)
+    msg_txt=request.POST.get('msg_txt')
+    msg_from=request.POST.get('msg_from')
+
+    sql=f"SELECT * FROM main_course as c, main_studentcourseenrollment as e, main_teacher as t WHERE c.teacher_id=t.id AND e.course_id=c.id AND e.student_id={student_id} GROUP BY c.teacher_id"
+    qs=models.Course.objects.raw(sql)
+
+    myCourses=qs
+    for course in myCourses:
+
+        msgRes=models.TeacherStudentChat.objects.create(
+            teacher=course.teacher, student=student, msg_txt=msg_txt, msg_from=msg_from
+        )
+    if msgRes:
+        return JsonResponse({'bool':True, 'msg':'Message has been sent'})
     else:
         return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})
