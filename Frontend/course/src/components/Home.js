@@ -117,15 +117,15 @@ function Home() {
   { /* End Popular Teachers*/ }
   { /* Student Testimonial */ }
         <h3 className="pb-1 mb-4 mt-5">Student Testimonial</h3>
-        <div id="carouselExampleIndicators" className="carousel slide bg-dark text-white py-5" data-bs-ride="carousel">
+        <div id="carouselExampleIndicators" className="carousel slide bg-dark text-white py-5" data-bs-ride="carousel" >
   <div className="carousel-indicators">
     {testimonialData && testimonialData.map((row,index)=>
     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={index} className={index===0 ? "active" : ""} ></button>
     )}
     </div>
-  <div className="carousel-inner">
+  <div className="carousel-inner" data-bs-interval="3000">
   {testimonialData && testimonialData.map((row,i)=>
-   <div className={i===0 ? "carousel-item text-center active" : "carousel-item text-center"}>
+   <div className={i===0 ? "carousel-item text-center active" : "carousel-item text-center"} >
     <figure class="text-center">
     <blockquote class="blockquote">
       <p>{row.reviews}</p>

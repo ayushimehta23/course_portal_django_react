@@ -20,6 +20,9 @@ class Teacher(models.Model):
     instagram_url=models.URLField(null=True)
     website_url=models.URLField(null=True)
 
+    def __str__(self):
+        return self.full_name
+
     class Meta:
         verbose_name_plural = "1. Teacher"
 
@@ -97,6 +100,9 @@ class Chapter(models.Model):
     class Meta:
         verbose_name_plural = "4. Chapters"
 
+    def __str__(self):
+        return self.title
+
 # Student Model
 class Student(models.Model):
     full_name = models.CharField(max_length=100)
@@ -107,8 +113,8 @@ class Student(models.Model):
     profile_img = models.ImageField(upload_to = 'student_profile_imgs/', null=True)
     verify_status=models.BooleanField(default=False)
    
-    # def __str__(self):
-    #     return self.full_name
+    def __str__(self):
+        return self.full_name
 
     def enrolled_courses(self):
         enrolled_courses=StudentCourseEnrollment.objects.filter(student=self).count()
@@ -177,7 +183,7 @@ class StudentAssignemnt(models.Model):
     add_time=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.title}"
+        return f"{self.teacher} - {self.student}"
 
     class Meta:
         verbose_name_plural="9. Student Assignments"
@@ -207,6 +213,11 @@ class Quiz(models.Model):
     class Meta:
         verbose_name_plural="11. Quiz"
 
+    def __str__(self):
+        return f"{self.title}"
+
+    
+
 # Quiz Questions Model
 class QuizQuestions(models.Model):
     quiz=models.ForeignKey(Quiz,on_delete=models.CASCADE,null=True)
@@ -221,6 +232,9 @@ class QuizQuestions(models.Model):
     class Meta:
         verbose_name_plural="12. Quiz Questions"
 
+    def __str__(self):
+        return f"{self.questions} - {self.quiz}"
+
 # Add Quiz to Course
 class CourseQuiz(models.Model):
     teacher=models.ForeignKey(Teacher,on_delete=models.CASCADE,null=True)
@@ -230,6 +244,9 @@ class CourseQuiz(models.Model):
 
     class Meta:
         verbose_name_plural="13. Course Quiz"
+
+    def __str__(self):
+        return f"{self.teacher} - {self.course} - {self.quiz}"
 
 # Attempt Quiz Question by Student
 class AttemptQuiz(models.Model):
@@ -242,6 +259,9 @@ class AttemptQuiz(models.Model):
     class Meta:
         verbose_name_plural="14. Attempted Question"
 
+    def __str__(self):
+        return f"{self.student} - {self.quiz}"
+
 # Study Material Model
 class StudyMaterial(models.Model):
     course=models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -252,6 +272,9 @@ class StudyMaterial(models.Model):
 
     class Meta:
         verbose_name_plural = "15. Course Study Materials"
+
+    def __str__(self):
+        return f"{self.course} - {self.title}"
 
 # FAQ Model
 class FAQ(models.Model):
@@ -297,6 +320,7 @@ class TeacherStudentChat(models.Model):
 
     class Meta:
         verbose_name_plural = "18. Teacher Student Messages"
+
 
 
 
