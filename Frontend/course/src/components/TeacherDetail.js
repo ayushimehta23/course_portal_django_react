@@ -38,7 +38,9 @@ const icon_style={
         <div className="container mt-3">
             <div className="row">
                 <div className="col-4">
-                <img src="/logo512.png" className="img-thumbnail" alt="Teacher Image"/>
+                  {teacherData.profile_img && 
+                <img src={teacherData.profile_img} className="img-thumbnail" alt="Teacher Image"/>
+              }
                 </div>
                     <div className="col-8">
                         <h3>{teacherData.full_name}</h3>

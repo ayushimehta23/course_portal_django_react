@@ -12,13 +12,13 @@ class Teacher(models.Model):
     profile_img = models.ImageField(upload_to = 'teacher_profile_imgs/', null=True)
     skills = models.TextField()
     verify_status=models.BooleanField(default=False)
-    otp_digit=models.CharField(max_length=10,null=True)
+    otp_digit=models.CharField(max_length=10,null=True, blank=True)
     login_via_otp=models.BooleanField(default=False)
 
-    facebook_url=models.URLField(null=True)
-    twitter_url=models.URLField(null=True)
-    instagram_url=models.URLField(null=True)
-    website_url=models.URLField(null=True)
+    facebook_url=models.URLField(null=True, blank=True)
+    twitter_url=models.URLField(null=True, blank=True)
+    instagram_url=models.URLField(null=True, blank=True)
+    website_url=models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.full_name
