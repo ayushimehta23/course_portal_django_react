@@ -50,7 +50,7 @@ function StudentAssignments(){
 
 
     useEffect(() => {
-        document.title='User | My Assignments';
+        document.title='My Assignments';
     });
     return (
         <div className="container mt-4">

@@ -53,7 +53,7 @@ function UpdatePassword(){
     }
 
     useEffect(() => {
-        document.title='Student Change Password';
+        document.title='Student Update Password';
     });
     return (
         <div className="container mt-4">

@@ -22,7 +22,7 @@ function RecommendedCourses(){
 
 
     useEffect(() => {
-        document.title='User | Recommended Courses';
+        document.title='Student | Recommended Courses';
     });
     return (
         <div className="container mt-4">

@@ -64,7 +64,7 @@ function AddQuizQuestion(){
     }
 
     useEffect(() => {
-        document.title='Add Chapter';
+        document.title='Add Quiz Questions';
     });
     return(
         

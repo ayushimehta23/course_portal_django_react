@@ -23,9 +23,10 @@ function Sidebar(){
 
     return (
         <div className="card">
-                        <Link to="/user-dashboard" className="list-group-item list-group-item-action"><h5 className="card-header">User Dashboard</h5></Link>
-                    <div className="list-group list-group-flush">
-                        <Link to="/user-dashboard" className="list-group-item list-group-item-action"></Link>
+                        <Link to="/student-dashboard" className="list-group-item list-group-item-action"><h5 className="card-header">Student Dashboard</h5></Link>
+                        <div className="list-group list-group-flush">
+                        
+                        <Link to="/student-dashboard" className="list-group-item list-group-item-action">Student Dashboard</Link>
                         <Link to="/my-courses" className="list-group-item list-group-item-action">My Courses</Link>
                         <Link to="/my-teachers" className="list-group-item list-group-item-action">My Teachers</Link>
                         <Link to="/favorite-courses" className="list-group-item list-group-item-action">Favorite Courses</Link>

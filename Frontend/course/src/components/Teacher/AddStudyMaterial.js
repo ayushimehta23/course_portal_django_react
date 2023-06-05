@@ -63,7 +63,7 @@ function AddStudyMaterial(){
     }
 
     useEffect(() => {
-        document.title='Add Chapter';
+        document.title='Add Study Material';
     });
     return(
         

@@ -30,7 +30,7 @@ function ShowAssignment(){
 
 
     useEffect(() => {
-        document.title='All Chapters';
+        document.title='Assigned Assignments';
     });
    return(
     <div className="container mt-4">

@@ -64,7 +64,7 @@ function QuizQuestions(){
     }
                 
     useEffect(() => {
-        document.title='All Questions';
+        document.title='Quiz Questions';
     });
    return(
     <div className="container mt-4">

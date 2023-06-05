@@ -22,7 +22,7 @@ function FavoriteCourses(){
 
 
     useEffect(() => {
-        document.title='User | My Courses';
+        document.title='User | Favorite Courses';
     });
     return (
         <div className="container mt-4">

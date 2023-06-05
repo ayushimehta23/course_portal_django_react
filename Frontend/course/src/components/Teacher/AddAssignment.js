@@ -26,7 +26,7 @@ function AddAssignment(){
         formData.append('teacher',teacher_id);
         formData.append('student',student_id);
         formData.append('title',assignmentData.title);
-        formData.append('detail',assignmentData.description);
+        formData.append('detail',assignmentData.detail);
         try{
             axios.post(baseURL+'/student-assignment/'+teacher_id+'/'+student_id,formData,{
                 headers: {
@@ -71,7 +71,7 @@ function AddAssignment(){
     }
 
     useEffect(() => {
-        document.title='Add Chapter';
+        document.title='Add Assignment';
     });
     return(
         

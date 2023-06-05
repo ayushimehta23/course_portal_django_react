@@ -100,7 +100,7 @@ function TeacherProfileSetting(){
     // End
 
     useEffect(() => {
-        document.title='My Profile Settings';
+        document.title='Student Profile Settings';
     });
 
     const studentLoginStatus = localStorage.getItem('studentLoginStatus')

@@ -26,7 +26,7 @@ function EnrolledStudents(){
 
     useEffect(()=>{
     
-        document.title='Teacher | My Courses';
+        document.title='Enrolled Students';
     });
     return (
         <div className="container mt-4">

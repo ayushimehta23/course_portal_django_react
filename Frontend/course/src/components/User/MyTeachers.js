@@ -105,7 +105,7 @@ function MyTeachers(){
        }
 
     useEffect(() => {
-        document.title='User | My Teachers';
+        document.title='My Teachers';
     });
     return (
         <div className="container mt-4">

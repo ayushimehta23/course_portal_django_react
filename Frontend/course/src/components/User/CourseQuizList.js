@@ -23,7 +23,7 @@ function CourseQuizList(){
 
 
     useEffect(() => {
-        document.title='Quiz List';
+        document.title='Course Quiz List';
     });
     return (
         <div className="container mt-4">

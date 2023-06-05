@@ -32,7 +32,7 @@ function UserStudyMaterials(){
     }
 
     useEffect(() => {
-        document.title='All Chapters';
+        document.title='Study Materials';
     });
    return(
     <div className="container mt-4">

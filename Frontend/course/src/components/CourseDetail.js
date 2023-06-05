@@ -75,7 +75,7 @@ function CourseDetail () {
   
     // Fetch enroll status
     try{
-      axios.get(baseURL+'/tech-favorite-status/'+studentId+'/'+course_id)
+      axios.get(baseURL+'/fetch-favorite-status/'+studentId+'/'+course_id)
       .then((res)=>{
         if(res.data.bool==true){
           setFavoriteStatus('success');

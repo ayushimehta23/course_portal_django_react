@@ -103,7 +103,7 @@ function UserList(){
 
     useEffect(()=>{
     
-        document.title='Teacher | My Courses';
+        document.title='Teacher | My Users';
     });
     return (
         <div className="container mt-4">

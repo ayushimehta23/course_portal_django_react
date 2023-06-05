@@ -46,7 +46,7 @@ function TeacherChangePassword(){
   }
 
   useEffect(() => {
-    document.title='Teacher - Change Password';
+    document.title='Teacher Change Password';
 });
 
 

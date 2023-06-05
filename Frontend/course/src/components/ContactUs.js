@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -63,8 +62,8 @@ function ContactUs(){
         <div className="container mt-4">
         <div className="row">
             <div className="col-7">
-                {contactData.status=="success" && <p className="text-success">Thanks for your Contacting Us</p>}
-                {!contactData.status=="error" && <p className="text-danger">Something went wrong!</p>}
+                {contactData.status==="success" && <p className="text-success">Thanks for your Contacting Us</p>}
+                {!contactData.status==="error" && <p className="text-danger">Something went wrong!</p>}
             <div className="card">
                 <h5 className="card-header">Contact Us</h5>
                                     <div className="card-body">

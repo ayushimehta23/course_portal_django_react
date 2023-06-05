@@ -75,7 +75,7 @@ function EditQuiz(){
     }
 
     useEffect(() => {
-        document.title='Edit Course';
+        document.title='Edit Quiz';
     }, []);
 
     return(

@@ -39,6 +39,10 @@ function PopularCourses() {
     }
   }
 
+  useEffect(() => {
+    document.title='Popular Courses';
+});
+
     return (
       <div className="container mt-3">
       <h3 className="pb-1 mb-5">Popular Courses</h3>

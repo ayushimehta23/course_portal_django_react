@@ -46,7 +46,7 @@ function Login(){
   }
 
   useEffect(() => {
-    document.title='User Login';
+    document.title='Student Login';
 });
     return (
         <div className="container mt-4">

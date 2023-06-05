@@ -58,7 +58,7 @@ function Home() {
 
   }, []);
   useEffect(() => {
-    document.title='Home Page';
+    document.title='Home';
 });
   return (
     <div className="container mt-4">

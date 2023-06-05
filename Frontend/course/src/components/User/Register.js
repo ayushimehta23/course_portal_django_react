@@ -60,7 +60,7 @@ function Register(){
     
 
     useEffect(() => {
-        document.title='User Register';
+        document.title='Student Registration';
     });
     return (
         <div className="container mt-4">

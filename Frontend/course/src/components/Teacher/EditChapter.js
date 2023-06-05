@@ -90,6 +90,10 @@ function EditChapter (){
     }, []);
    
 
+    useEffect(() => {
+        document.title='Edit Chapter';
+    });
+
     return (
         <div className="container mt-4">
             <div className="row">

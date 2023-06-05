@@ -31,7 +31,7 @@ function AttemptedStudents(){
 
     useEffect(()=>{
     
-        document.title='My Quiz';
+        document.title='Attempted Quiz';
     });
     return (
         <div className="container mt-4">

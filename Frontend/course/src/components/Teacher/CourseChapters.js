@@ -65,7 +65,7 @@ function CourseChapters(){
                 
 
     useEffect(() => {
-        document.title='All Chapters';
+        document.title='Course Chapters';
     });
    return(
     <div className="container mt-4">

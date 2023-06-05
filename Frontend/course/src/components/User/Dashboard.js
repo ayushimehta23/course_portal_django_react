@@ -23,7 +23,7 @@ function Dashboard(){
 
 
     useEffect(() => {
-        document.title='Student Dashboard';
+        document.title='Teacher Dashboard';
     });
     return (
         <div className="container mt-4">

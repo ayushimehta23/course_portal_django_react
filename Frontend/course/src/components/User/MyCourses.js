@@ -22,7 +22,7 @@ function MyCourses(){
 
 
     useEffect(() => {
-        document.title='User | My Courses';
+        document.title='Student | My Courses';
     });
     return (
         <div className="container mt-4">
