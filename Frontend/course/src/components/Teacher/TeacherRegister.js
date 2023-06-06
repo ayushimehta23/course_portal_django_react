@@ -42,7 +42,7 @@ function TeacherRegister(){
         teacherFormData.append("otp_digit", otp_digit)
         
         axios.post(baseURL, teacherFormData).then((response)=>{
-            navigate('/verify-teacher/'+response.data.id)
+            window.location.href=('/verify-teacher/'+response.data.id)
             
             // setTeacherData({
             //     'full_name':'',

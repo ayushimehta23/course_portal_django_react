@@ -11,6 +11,7 @@ urlpatterns = [
     path('teacher-change-password/<int:teacher_id>/',views.teacher_change_password),
     path('teacher-login', views.teacher_login),
     path('popular-teachers/', views.TeacherList.as_view()),
+    path('verify-teacher/<int:teacher_id>/',views.verify_teacher_via_otp),
    
     # Category
     path('category/', views.CategoryList.as_view()),
@@ -67,6 +68,7 @@ urlpatterns = [
     path('student-forgot-password/',views.student_forgot_password),
     path('send-message/<int:teacher_id>/<int:student_id>',views.save_teacher_student_msg),
     path('send-group-message/<int:teacher_id>',views.save_teacher_student_group_msg),
+    path('verify-student/<int:student_id>/',views.verify_student_via_otp),
 
     path('send-group-message-from-student/<int:student_id>',views.save_teacher_student_group_msg_from_student),
 

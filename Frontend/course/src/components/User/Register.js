@@ -36,27 +36,19 @@ function Register(){
         studentFormData.append("username", studentData.username)
         studentFormData.append("interested_categories", studentData.interested_categories)
         studentFormData.append("otp_digit", otp_digit)
-        try {
-            axios.post(baseURL, studentFormData).then((response)=>{
-                navigate=('/verify-student/'+response.data.id)
-                // setStudentData({
-                //     'full_name':'',
-                //     'email':'',
-                //     'password':'',
-                //     'username':'',
-                //     'interested_categories':'',
-                //     'status':'success',
-                  
-                // })
-            })
-        }catch(error){
+        
+        axios.post(baseURL, studentFormData).then((response)=>{
+            navigate('/verify-student/'+response.data.id)
+            
+           
+                
+            // })
+        }).catch((error) => {
             console.log(error);
             setStudentData({'status':'error'})
-        }
+        })
         
     };
-
-    // End
     
 
     useEffect(() => {
@@ -71,7 +63,7 @@ function Register(){
             <div className="card">
                 <h5 className="card-header">User Register</h5>
                 <div className="card-body">
-                <form>
+                {/* <form> */}
                 <div className="mb-3">
 <label for="exampleInputEmail1" className="form-label">Full Name</label>
 <input type="text" name="full_name" value={studentData.full_name} onChange={handleChange} className="form-control" />
@@ -99,7 +91,7 @@ function Register(){
 </div>
 
 <button type="submit" onClick={submitForm} className="btn btn-primary">Register</button>
-</form> 
+{/* </form>  */}
                 </div>
             </div>
             </div>
