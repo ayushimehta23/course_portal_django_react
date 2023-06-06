@@ -98,18 +98,6 @@ class CourseList(generics.ListCreateAPIView):
             else:
                 qs=models.Course.objects.all()
 
-        # elif 'studentId' in self.kwargs:
-        #     student_id = self.kwargs['student_id']
-        #     print(student.interested_categories)
-        #     queries = [Q(techs__iendswith=value) for value in student.interested_categories]
-        #     query = queries.pop()
-        #     for item in queries:
-        #         query |= item
-        #     qs=models.Course.objects.filter(query)
-        #     return qs
-
-        # return qs
-
 class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset=models.Course.objects.all()
     serializer_class=CourseSerializer
@@ -246,11 +234,7 @@ class EnrolledStudentList(generics.ListAPIView):
             student_id=self.kwargs['student_id']
             student=models.Student.objects.get(pk=student_id)
             return models.StudentCourseEnrollment.objects.filter(student=student).distinct()
-        elif 'studentId' in self.kwargs:
-            student_id=self.kwargs['studentId']
-            student=models.Student.objects.get(pk=student_id)
-            return models.StudentCourseEnrollment.objects.filter(course__techs__icontains=student.interested_categories)
-        
+
 class CourseRatingList(generics.ListCreateAPIView):
     queryset = models.CourseRating.objects.all()
     serializer_class = CourseRatingSerializer

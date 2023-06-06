@@ -11,7 +11,6 @@ function AddAssignment(){
         detail: "",
     })
 
-
     const handleChange=(event)=>{
         setAssignmentData({
             ...assignmentData, [event.target.name]: event.target.value
