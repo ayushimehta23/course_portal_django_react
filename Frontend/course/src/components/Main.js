@@ -72,7 +72,7 @@ function Main() {
     
      <Header />
      <Switch>
-      {/*  */}
+      
       <Route path="/" element={<Home />}/>
       <Route path="/detail/:course_id" element={<CourseDetail />}/> 
       <Route path="/student-login" element={<Login />}/>
