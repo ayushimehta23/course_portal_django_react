@@ -53,15 +53,7 @@ def teacher_login(request):
     else:
         return JsonResponse({'bool': False})
 
-@csrf_exempt
-def verify_teacher_via_otp(request, teacher_id):
-    otp_digit=request.POST.get('otp_digit')
-    verify=models.Teacher.objects.filter(id=teacher_id,otp_digit=otp_digit).first()
-    if verify:
-        models.Teacher.objects.filter(id=teacher_id,otp_digit=otp_digit).update(verify_status=True)
-        return JsonResponse({'bool': True,'teacher_id':verify.id})
-    else:
-        return JsonResponse({'bool': False})
+
 
 class CategoryList(generics.ListCreateAPIView):
     queryset = models.CourseCategory.objects.all()
@@ -91,12 +83,7 @@ class CourseList(generics.ListCreateAPIView):
             teacher=models.Teacher.objects.filter(id=skill_name).first()
             qs=models.Course.objects.filter(techs__icontains=skill_name, teacher=teacher)
 
-        if 'searchString' in self.kwargs:
-            search=self.kwargs['searchString']
-            if search=="":
-                 qs=models.Course.objects.filter(Q(title__icontains=search))
-            else:
-                qs=models.Course.objects.all()
+       
 
 class CourseDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset=models.Course.objects.all()
@@ -162,15 +149,6 @@ def student_login(request):
     else:
         return JsonResponse({'bool': False})
 
-@csrf_exempt
-def verify_student_via_otp(request, student_id):
-    otp_digit=request.POST.get('otp_digit')
-    verify=models.Student.objects.filter(id=student_id,otp_digit=otp_digit).first()
-    if verify:
-        models.Student.objects.filter(id=student_id,otp_digit=otp_digit).update(verify_status=True)
-        return JsonResponse({'bool': True,'student_id':verify.id})
-    else:
-        return JsonResponse({'bool': False})
 
 class StudentEnrollCourseList(generics.ListCreateAPIView):
     queryset = models.StudentCourseEnrollment.objects.all()
@@ -270,16 +248,6 @@ def teacher_update_password(request, teacher_id):
         return JsonResponse({'bool': True})
     else:
         return JsonResponse({'bool': False})
-
-@csrf_exempt
-def teacher_change_password(request, teacher_id):
-    password = request.POST['password']
-    verify = models.Teacher.objects.filter(id=teacher_id).first()
-    if verify:
-        models.Teacher.objects.filter(id=teacher_id).update(password=password)
-        return JsonResponse({'bool':True, 'msg':'Password has been changed'})
-    else:
-        return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})
 
 class AssignmentList(generics.ListCreateAPIView):
     queryset=models.StudentAssignemnt.objects.all()
@@ -449,51 +417,6 @@ class ContactList(generics.ListCreateAPIView):
     queryset = models.Contact.objects.all()
     serializer_class = ContactSerializer
 
-@csrf_exempt
-def teacher_forgot_password(request):
-    email=request.POST.get('email')
-    verify=models.Teacher.objects.filter(email=email).first()
-    if verify:
-        link=f"http://localhost:3000/teacher-change-password/{verify.id}/"
-        send_mail(
-            "Verify Account",
-            "Please verify your account",
-            "ayushimehta2342@gmail.com",
-            [email],
-            fail_silently=False,
-            html_message=f'<p>Your OTP is</p><p>{link}</p>'
-        )
-        return JsonResponse({'bool': True, 'msg':'Please check your email'})
-    else:
-        return JsonResponse({'bool': False, 'msg':'Invalid Email!!'})
-
-@csrf_exempt
-def student_forgot_password(request):
-    email=request.POST.get('email')
-    verify=models.Student.objects.filter(email=email).first()
-    if verify:
-        link=f"http://localhost:3000/student-change-password/{verify.id}/"
-        send_mail(
-            "Verify Account",
-            "Please verify your account",
-            "ayushimehta2342@gmail.com",
-            [email],
-            fail_silently=False,
-            html_message=f'<p>Your OTP is</p><p>{link}</p>'
-        )
-        return JsonResponse({'bool': True, 'msg':'Please check your email'})
-    else:
-        return JsonResponse({'bool': False, 'msg':'Invalid Email!!'})
-
-@csrf_exempt
-def student_change_password(request, student_id):
-    password = request.POST['password']
-    verify = models.Student.objects.filter(id=student_id).first()
-    if verify:
-        models.Student.objects.filter(id=student_id).update(password=password)
-        return JsonResponse({'bool':True, 'msg':'Password has been changed'})
-    else:
-        return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})
 
 @csrf_exempt
 def save_teacher_student_msg(request, teacher_id, student_id):
@@ -570,3 +493,4 @@ def save_teacher_student_group_msg_from_student(request, student_id):
         return JsonResponse({'bool':True, 'msg':'Message has been sent'})
     else:
         return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})
+

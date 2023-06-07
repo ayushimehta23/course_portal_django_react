@@ -32,7 +32,6 @@ import AddChapter from './Teacher/AddChapter';
 import CourseChapters from './Teacher/CourseChapters';
 import EditChapter from './Teacher/EditChapter';
 import EditCourse from './Teacher/EditCourse';
-import TeacherSkillCourses from './TeacherSkillCourses';
 import EnrolledStudents from './Teacher/EnrolledStudents';
 import AddAssignment from './Teacher/AddAssignment';
 import ShowAssignment from './Teacher/ShowAssignment';
@@ -50,7 +49,6 @@ import AssignQuiz  from './Teacher/AssignQuiz';
 import AllCourses from './AllCourses';
 import PopularCourses from './PopularCourses';
 import PopularTeachers from './PopularTeachers';
-import CategoryCourses from './CategoryCourses';
 import AddQuizQuestion from './Teacher/AddQuizQuestions';
 
 // Student Dashboard: Quiz
@@ -63,13 +61,8 @@ import Category from './Category';
 import FAQ from './FAQ';
 import Page from './Page';
 import ContactUs from './ContactUs';
-import VerifyTeacher from './Teacher/VerifyTeacher';
-import VerifyStudent from './User/VerifyStudent';
-import TeacherForgotPassword from './Teacher/TeacherForgotPassword';
-import TeacherChangePassword from './Teacher/TeacherChangePassword';
-import ForgotPassword from './User/ForgotPassword';
-import ChangePassword from './User/ChangePassword';
 import MyTeachers from './User/MyTeachers';
+
 
 
 
@@ -88,16 +81,13 @@ function Main() {
       <Route path="/student-logout" element={<StudentLogout />}/>
       <Route path="/my-courses" element={<MyCourses />}/>
       <Route path="/favorite-courses" element={<FavoriteCourses />}/>
-        <Route path="/profile-setting" element={<ProfileSetting />}/>
+      <Route path="/profile-setting" element={<ProfileSetting />}/>
       <Route path="/update-password" element={<UpdatePassword />}/>
-
-      
       <Route path="/teacher-login" element={<TeacherLogin />}/>
       <Route path="/teacher-register" element={<TeacherRegister />}/>
       <Route path="/teacher-dashboard" element={<TeacherDashboard />}/>
       <Route path="/teacher-profile-setting" element={<TeacherProfileSetting />}/>
       <Route path="/teacher-update-password" element={<TeacherUpdatePassword />}/>
-      <Route path="/teacher-change-password/:teacher_id" element={<TeacherChangePassword />}/>
       <Route path="/teacher-my-courses" element={<TeacherMyCourses />}/>
       <Route path="/my-users" element={<UserList />}/>
       <Route path="/add-course" element={<AddCourse />}/>
@@ -105,13 +95,11 @@ function Main() {
       <Route path="/all-courses" element={<AllCourses />}/>
       <Route path="/popular-courses" element={<PopularCourses />}/>
       <Route path="/popular-teachers" element={<PopularTeachers />}/>
-      <Route path="/course/:category_id/:category_slug" element={<CategoryCourses />}/>
       <Route path="/teacher-logout" element={<TeacherLogout/>}/>
       <Route path="/add-chapter/:id" element={<AddChapter/>}/>
       <Route path="/all-chapters/:course_id" element={<CourseChapters/>}/>
       <Route path="/edit-chapter/:chapter_id" element={<EditChapter/>}/>
       <Route path="/edit-course/:course_id" element={<EditCourse/>}/>
-      <Route path="/teacher-skill-courses/:skill_name/:teacher_id" element={<TeacherSkillCourses/>}/>
       <Route path="/student-logout" element={<StudentLogout/>}/>
       <Route path="/enrolled-students/:course_id" element={<EnrolledStudents/>}/>
       <Route path="/add-assignment/:student_id/:teacher_id" element={<AddAssignment/>}/>
@@ -134,12 +122,9 @@ function Main() {
       <Route path="/faq" element={<FAQ/>}/>
       <Route path="/page/:page_id/:page_slug" element={<Page/>}/>
       <Route path="/contact-us" element={<ContactUs />}/>
-      <Route path="/verify-teacher/:teacher_id" element={<VerifyTeacher />}/>
-      <Route path="/verify-student/:student_id" element={<VerifyStudent />}/>
-      <Route path="/teacher-forgot-password" element={<TeacherForgotPassword />}/>
-      <Route path="/student-forgot-password" element={<ForgotPassword />}/>
-      <Route path="/student-change-password/:student_id" element={<ChangePassword />}/>
+
       <Route path="/my-teachers" element={<MyTeachers />}/>
+      
      </Switch>
      <Footer />
      </div>

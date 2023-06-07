@@ -48,7 +48,7 @@ const icon_style={
                         <p className="fw-bold">Skills: &nbsp;
                         {skillListData.map((skill, index)=>
                         <>
-                          <Link to={`/teacher-skill-courses/${skill.trim()}/${teacherData.id}`} className="badge badge-pill text-dark bg-warning mr-2">{skill.trim()}</Link>&nbsp;
+                          <Link to="#" className="badge badge-pill text-dark bg-warning mr-2">{skill.trim()}</Link>&nbsp;
                           </>
                         )}
                         </p>

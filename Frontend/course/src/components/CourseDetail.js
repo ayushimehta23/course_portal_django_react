@@ -264,7 +264,7 @@ const handleFileChange=(event)=>{
                         <p className="fw-bold">Techs:&nbsp;
                         {techListData.map((tech, index)=>
                         <>
-                          <Link to={`/category/${tech.trim()}`} className="badge badge-pill text-dark bg-warning mr-2">{tech.trim()}</Link>&nbsp;
+                          <Link to="#" className="badge badge-pill text-dark bg-warning mr-2">{tech.trim()}</Link>&nbsp;
                           </>
                         )}
                         </p>

@@ -71,7 +71,7 @@ function Login(){
     <label className="form-check-label" for="exampleCheck1">Remember Me</label>
   </div> */}
   <button type="submit" onClick={submitForm} className="btn btn-primary">Login</button>
-  <p className="mt-3"><Link to="/student-forgot-password" className="text-danger">Forgot Password?</Link></p>
+  
 </form> 
                     </div>
                 </div>

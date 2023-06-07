@@ -16,7 +16,7 @@ function TeacherRegister(){
         'mobile_no':'',
         'skills':'',
         'status':'',
-        'otp_digit':'',
+       
       
     })
     
@@ -31,7 +31,7 @@ function TeacherRegister(){
 
     const submitForm = () => {
         // console.log(teacherData)
-        const otp_digit=Math.floor(100000 + Math.random() * 900000);
+        
         const teacherFormData = new FormData();
         teacherFormData.append("full_name", teacherData.full_name)
         teacherFormData.append("email", teacherData.email)
@@ -39,27 +39,30 @@ function TeacherRegister(){
         teacherFormData.append("qualification", teacherData.qualification)
         teacherFormData.append("mobile_no", teacherData.mobile_no)
         teacherFormData.append("skills", teacherData.skills)
-        teacherFormData.append("otp_digit", otp_digit)
+        
         
         axios.post(baseURL, teacherFormData).then((response)=>{
-            window.location.href=('/verify-teacher/'+response.data.id)
-            
-            // setTeacherData({
-            //     'full_name':'',
-            //     'email':'',
-            //     'password':'',
-            //     'qualification':'',
-            //     'mobile_no':'',
-            //     'skills':'',
-            //     'status':'success',
+            setTeacherData({
+                'full_name':'',
+                'email':'',
+                'password':'',
+                'qualification':'',
+                'mobile_no':'',
+                'skills':'',
+                'status':'success',
                 
-            // })
+            })
         }).catch((error) => {
             console.log(error);
             setTeacherData({'status':'error'})
         })
         
     };
+
+    
+  
+   
+    
 
     // End
     useEffect(() => {

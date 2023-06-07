@@ -11,9 +11,7 @@ class Teacher(models.Model):
     mobile_no = models.CharField(max_length=20)
     profile_img = models.ImageField(upload_to = 'teacher_profile_imgs/', null=True)
     skills = models.TextField()
-    verify_status=models.BooleanField(default=False)
-    otp_digit=models.CharField(max_length=10,null=True, blank=True)
-    login_via_otp=models.BooleanField(default=False)
+    
 
     facebook_url=models.URLField(null=True, blank=True)
     twitter_url=models.URLField(null=True, blank=True)
@@ -111,8 +109,7 @@ class Student(models.Model):
     username = models.CharField(max_length=200)
     interested_categories = models.TextField()
     profile_img = models.ImageField(upload_to = 'student_profile_imgs/', null=True)
-    verify_status=models.BooleanField(default=False)
-    otp_digit=models.CharField(max_length=10,null=True, blank=True)
+    
    
     def __str__(self):
         return self.full_name

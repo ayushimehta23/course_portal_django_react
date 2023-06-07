@@ -28,18 +28,26 @@ function Register(){
 
       const submitForm = () => {
         // console.log(teacherData)
-        const otp_digit=Math.floor(100000 + Math.random() * 900000);
+
         const studentFormData = new FormData();
         studentFormData.append("full_name", studentData.full_name)
         studentFormData.append("email", studentData.email)
         studentFormData.append("password", studentData.password)
         studentFormData.append("username", studentData.username)
         studentFormData.append("interested_categories", studentData.interested_categories)
-        studentFormData.append("otp_digit", otp_digit)
+      
         
         axios.post(baseURL, studentFormData).then((response)=>{
-            navigate('/verify-student/'+response.data.id)
-            
+           
+            setStudentData({
+                'full_name':'',
+                'email':'',
+                'password':'',
+                'username':'',
+                'interested_categories':'',
+                'status':'success',
+                
+            })
            
                 
             // })
