@@ -66,6 +66,7 @@ import MyTeachers from './User/MyTeachers';
 
 
 
+
 function Main() {
   return (
    <div className="App">
@@ -122,7 +123,6 @@ function Main() {
       <Route path="/faq" element={<FAQ/>}/>
       <Route path="/page/:page_id/:page_slug" element={<Page/>}/>
       <Route path="/contact-us" element={<ContactUs />}/>
-
       <Route path="/my-teachers" element={<MyTeachers />}/>
       
      </Switch>

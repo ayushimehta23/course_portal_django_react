@@ -69,7 +69,7 @@ function TeacherLogin(){
   </div>
  
   <button type="submit" onClick={submitForm} className="btn btn-primary">Login</button>
- 
+  
 </form> 
                     </div>
                 </div>
