@@ -145,7 +145,7 @@ const markAsFavorite = () => {
           title: "This course has been added in your wish list",
           icon:'success',
           toast:true,
-          timer:10000,
+          timer:3000,
           position:'top-right',
           timerProgressBar:true,
           showConfirmButton: false
@@ -179,7 +179,7 @@ const removeFavorite = (pk) => {
         title: 'This course has been removed from your wish list',
         icon:'success',
         toast: true,
-        timer: 10000,
+        timer: 3000,
         position: 'top-right',
         timerProgressBar:true,
         showConfirmButton:false

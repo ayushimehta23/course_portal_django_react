@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import Footer from "./Footer";
 const baseURL = "http://127.0.0.1:8000/api";
 
 

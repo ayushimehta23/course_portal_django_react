@@ -104,7 +104,7 @@ function ContactUs(){
                     </li>
                     <li>
                         <label className="fw-bold">Phone No:</label>
-                        <span className="ms-2">0268-2550814</span>
+                        <span className="ms-2">0011-2550814</span>
                     </li>
                 </ul>
             </div>

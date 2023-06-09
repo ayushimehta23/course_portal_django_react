@@ -170,7 +170,7 @@ function UserList(){
                                     <Link to={`/add-assignment/${row.student.id}/${teacherId}`} className="btn btn-sm btn-success mb-2 me-2">Add Assignment</Link>
                                     <button data-bs-toggle="modal" data-bs-target={`#msgModal${index}`} className="btn btn-sm btn-dark mb-2" title="Send Message"><i class="bi bi-chat-fill"></i></button>
 
-                                    {/* {Message Modal} */}
+                                   
                                     <div className="modal fade" id={`msgModal${index}`}  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div className="modal-dialog modal-fullscreen">
                                         <div className="modal-content">

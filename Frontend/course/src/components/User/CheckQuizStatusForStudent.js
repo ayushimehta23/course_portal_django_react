@@ -18,24 +18,19 @@ function CheckQuizStatusForStudent(props){
           }catch(error){
             console.log(error)
           }
-
-        
-        
+ 
     }, []);
-
-
-
 
     return (
     
         <td>
         {quizData.bool==false &&
         <Link to={`/take-quiz/${props.quiz}`} className="btn btn-success btn-sm ms-2">Take Quiz</Link>
-}
-{quizData.bool==true &&
-<span className="text-success">Attempted</span>
-
-}
+        }
+        
+        {quizData.bool==true &&
+        <span className="text-success">Attempted</span>
+        }
        </td>
        
         
