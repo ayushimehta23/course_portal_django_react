@@ -20,7 +20,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 class TeacherList(generics.ListCreateAPIView):
     queryset = models.Teacher.objects.all()
     serializer_class = TeacherSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+   
 
     def get_queryset(self):
         if 'popular' in self.request.GET:
@@ -34,7 +34,7 @@ class TeacherList(generics.ListCreateAPIView):
 class TeacherDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Teacher.objects.all()
     serializer_class = TeacherSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+   
 
 class TeacherDashboard(generics.RetrieveAPIView):
     queryset=models.Teacher.objects.all()
@@ -125,13 +125,11 @@ class ChapterDetailView(generics.RetrieveUpdateDestroyAPIView):
 class StudentList(generics.ListCreateAPIView):
     queryset = models.Student.objects.all()
     serializer_class = StudentSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-
+    
 class StudentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Student.objects.all()
     serializer_class = StudentSerializer
-    # permission_classes = [permissions.IsAuthenticated]
-
+    
 class StudentDashboard(generics.RetrieveAPIView):
     queryset=models.Student.objects.all()
     serializer_class=StudentDashboardSerializer

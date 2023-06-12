@@ -1,6 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+
+// import emailjs from '@emailjs/browser';
+
 const baseURL = "http://127.0.0.1:8000/api";
 
 function Login(){
@@ -20,10 +23,19 @@ function Login(){
     })
   }
   
-  const submitForm = () => {
+  const submitForm = (e) => {
     const studentFormData = new FormData;
     studentFormData.append('email',studentLoginData.email)
     studentFormData.append('password',studentLoginData.password)
+
+    // e.preventDefault();
+    // emailjs.sendForm('service_1xe4vbd', 'YOUR_TEMPLATE_ID', form.current, 'tQCyvnyF0nvMTTcXW')
+    //   .then((result) => {
+    //       console.log(result.text);
+    //   }, (error) => {
+    //       console.log(error.text);
+    //   });
+
     try{
       axios.post(baseURL+'/student-login',studentFormData)
       .then((res)=>{

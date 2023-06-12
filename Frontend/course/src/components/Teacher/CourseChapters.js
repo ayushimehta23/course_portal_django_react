@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useParams } from "react-router-dom";
 
-import Swal from 'sweetalert2';
 const baseURL = "http://127.0.0.1:8000/api";
 
 
@@ -93,9 +92,9 @@ function CourseChapters(){
                                     <td><Link to={'/edit-chapter/'+chapter.id}>{chapter.title}</Link></td>
                                     <td>
                                     <video controls width="250">
-                                            <source src={chapter.video.url} type="video/webm"/>
+                                            <source src={chapterData.video.url} type="video/webm"/>
 
-                                            <source src={chapter.video.url} type="video/mp4"/>
+                                            <source src={chapterData.video.url} type="video/mp4"/>
 
                                             Sorry, your browser doesn't support embedded videos
                     

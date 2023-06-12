@@ -42,7 +42,7 @@ function AddChapter(){
                 }
             })
             .then((res)=>{
-                // console.log(res.data);
+                
                 if(res.status===200 | res.status===201){
                     const Swal = require('sweetalert2')
                     

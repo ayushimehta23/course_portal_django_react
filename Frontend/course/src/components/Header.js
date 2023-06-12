@@ -23,6 +23,7 @@ function Header() {
             <Link className="nav-link active" aria-current="page" to="/">Home</Link>
             <Link className="nav-link" to="/category">Categories</Link>
             <Link className="nav-link" to="/all-courses">Courses</Link>
+            {studentLoginStatus!='true' && 
             <Dropdown>
       <Dropdown.Toggle variant="secondary" id="dropdown-basic">
         Teacher
@@ -45,14 +46,16 @@ function Header() {
       </Dropdown.Menu>
       
     </Dropdown>
+    }
     <span><h3>..</h3></span>
+    {teacherLoginStatus!='true' && 
             <Dropdown>
       <Dropdown.Toggle variant="secondary" id="dropdown-basic">
         User
       </Dropdown.Toggle>
-
+      
       <Dropdown.Menu>
-        {studentLoginStatus!='true'  && 
+        {studentLoginStatus!='true' &&
         <>
         <Dropdown.Item href="/student-login">Login</Dropdown.Item>
         <Dropdown.Item href="/student-register">Register</Dropdown.Item>
@@ -65,8 +68,9 @@ function Header() {
         </>
         }
       </Dropdown.Menu>
+
     </Dropdown>
-           
+  }    
         </div>
         </div>
       </div>
