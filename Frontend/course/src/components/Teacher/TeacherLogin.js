@@ -1,9 +1,12 @@
 import { Form, Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Loader from "../Loader";
 
 const baseURL = "http://127.0.0.1:8000/api";
 function TeacherLogin(){
+
+  const [loading, setLoading] = useState(false);
 
   const [teacherLoginData, setTeacherLoginData] = useState({
     email:'',
@@ -19,10 +22,13 @@ function TeacherLogin(){
     })
   }
 
-  const submitForm = () => {
+  const submitForm = (e) => {
+    e.preventDefault();
     const teacherFormData = new FormData;
     teacherFormData.append('email',teacherLoginData.email)
     teacherFormData.append('password',teacherLoginData.password)
+
+    setLoading(true);
     try{
       axios.post(baseURL+'/teacher-login',teacherFormData)
       .then((res)=>{
@@ -37,6 +43,10 @@ function TeacherLogin(){
     }catch(error){
       console.log(error)
     }
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000);
   }
 
   const teacherLoginStatus=localStorage.getItem('teacherLoginStatus');
@@ -57,7 +67,7 @@ function TeacherLogin(){
                     <h5 className="card-header">Teacher Login</h5>
                     <div className="card-body">
                       {errorMsg && <p className="text-danger">{errorMsg}</p>}
-                    <form>
+                    
   <div className="mb-3">
     <label for="exampleInputEmail1" className="form-label" >Email</label>
     <input name="email" type="email" value = {teacherLoginData.email} onChange={handleChange} className="form-control" />
@@ -68,9 +78,9 @@ function TeacherLogin(){
     <input name="password" type="password" value = {teacherLoginData.password} onChange={handleChange} className="form-control" id="exampleInputPassword1" />
   </div>
  
-  <button type="submit" onClick={submitForm} className="btn btn-primary">Login</button>
-  
-</form> 
+  {!loading && <button type="submit" onClick={submitForm} className="btn btn-primary">Login</button>}
+  {loading && <Loader />}
+
                     </div>
                 </div>
                 </div>

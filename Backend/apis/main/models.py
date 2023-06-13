@@ -322,3 +322,4 @@ class TeacherStudentChat(models.Model):
 
 
 
+# https://chat.openai.com/share/57cd9634-0778-454a-8cc3-853333e25a5f

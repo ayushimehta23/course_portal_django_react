@@ -9,8 +9,9 @@ from .serializers import TeacherSerializer, CategorySerializer, CourseSerializer
 from . import models
 from rest_framework.pagination import PageNumberPagination
 from django.contrib.flatpages.models import FlatPage
+
+from django.conf import settings
 from django.core.mail import send_mail
-from random import randint
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size=4
@@ -42,15 +43,22 @@ class TeacherDashboard(generics.RetrieveAPIView):
 
 @csrf_exempt
 def teacher_login(request):
+   
     email = request.POST['email']
     password = request.POST['password']
+    
+    
     try:
         teacherData = models.Teacher.objects.get(email = email, password = password)
-    except models.Teacher.DoesNotExist:
-        teacherData=None
-    if teacherData:
+        if not teacherData:
+            return JsonResponse({'bool': False})
+        subject = 'Welcome to Course Portal'
+        message = f"Hello, \n\nWe're excited to inform you that a successful login has been detected on your account. Your account security is our utmost priority, and we want to ensure that you are aware of any activity related to your account. \n\nIf you have recently logged into your account, there is no need for concern. However, if you did not initiate this login or suspect any unauthorized activity, we strongly recommend taking immediate action by contacting us to secure your account. \n\nThank you for your cooperation in maintaining the security of your account. \n\n\nBest Regards, \nCourse Portal."
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ['ayushimehta9515@gmail.com']
+        send_mail( subject, message, email_from, recipient_list )
         return JsonResponse({'bool': True, 'teacher_id':teacherData.id})
-    else:
+    except models.Teacher.DoesNotExist:
         return JsonResponse({'bool': False})
 
 
@@ -136,15 +144,22 @@ class StudentDashboard(generics.RetrieveAPIView):
 
 @csrf_exempt
 def student_login(request):
+   
     email = request.POST['email']
     password = request.POST['password']
+    
+    
     try:
         studentData = models.Student.objects.get(email = email, password = password)
-    except models.Student.DoesNotExist:
-        studentData=None
-    if studentData:
+        if not studentData:
+            return JsonResponse({'bool': False})
+        subject = 'Welcome to Course Portal'
+        message = f"Hello, \n\nWe're excited to inform you that a successful login has been detected on your account. Your account security is our utmost priority, and we want to ensure that you are aware of any activity related to your account. \n\nIf you have recently logged into your account, there is no need for concern. However, if you did not initiate this login or suspect any unauthorized activity, we strongly recommend taking immediate action by contacting us to secure your account. \n\nThank you for your cooperation in maintaining the security of your account. \n\n\nBest Regards, \nCourse Portal."
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ['ayushimehta9515@gmail.com']
+        send_mail( subject, message, email_from, recipient_list )
         return JsonResponse({'bool': True, 'student_id':studentData.id})
-    else:
+    except models.Student.DoesNotExist:
         return JsonResponse({'bool': False})
 
 
