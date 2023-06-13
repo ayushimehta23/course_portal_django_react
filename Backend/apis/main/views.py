@@ -12,6 +12,7 @@ from django.contrib.flatpages.models import FlatPage
 
 from django.conf import settings
 from django.core.mail import send_mail
+import pandas as pd
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size=4
@@ -506,4 +507,5 @@ def save_teacher_student_group_msg_from_student(request, student_id):
         return JsonResponse({'bool':True, 'msg':'Message has been sent'})
     else:
         return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})
+
 

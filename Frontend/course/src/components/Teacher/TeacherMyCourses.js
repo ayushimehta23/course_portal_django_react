@@ -18,6 +18,8 @@ function TeacherMyCourses(){
           }catch(error){
             console.log(error)
           }
+
+          
         
     }, []);
 
@@ -58,6 +60,7 @@ function TeacherMyCourses(){
         });
     }
         
+   
 
     useEffect(()=>{
     
@@ -111,6 +114,7 @@ function TeacherMyCourses(){
                                         <Link className="btn btn-warning btn-sm ms-2" to={'/assign-quiz/'+course.id}>Assign Quiz</Link>
                                         
                                         <button onClick={()=>handleDeleteClick(course.id)} className="btn btn-danger btn-sm ms-2">Delete</button>
+                                       
                                     </td>
                                     </tr>
                                     )}

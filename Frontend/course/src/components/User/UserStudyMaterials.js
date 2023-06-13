@@ -1,10 +1,8 @@
-import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useParams } from "react-router-dom";
 
-import Swal from 'sweetalert2';
 const baseURL = "http://127.0.0.1:8000/api";
 
 
