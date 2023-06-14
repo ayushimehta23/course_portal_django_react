@@ -96,9 +96,9 @@ function CourseChapters() {
                         </Link>
                       </td>
                       <td>
-                        <div class="embed-responsive embed-responsive-16by9">
-                          <video class="embed-responsive-item" controls>
-                            <source src={chapterData.video} type="video/mp4" />
+                        <div className="embed-responsive embed-responsive-16by9">
+                          <video className="embed-responsive-item" controls>
+                            <source src={chapter.video} type="video/mp4" />
                             Your browser does not support the video tag.
                           </video>
                         </div>

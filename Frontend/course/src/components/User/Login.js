@@ -101,6 +101,7 @@ function Login() {
                   Login
                 </button>
                 }
+                {!loading && <p className="mt-3"><Link to="/student-forgot-password" className="text-danger">Forgot Password?</Link></p>}
                 {loading && 
                 <Loader />
                 }

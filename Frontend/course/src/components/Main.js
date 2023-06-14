@@ -36,6 +36,11 @@ import EnrolledStudents from './Teacher/EnrolledStudents';
 import AddAssignment from './Teacher/AddAssignment';
 import ShowAssignment from './Teacher/ShowAssignment';
 import StudyMaterials from './Teacher/StudyMaterials';
+import TeacherForgotPassword from './Teacher/TeacherForgotPassword';
+import TeacherChangePassword from './Teacher/TeacherChangePassword';
+
+import ForgotPassword from './User/ForgotPassword';
+import ChangePassword from './User/ChangePassword';
 
 // Teacher Dashboard: Quiz
 import AddQuiz from './Teacher/AddQuiz';
@@ -62,10 +67,6 @@ import FAQ from './FAQ';
 import Page from './Page';
 import ContactUs from './ContactUs';
 import MyTeachers from './User/MyTeachers';
-
-
-
-
 
 function Main() {
   return (
@@ -124,6 +125,12 @@ function Main() {
       <Route path="/page/:page_id/:page_slug" element={<Page/>}/>
       <Route path="/contact-us" element={<ContactUs />}/>
       <Route path="/my-teachers" element={<MyTeachers />}/>
+
+      <Route path="/teacher-forgot-password" element={<TeacherForgotPassword />}/>
+      <Route path="/teacher-change-password/:teacher_id" element={<TeacherChangePassword />}/>
+
+      <Route path="/student-forgot-password" element={<ForgotPassword />}/>
+      <Route path="/student-change-password/:student_id" element={<ChangePassword />}/>
       
      </Switch>
      <Footer />

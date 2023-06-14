@@ -53,8 +53,8 @@ def teacher_login(request):
         teacherData = models.Teacher.objects.get(email = email, password = password)
         if not teacherData:
             return JsonResponse({'bool': False})
-        subject = 'Welcome to Course Portal'
-        message = f"Hello, \n\nWe're excited to inform you that a successful login has been detected on your account. Your account security is our utmost priority, and we want to ensure that you are aware of any activity related to your account. \n\nIf you have recently logged into your account, there is no need for concern. However, if you did not initiate this login or suspect any unauthorized activity, we strongly recommend taking immediate action by contacting us to secure your account. \n\nThank you for your cooperation in maintaining the security of your account. \n\n\nBest Regards, \nCourse Portal."
+        subject = 'Login Successful (Teacher)'
+        message = f"Hello {teacherData.full_name}, \n\nWe're excited to inform you that a successful login has been detected on your account. Your account security is our utmost priority, and we want to ensure that you are aware of any activity related to your account. \n\nIf you have recently logged into your account, there is no need for concern. However, if you did not initiate this login or suspect any unauthorized activity, we strongly recommend taking immediate action by contacting us to secure your account. \n\nThank you for your cooperation in maintaining the security of your account. \n\n\nBest Regards, \nCourse Portal."
         email_from = settings.EMAIL_HOST_USER
         recipient_list = ['ayushimehta9515@gmail.com']
         send_mail( subject, message, email_from, recipient_list )
@@ -154,8 +154,8 @@ def student_login(request):
         studentData = models.Student.objects.get(email = email, password = password)
         if not studentData:
             return JsonResponse({'bool': False})
-        subject = 'Welcome to Course Portal'
-        message = f"Hello, \n\nWe're excited to inform you that a successful login has been detected on your account. Your account security is our utmost priority, and we want to ensure that you are aware of any activity related to your account. \n\nIf you have recently logged into your account, there is no need for concern. However, if you did not initiate this login or suspect any unauthorized activity, we strongly recommend taking immediate action by contacting us to secure your account. \n\nThank you for your cooperation in maintaining the security of your account. \n\n\nBest Regards, \nCourse Portal."
+        subject = 'Login Successful (Student)'
+        message = f"Hello {studentData.full_name}, \n\nWe're excited to inform you that a successful login has been detected on your account. Your account security is our utmost priority, and we want to ensure that you are aware of any activity related to your account. \n\nIf you have recently logged into your account, there is no need for concern. However, if you did not initiate this login or suspect any unauthorized activity, we strongly recommend taking immediate action by contacting us to secure your account. \n\nThank you for your cooperation in maintaining the security of your account. \n\n\nBest Regards, \nCourse Portal."
         email_from = settings.EMAIL_HOST_USER
         recipient_list = ['ayushimehta9515@gmail.com']
         send_mail( subject, message, email_from, recipient_list )
@@ -509,3 +509,57 @@ def save_teacher_student_group_msg_from_student(request, student_id):
         return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})
 
 
+@csrf_exempt
+def teacher_forgot_password(request):
+    email=request.POST.get('email')
+    verify=models.Teacher.objects.filter(email=email).first()
+    teacherData = models.Teacher.objects.get(email = email)
+    if verify:
+        link=f"http://localhost:3000/teacher-change-password/{verify.id}/"
+       
+        subject = 'Reset Password Link (Teacher)'
+        message = f"Hello {teacherData.full_name}, \n\nA request has been received to change the password of your course portal account. \n\nhttp://localhost:3000/teacher-change-password/{verify.id}/. \n\nIf you didn't inititate this request, we strongly recommend taking immediate action by contacting us to secure your account. \n\nThank you for your cooperation in maintaining the security of your account.. \n\n\nBest Regards, \nCourse Portal."
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ['ayushimehta9515@gmail.com']
+        send_mail( subject, message, email_from, recipient_list )
+        return JsonResponse({'bool': True, 'teacher_id':teacherData.id})
+    else:
+        return JsonResponse({'bool': False, 'msg':'Invalid Email!!'})
+
+@csrf_exempt
+def teacher_change_password(request, teacher_id):
+    password = request.POST['password']
+    verify = models.Teacher.objects.filter(id=teacher_id).first()
+    if verify:
+        models.Teacher.objects.filter(id=teacher_id).update(password=password)
+        return JsonResponse({'bool':True, 'msg':'Password has been changed'})
+    else:
+        return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})
+
+
+@csrf_exempt
+def student_forgot_password(request):
+    email=request.POST.get('email')
+    verify=models.Student.objects.filter(email=email).first()
+    studentData = models.Student.objects.get(email = email)
+    if verify:
+        link=f"http://localhost:3000/student-change-password/{verify.id}/"
+       
+        subject = 'Reset Password Link (Student)'
+        message = f"Hello {studentData.full_name}, \n\nA request has been received to change the password of your course portal account. \n\nhttp://localhost:3000/student-change-password/{verify.id}/. \n\nIf you didn't inititate this request, we strongly recommend taking immediate action by contacting us to secure your account. \n\nThank you for your cooperation in maintaining the security of your account.. \n\n\nBest Regards, \nCourse Portal."
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ['ayushimehta9515@gmail.com']
+        send_mail( subject, message, email_from, recipient_list )
+        return JsonResponse({'bool': True, 'student_id':studentData.id})
+    else:
+        return JsonResponse({'bool': False, 'msg':'Invalid Email!!'})
+
+@csrf_exempt
+def student_change_password(request, student_id):
+    password = request.POST['password']
+    verify = models.Student.objects.filter(id=student_id).first()
+    if verify:
+        models.Student.objects.filter(id=student_id).update(password=password)
+        return JsonResponse({'bool':True, 'msg':'Password has been changed'})
+    else:
+        return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})

@@ -347,23 +347,26 @@ const handleFileChange=(event)=>{
               <li className="list-group-item">{chapter.title} <span className="float-end"> <button className="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#videoModal1" float-end><i class="bi-youtube"></i></button>
               </span>
               { /* Video Modal */}
-              <div className="modal" id="videoModal1" tabindex="-1" aria-labelledby="exampleModalLabel">
-            <div className="modal-dialog modal-xl">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Video 1</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                <div class="ratio ratio-16x9">
-            <iframe src={chapter.video} title={chapter.title} allowfullscreen></iframe>
-          </div>
-                </div>
-      
+              <div class="modal fade" id="videoModal1" tabindex="-1" aria-labelledby="videoModalLabel1" aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="videoModalLabel1">{chapter.title}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div className="embed-responsive embed-responsive-16by9">
+        <video className="embed-responsive-item mt-2 ms-2" controls>
+          <source src={chapter.video} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
 </div>
-{ /*End Video Modal */}
+              { /*End Video Modal */}
     </li>
     )}
   </ul>

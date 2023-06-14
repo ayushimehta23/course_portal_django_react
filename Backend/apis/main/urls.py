@@ -93,6 +93,13 @@ urlpatterns = [
 
     path('fetch-my-teachers/<int:studentId>', views.MyTeacherList.as_view()),
 
+    path('teacher-forgot-password/',views.teacher_forgot_password),
+    path('teacher-change-password/<int:teacher_id>/',views.teacher_change_password),
+
+    path('student-forgot-password/',views.student_forgot_password),
+    path('student-change-password/<int:student_id>/',views.student_change_password),
+
+
    
 
     

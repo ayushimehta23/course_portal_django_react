@@ -49,10 +49,7 @@ function TeacherLogin(){
     }, 5000);
   }
 
-  const teacherLoginStatus=localStorage.getItem('teacherLoginStatus');
-  if(teacherLoginStatus=='true'){
-    window.location.href='/teacher-dashboard';
-  }
+  
 
   useEffect(() => {
     document.title='Teacher Login';
@@ -79,6 +76,7 @@ function TeacherLogin(){
   </div>
  
   {!loading && <button type="submit" onClick={submitForm} className="btn btn-primary">Login</button>}
+  {!loading && <p className="mt-3"><Link to="/teacher-forgot-password" className="text-danger">Forgot Password?</Link></p>}
   {loading && <Loader />}
 
                     </div>
