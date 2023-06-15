@@ -431,6 +431,15 @@ class ContactList(generics.ListCreateAPIView):
     queryset = models.Contact.objects.all()
     serializer_class = ContactSerializer
 
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        
+        subject = 'Thank You for Contacting Us'
+        message = f"Hello, \n\nThank you for contacting us. We appreciate your intrest and value your query request. \n\nIf you require immediate assistance, please don't hesitate to contact us directly at 9426523102. Our team is ready to help. \n\nWe look forward to serving you. \n\n\nBest Regards,\nCourse Portal."
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ['ayushimehta9515@gmail.com']
+
+        send_mail( subject, message, email_from, recipient_list )
 
 @csrf_exempt
 def save_teacher_student_msg(request, teacher_id, student_id):
@@ -563,3 +572,6 @@ def student_change_password(request, student_id):
         return JsonResponse({'bool':True, 'msg':'Password has been changed'})
     else:
         return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})
+
+
+       

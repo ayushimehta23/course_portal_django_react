@@ -16,8 +16,6 @@ function TeacherRegister(){
         'mobile_no':'',
         'skills':'',
         'status':'',
-       
-      
     })
     
     // Change element value
@@ -58,11 +56,6 @@ function TeacherRegister(){
         })
         
     };
-
-    
-  
-   
-    
 
     // End
     useEffect(() => {

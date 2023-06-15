@@ -294,17 +294,6 @@ class Contact(models.Model):
     def __str__(self) -> str:
         return self.query_txt
 
-    def save(self, *args, **kwargs):
-        send_mail(
-            "Contact Query",
-            "Here is the message.",
-            "ayushimehta2342@gmail.com",
-            [self.email],
-            fail_silently=False,
-            html_message=f'<p>{self.full_name}</p><p>{self.query_txt}</p>'
-        )
-        return super(Contact,self).save(*args, **kwargs)
-
     class Meta:
         verbose_name_plural = "17. Contact Queries"
 
@@ -322,4 +311,3 @@ class TeacherStudentChat(models.Model):
 
 
 
-# https://chat.openai.com/share/57cd9634-0778-454a-8cc3-853333e25a5f

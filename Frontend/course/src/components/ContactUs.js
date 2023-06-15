@@ -23,8 +23,8 @@ function ContactUs(){
     
     // Submit Form
 
-    const submitForm = () => {
-        // console.log(teacherData)
+    const submitForm = (e) => {
+        e.preventDefault();
         const contactFormData = new FormData();
         contactFormData.append("full_name", contactData.full_name)
         contactFormData.append("email", contactData.email)

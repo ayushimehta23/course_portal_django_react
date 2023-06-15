@@ -81,7 +81,7 @@ function AllQuiz(){
                                 <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Total Questions</th>
+                                        
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -92,7 +92,7 @@ function AllQuiz(){
                                         <Link to={'/all-questions/'+row.id}>{row.title}</Link>
                                     </td>
                                     
-                                    <td><Link to="#">1</Link></td>
+                                    
                                     <td>
                                         
                                         <Link className="btn btn-info btn-sm" to={'/edit-quiz/'+row.id}>Edit</Link>
