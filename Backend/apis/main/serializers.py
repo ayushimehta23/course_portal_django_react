@@ -2,11 +2,12 @@ from rest_framework import serializers
 from . import models
 from django.contrib.flatpages.models import FlatPage
 from django.core.mail import send_mail
+from django.conf import settings
 
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Teacher
-        fields = ['id', 'full_name', 'email', 'qualification', 'mobile_no', 'skills', 'profile_img', 'teacher_courses', 'skill_list', 'total_teacher_courses', 'facebook_url', 'twitter_url', 'instagram_url', 'website_url']
+        fields = ['id', 'full_name', 'password', 'email', 'qualification', 'mobile_no', 'skills', 'profile_img', 'teacher_courses', 'skill_list', 'total_teacher_courses', 'facebook_url', 'twitter_url', 'instagram_url', 'website_url', 'otp_digit', 'verify_status']
         depth = 1
 
     def __init__(self, *args, **kwargs):
@@ -15,6 +16,19 @@ class TeacherSerializer(serializers.ModelSerializer):
         self.Meta.depth = 0
         if request and request.method == 'GET':
             self.Meta.depth = 1
+
+    def create(self, validate_data):
+        email=self.validated_data['email']
+        otp_digit=self.validated_data['otp_digit']
+        instance=super(TeacherSerializer, self).create(validate_data)
+
+        subject = 'Welcome to Course Portal'
+        message = f"Hello, \n\nWelcome to course portal. \n\nYour OTP for registration is {otp_digit}. \n\nThank you for connecting with us. \n\n\nBest Regards,\nCourse Portal."
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ['ayushimehta9515@gmail.com']
+        send_mail( subject, message, email_from, recipient_list )
+
+        return instance
 
     
 
@@ -57,7 +71,7 @@ class ChapterSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Student
-        fields = ['id', 'full_name', 'email', 'password', 'username', 'interested_categories', 'profile_img']
+        fields = ['id', 'full_name', 'email', 'password', 'username', 'interested_categories', 'profile_img', 'otp_digit', 'verify_status']
 
 
     def __init__(self, *args, **kwargs):
@@ -66,6 +80,19 @@ class StudentSerializer(serializers.ModelSerializer):
         self.Meta.depth = 0
         if request and request.method == 'GET':
             self.Meta.depth = 1
+
+    def create(self, validate_data):
+        email=self.validated_data['email']
+        otp_digit=self.validated_data['otp_digit']
+        instance=super(StudentSerializer, self).create(validate_data)
+
+        subject = 'Welcome to Course Portal'
+        message = f"Hello, \n\nWelcome to course portal. \n\nYour OTP for registration is {otp_digit}. \n\nThank you for connecting with us. \n\n\nBest Regards,\nCourse Portal."
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ['ayushimehta9515@gmail.com']
+        send_mail( subject, message, email_from, recipient_list )
+
+        return instance
 
     
 class StudentCourseEnrollSerializer(serializers.ModelSerializer):

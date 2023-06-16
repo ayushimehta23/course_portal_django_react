@@ -2,11 +2,14 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Loader from "../Loader";
 
 const baseURL = "http://127.0.0.1:8000/api/teacher";
 function TeacherRegister(){
 
     const navigate = useNavigate();
+
+    const [loading, setLoading] = useState(false);
 
     const [teacherData, setTeacherData] = useState({
         'full_name':'',
@@ -16,6 +19,8 @@ function TeacherRegister(){
         'mobile_no':'',
         'skills':'',
         'status':'',
+        'otp_digit':'',
+      
     })
     
     // Change element value
@@ -29,7 +34,7 @@ function TeacherRegister(){
 
     const submitForm = () => {
         // console.log(teacherData)
-        
+        const otp_digit=Math.floor(100000 + Math.random() * 900000);
         const teacherFormData = new FormData();
         teacherFormData.append("full_name", teacherData.full_name)
         teacherFormData.append("email", teacherData.email)
@@ -37,23 +42,31 @@ function TeacherRegister(){
         teacherFormData.append("qualification", teacherData.qualification)
         teacherFormData.append("mobile_no", teacherData.mobile_no)
         teacherFormData.append("skills", teacherData.skills)
-        
+        teacherFormData.append("otp_digit", otp_digit)
+
+        setLoading(true);
         
         axios.post(baseURL, teacherFormData).then((response)=>{
-            setTeacherData({
-                'full_name':'',
-                'email':'',
-                'password':'',
-                'qualification':'',
-                'mobile_no':'',
-                'skills':'',
-                'status':'success',
+            window.location.href=('/verify-teacher/'+response.data.id)
+            
+            // setTeacherData({
+            //     'full_name':'',
+            //     'email':'',
+            //     'password':'',
+            //     'qualification':'',
+            //     'mobile_no':'',
+            //     'skills':'',
+            //     'status':'success',
                 
-            })
+            // })
         }).catch((error) => {
             console.log(error);
             setTeacherData({'status':'error'})
         })
+
+        setTimeout(() => {
+            setLoading(false);
+          }, 5000);
         
     };
 
@@ -105,7 +118,8 @@ function TeacherRegister(){
 
                     </div>
 
-                    <button onClick={submitForm} type="submit" className="btn btn-primary">Register</button>
+                    {!loading && <button onClick={submitForm} type="submit" className="btn btn-primary">Register</button>}
+                    {loading && <Loader />}
                                     </div>
             </div>
             </div>

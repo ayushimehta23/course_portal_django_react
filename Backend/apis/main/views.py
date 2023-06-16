@@ -573,5 +573,30 @@ def student_change_password(request, student_id):
     else:
         return JsonResponse({'bool':True, 'msg':'Oops... Some Error Occured!!'})
 
+@csrf_exempt
+def verify_teacher_via_otp(request, teacher_id):
+    otp_digit=request.POST.get('otp_digit')
+    verify=models.Teacher.objects.filter(id=teacher_id,otp_digit=otp_digit).first()
+    if verify:
+        models.Teacher.objects.filter(id=teacher_id,otp_digit=otp_digit).update(verify_status=True)
+        return JsonResponse({'bool': True,'teacher_id':verify.id})
+    else:
+        return JsonResponse({'bool': False})
+
+@csrf_exempt
+def verify_student_via_otp(request, student_id):
+    otp_digit=request.POST.get('otp_digit')
+    verify=models.Student.objects.filter(id=student_id,otp_digit=otp_digit).first()
+    if verify:
+        models.Student.objects.filter(id=student_id,otp_digit=otp_digit).update(verify_status=True)
+        return JsonResponse({'bool': True,'student_id':verify.id})
+    else:
+        return JsonResponse({'bool': False})
+
+
+   
+
+        
+     
 
        

@@ -9,8 +9,10 @@ class Teacher(models.Model):
     password = models.CharField(max_length=100, blank=True, null=True)
     qualification = models.CharField(max_length=200)
     mobile_no = models.CharField(max_length=20)
-    profile_img = models.ImageField(upload_to = 'teacher_profile_imgs/', null=True)
+    profile_img = models.ImageField(upload_to = 'teacher_profile_imgs/', null=True, blank=True)
     skills = models.TextField()
+    verify_status=models.BooleanField(default=False)
+    otp_digit=models.CharField(max_length=10,null=True, blank=True)
     
 
     facebook_url=models.URLField(null=True, blank=True)
@@ -108,7 +110,9 @@ class Student(models.Model):
     password = models.CharField(max_length=100,blank=True, null=True)
     username = models.CharField(max_length=200)
     interested_categories = models.TextField()
-    profile_img = models.ImageField(upload_to = 'student_profile_imgs/', null=True)
+    profile_img = models.ImageField(upload_to = 'student_profile_imgs/', null=True, blank=True)
+    verify_status=models.BooleanField(default=False)
+    otp_digit=models.CharField(max_length=10,null=True, blank=True)
     
    
     def __str__(self):

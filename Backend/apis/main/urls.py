@@ -99,6 +99,10 @@ urlpatterns = [
     path('student-forgot-password/',views.student_forgot_password),
     path('student-change-password/<int:student_id>/',views.student_change_password),
 
+    path('verify-teacher/<int:teacher_id>/',views.verify_teacher_via_otp),
+
+    path('verify-student/<int:student_id>/',views.verify_student_via_otp),
+
 
    
 

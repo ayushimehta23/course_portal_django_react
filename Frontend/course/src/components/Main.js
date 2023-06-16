@@ -42,6 +42,9 @@ import TeacherChangePassword from './Teacher/TeacherChangePassword';
 import ForgotPassword from './User/ForgotPassword';
 import ChangePassword from './User/ChangePassword';
 
+import VerifyTeacher from './Teacher/VerifyTeacher';
+import VerifyStudent from './User/VerifyStudent';
+
 // Teacher Dashboard: Quiz
 import AddQuiz from './Teacher/AddQuiz';
 import AllQuiz from './Teacher/AllQuiz';
@@ -131,6 +134,9 @@ function Main() {
 
       <Route path="/student-forgot-password" element={<ForgotPassword />}/>
       <Route path="/student-change-password/:student_id" element={<ChangePassword />}/>
+
+      <Route path="/verify-teacher/:teacher_id" element={<VerifyTeacher />}/>
+      <Route path="/verify-student/:student_id" element={<VerifyStudent/>}/>
       
      </Switch>
      <Footer />

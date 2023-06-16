@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Loader from "./Loader";
 
 const baseURL = "http://127.0.0.1:8000/api/contact/";
 function ContactUs(){
 
 
-
+    const [loading, setLoading] = useState(false);
     const [contactData, setContactData] = useState({
         'full_name':'',
         'email':'',
@@ -14,15 +15,12 @@ function ContactUs(){
         
     })
     
-    // Change element value
     const  handleChange=(event)=>{
         setContactData({
             ...contactData, [event.target.name]:event.target.value
         });
     }
     
-    // Submit Form
-
     const submitForm = (e) => {
         e.preventDefault();
         const contactFormData = new FormData();
@@ -30,7 +28,7 @@ function ContactUs(){
         contactFormData.append("email", contactData.email)
         contactFormData.append("query_txt", contactData.query_txt)
        
-        
+        setLoading(true);
         try {
             axios.post(baseURL, contactFormData).then((response)=>{
                 setContactData({
@@ -44,6 +42,10 @@ function ContactUs(){
             console.log(error);
             setContactData({'status':'error'})
         }
+
+        setTimeout(() => {
+            setLoading(false);
+          }, 5000);
         
     };
 
@@ -86,7 +88,8 @@ function ContactUs(){
 
                     </div>
 
-                    <button onClick={submitForm} type="submit" className="btn btn-primary">Send</button>
+                    {!loading && <button onClick={submitForm} type="submit" className="btn btn-primary">Send</button>}
+                    {loading && <Loader />}
                     </form> 
                 </div>
             </div>
